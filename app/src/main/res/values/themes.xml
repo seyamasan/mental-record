@@ -2,8 +2,13 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.MentalRecordApplication" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:actionOverflowButtonStyle">@style/MyActionOverflowButton</item>
     </style>
 
     <style name="Theme.MentalRecordApplication" parent="Base.Theme.MentalRecordApplication" />
+
+    <!-- オーバーフローボタンのスタイル -->
+    <style name="MyActionOverflowButton" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:src">@drawable/icon_menu</item>
+    </style>
 </resources>
