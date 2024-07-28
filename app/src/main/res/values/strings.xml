@@ -1,7 +1,14 @@
 <resources>
+<!--    Main-->
     <string name="mental_record_app_name">MENTAL RECORD</string>
     <string name="mental_name">MENTAL</string>
     <string name="record_name">RECORD</string>
     <string name="author_name">created by seyamasan</string>
     <string name="app_ver">ver 1.0.0</string>
+
+<!--    RecordMood-->
+    <string name="question_text">今の気持ちは？</string>
+    <string name="menu_calendar_button_text">カレンダー</string>
+    <string name="menu_graph_button_text">グラフ</string>
+
 </resources>
