@@ -18,5 +18,15 @@
     <string name="time_zone_title">time zone</string>
     <string name="select_date_title">date</string>
     <string name="save_button_text">save</string>
-    <string name="date_button_text">select</string>
+    <string name="success_save_dialog_title">成功</string>
+    <string name="success_save_dialog_msg">保存に成功しました。</string>
+    <string name="empty_mood_dialog_title">dateが未選択です</string>
+    <string name="empty_mood_dialog_msg">日付を選択してください。</string>
+    <string name="null_mood_dialog_title">感情が未選択です</string>
+    <string name="null_mood_dialog_msg">一番気持ちが近いボタンをタップしてください。</string>
+    <string name="null_time_zone_dialog_title">time zoneが未入力です</string>
+    <string name="null_time_zone_dialog_msg">時間帯を選択してください。</string>
+    <string name="failure_save_dialog_title">失敗</string>
+    <string name="failure_save_dialog_msg">保存に失敗しました。</string>
+
 </resources>

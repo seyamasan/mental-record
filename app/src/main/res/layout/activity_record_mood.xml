@@ -43,7 +43,7 @@
                 android:layout_toStartOf="@id/toolbar_icon"
                 android:layout_marginStart="16dp"/>
 
-        </androidx.appcompat.widget.Toolbar>>
+        </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
             android:id="@+id/moodButtonLayout"
@@ -64,7 +64,8 @@
                 android:textColor="@color/white"
                 android:drawableTop="@drawable/icon_happy"
                 android:drawableTint="@color/salmon_pink"
-                android:textSize="50px"/>
+                android:textSize="50px"
+                android:onClick="@{() -> viewModel.happyBtnTapped()}"/>
 
             <TextView
                 android:id="@+id/angerButton"
@@ -76,7 +77,8 @@
                 android:textColor="@color/white"
                 android:drawableTop="@drawable/icon_anger"
                 android:drawableTint="@color/dahlia_purple"
-                android:textSize="50px"/>
+                android:textSize="50px"
+                android:onClick="@{() -> viewModel.angerBtnTapped()}"/>
 
             <TextView
                 android:id="@+id/sadButton"
@@ -88,7 +90,8 @@
                 android:textColor="@color/white"
                 android:drawableTop="@drawable/icon_sad"
                 android:drawableTint="@color/cerulean_blue"
-                android:textSize="50px"/>
+                android:textSize="50px"
+                android:onClick="@{() -> viewModel.sadBtnTapped()}"/>
 
             <TextView
                 android:id="@+id/funButton"
@@ -100,7 +103,8 @@
                 android:textColor="@color/white"
                 android:drawableTop="@drawable/icon_fun"
                 android:drawableTint="@color/chartreuse_yellow"
-                android:textSize="50px"/>
+                android:textSize="50px"
+                android:onClick="@{() -> viewModel.funBtnTapped()}"/>
 
         </LinearLayout>
 
@@ -135,7 +139,6 @@
                     android:layout_height="40dp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
-                    android:text="@string/date_button_text"
                     android:textSize="40px"
                     android:textColor="@color/black"/>
 
@@ -202,8 +205,7 @@
             android:textSize="20dp"
             app:layout_constraintTop_toBottomOf="@+id/detailLayout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:onClick="@{() -> viewModel.saveBtnTapped()}"/>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
