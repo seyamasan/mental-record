@@ -114,9 +114,10 @@
             app:layout_constraintTop_toBottomOf="@+id/moodButtonLayout">
 
             <LinearLayout
-                android:id="@+id/memoLayout"
+                android:id="@+id/selectDateLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:padding="16dp"
                 android:orientation="horizontal">
 
@@ -124,17 +125,19 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/memo_title"
+                    android:text="@string/select_date_title"
                     android:textColor="@color/white"
                     android:textSize="50px"/>
 
-                <EditText
-                    android:id="@+id/memoEditText"
+                <Button
+                    android:id="@+id/dateButton"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:textColor="@color/white"
-                    android:textSize="50px" />
+                    android:backgroundTint="@color/white"
+                    android:text="@string/date_button_text"
+                    android:textSize="40px"
+                    android:textColor="@color/black"/>
 
             </LinearLayout>
 
@@ -160,6 +163,31 @@
                     android:layout_height="40dp"
                     android:layout_weight="1"
                     android:background="@drawable/rounded_border_gray_1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/memoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/memo_title"
+                    android:textColor="@color/white"
+                    android:textSize="50px"/>
+
+                <EditText
+                    android:id="@+id/memoEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:textSize="40px"/>
 
             </LinearLayout>
 

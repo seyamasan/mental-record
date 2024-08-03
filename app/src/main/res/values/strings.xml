@@ -16,5 +16,7 @@
     <string name="sad_button_text">sad</string>
     <string name="memo_title">memo</string>
     <string name="time_zone_title">time zone</string>
+    <string name="select_date_title">date</string>
     <string name="save_button_text">save</string>
+    <string name="date_button_text">select</string>
 </resources>
