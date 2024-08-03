@@ -8,12 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.mentalrecordapplication.R
 import com.example.mentalrecordapplication.databinding.ActivityRecordMoodBinding
 import com.example.mentalrecordapplication.record_mood.view_model.RecordMoodActivityViewModel
+import com.example.mentalrecordapplication.utils.CalenderDialogUtil
 
 class RecordMoodActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecordMoodBinding
 
-    private val _timeZoneArray = arrayOf("未選択", "morning", "noon", "night")
+    private val _timeZoneArray = arrayOf("Unselected", "morning", "noon", "night")
     private val _recordMoodActivityViewModel: RecordMoodActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,12 +24,23 @@ class RecordMoodActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(findViewById(R.id.toolbar))
         binding.viewModel = _recordMoodActivityViewModel
+        setupListener()
         setupTimeZoneSpinner()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_record_mood_activity, menu)
         return true
+    }
+
+    private fun setupListener() {
+        binding.dateButton.setOnClickListener {
+            CalenderDialogUtil.showDatePickerDialog(this, object : CalenderDialogUtil.DatePickerCallback {
+                override fun onDateSelected(year: Int, month: Int, day: Int) {
+                    binding.dateButton.text = "${year}/${month}/${day}"
+                }
+            })
+        }
     }
 
     private fun setupTimeZoneSpinner() {
