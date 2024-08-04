@@ -36,6 +36,7 @@ class RecordMoodActivity : AppCompatActivity() {
         binding = ActivityRecordMoodBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(findViewById(R.id.toolbar))
+        supportActionBar?.setDisplayShowTitleEnabled(false)// タイトルを非表示にする
         binding.viewModel = _recordMoodActivityViewModel
 
         setupToday()
