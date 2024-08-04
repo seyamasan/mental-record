@@ -7,6 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.mentalrecordapplication.databinding.ActivityMainBinding
 import com.example.mentalrecordapplication.record_mood.view.RecordMoodActivity
 
+/*
+* 一番最初に使うActivity
+* タイトルだけ表示している
+*/
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
