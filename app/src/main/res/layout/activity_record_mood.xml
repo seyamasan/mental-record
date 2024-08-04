@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="viewModel" type="com.example.mentalrecordapplication.record_mood.view_model.RecordMoodActivityViewModel" />
+        <variable name="viewModel" type="com.example.mentalrecordapplication.record_mood.viewmodel.RecordMoodActivityViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -64,8 +64,7 @@
                 android:textColor="@color/white"
                 android:drawableTop="@drawable/icon_happy"
                 android:drawableTint="@color/salmon_pink"
-                android:textSize="50px"
-                android:onClick="@{() -> viewModel.happyBtnTapped()}"/>
+                android:textSize="50px"/>
 
             <TextView
                 android:id="@+id/angerButton"
@@ -77,8 +76,7 @@
                 android:textColor="@color/white"
                 android:drawableTop="@drawable/icon_anger"
                 android:drawableTint="@color/dahlia_purple"
-                android:textSize="50px"
-                android:onClick="@{() -> viewModel.angerBtnTapped()}"/>
+                android:textSize="50px"/>
 
             <TextView
                 android:id="@+id/sadButton"
@@ -90,8 +88,7 @@
                 android:textColor="@color/white"
                 android:drawableTop="@drawable/icon_sad"
                 android:drawableTint="@color/cerulean_blue"
-                android:textSize="50px"
-                android:onClick="@{() -> viewModel.sadBtnTapped()}"/>
+                android:textSize="50px"/>
 
             <TextView
                 android:id="@+id/funButton"
@@ -103,8 +100,7 @@
                 android:textColor="@color/white"
                 android:drawableTop="@drawable/icon_fun"
                 android:drawableTint="@color/chartreuse_yellow"
-                android:textSize="50px"
-                android:onClick="@{() -> viewModel.funBtnTapped()}"/>
+                android:textSize="50px"/>
 
         </LinearLayout>
 
@@ -114,8 +110,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="100dp"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="@+id/moodButtonLayout"
-            app:layout_constraintTop_toBottomOf="@+id/moodButtonLayout">
+            app:layout_constraintTop_toBottomOf="@+id/moodButtonLayout"
+            tools:visibility="visible">
 
             <LinearLayout
                 android:id="@+id/selectDateLayout"
@@ -203,9 +201,11 @@
             android:layout_marginTop="60dp"
             android:text="@string/save_button_text"
             android:textSize="20dp"
+            android:visibility="invisible"
             app:layout_constraintTop_toBottomOf="@+id/detailLayout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:visibility="visible"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
