@@ -1,4 +1,4 @@
-ver1.0.0 開発中👷
+Ver1.0.0 is currently under development.👷
 
 Architecture: MVVM + Repository
 
