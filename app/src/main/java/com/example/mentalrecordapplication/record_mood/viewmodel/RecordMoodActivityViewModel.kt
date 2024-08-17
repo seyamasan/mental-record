@@ -5,7 +5,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.mentalrecordapplication.record_mood.param.Mood
 import com.example.mentalrecordapplication.repository.MoodRepository
+import com.example.mentalrecordapplication.room.MoodEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,16 +24,9 @@ class RecordMoodActivityViewModel(application: Application) : AndroidViewModel(a
     val saveResult: LiveData<Int>
         get() = _saveResult
 
-    enum class Mood(private val mood: String) {
-        HAPPY("Happy"),
-        ANGER("Anger"),
-        SAD("Sad"),
-        FUN("Fun");
-
-        fun getMood(): String {
-            return mood
-        }
-    }
+    private var _recordDetailsList = MutableLiveData<List<MoodEntity>?>()
+    val recordDetailsList: LiveData<List<MoodEntity>?>
+        get() = _recordDetailsList
 
     fun setHappy() {
         _selectedMood = Mood.HAPPY.getMood()
@@ -85,6 +80,15 @@ class RecordMoodActivityViewModel(application: Application) : AndroidViewModel(a
             // メインスレッドで更新
             withContext(Dispatchers.Main) {
                 _saveResult.value = if (result) 0 else 999 // 999は失敗を表す値
+            }
+        }
+    }
+
+    fun getMoodDetails() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = _repo.selectAll()
+            withContext(Dispatchers.Main) {
+                _recordDetailsList.value = result
             }
         }
     }

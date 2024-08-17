@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent" >
 
             <ImageView
-                android:id="@+id/toolbar_icon"
+                android:id="@+id/toolbarIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/icon_history_edu"
@@ -34,16 +34,23 @@
                 android:layout_marginEnd="10dp"/>
 
             <TextView
-                android:id="@+id/toolbar_title"
+                android:id="@+id/toolbarTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/record_mood_activity_title"
                 android:textSize="60px"
                 android:textColor="@color/white"
-                android:layout_toStartOf="@id/toolbar_icon"
+                android:layout_toStartOf="@id/toolbarIcon"
                 android:layout_marginStart="16dp"/>
 
         </androidx.appcompat.widget.Toolbar>
+
+        <FrameLayout
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintStart_toStartOf="@+id/toolbar"/>
 
         <LinearLayout
             android:id="@+id/moodButtonLayout"

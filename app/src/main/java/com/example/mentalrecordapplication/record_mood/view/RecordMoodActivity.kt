@@ -3,6 +3,7 @@ package com.example.mentalrecordapplication.record_mood.view
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -27,8 +28,9 @@ class RecordMoodActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecordMoodBinding
 
-    private val _timeZoneArray = arrayOf("morning", "noon", "night")
     private val _recordMoodActivityViewModel: RecordMoodActivityViewModel by viewModels()
+    private val _timeZoneArray = arrayOf("morning", "noon", "night")
+    private var _recordListFragment: RecordListFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,12 +43,30 @@ class RecordMoodActivity : AppCompatActivity() {
 
         setupToday()
         setupListener()
+        setupObserve()
         setupTimeZoneSpinner()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_record_mood_activity, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // メニュー項目のクリックイベントを処理する
+        return when (item.itemId) {
+            R.id.listButton -> {
+                hiddenRecordView()
+                _recordListFragment = RecordListFragment()
+                binding.viewModel?.getMoodDetails()
+                true
+            }
+            R.id.graphButton -> {
+                // 後々グラフのview入れるかも
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -64,25 +84,25 @@ class RecordMoodActivity : AppCompatActivity() {
     private fun setupListener() {
         // 感情ボタン
         binding.happyButton.setOnClickListener {
-            if (binding.detailLayout.visibility == View.INVISIBLE) { viewVisible() }
+            if (binding.detailLayout.visibility == View.INVISIBLE) { visibleTapTheMoodBtn() }
             binding.viewModel?.setHappy()
             clearMoodButtonBackGround()
             binding.happyButton.background = ContextCompat.getDrawable(this, R.drawable.rounded_border_white)
         }
         binding.angerButton.setOnClickListener {
-            if (binding.detailLayout.visibility == View.INVISIBLE) { viewVisible() }
+            if (binding.detailLayout.visibility == View.INVISIBLE) { visibleTapTheMoodBtn() }
             binding.viewModel?.setAnger()
             clearMoodButtonBackGround()
             binding.angerButton.background = ContextCompat.getDrawable(this, R.drawable.rounded_border_white)
         }
         binding.sadButton.setOnClickListener {
-            if (binding.detailLayout.visibility == View.INVISIBLE) { viewVisible() }
+            if (binding.detailLayout.visibility == View.INVISIBLE) { visibleTapTheMoodBtn() }
             binding.viewModel?.setSad()
             clearMoodButtonBackGround()
             binding.sadButton.background = ContextCompat.getDrawable(this, R.drawable.rounded_border_white)
         }
         binding.funButton.setOnClickListener {
-            if (binding.detailLayout.visibility == View.INVISIBLE) { viewVisible() }
+            if (binding.detailLayout.visibility == View.INVISIBLE) { visibleTapTheMoodBtn() }
             binding.viewModel?.setFun()
             clearMoodButtonBackGround()
             binding.funButton.background = ContextCompat.getDrawable(this, R.drawable.rounded_border_white)
@@ -108,10 +128,30 @@ class RecordMoodActivity : AppCompatActivity() {
             ButtonScaleAnimationUtil.simpleScaleAnimation(binding.saveButton)
             binding.viewModel?.saveMoodDetail()
         }
+    }
 
-        // saveResultを監視して、変更があった場合に処理を実行する
+    private fun setupObserve() {
+        // viewModelの変数を監視して各々処理する
+
         binding.viewModel?.saveResult?.observe(this) { result ->
             sortingSavedResults(result)
+        }
+
+        binding.viewModel?.recordDetailsList?.observe(this) { result ->
+            if (result.isNullOrEmpty()) {
+                AlertDialogUtil.showOkDialog(
+                    title = getString(R.string.not_data_dialog_title),
+                    msg = getString(R.string.not_data_dialog_msg),
+                    context = this
+                )
+            } else {
+                if (_recordListFragment != null) {
+                    _recordListFragment?.setMoodDetailsList(result)
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, _recordListFragment!!)
+                        .commit()
+                }
+            }
         }
     }
 
@@ -170,15 +210,23 @@ class RecordMoodActivity : AppCompatActivity() {
         }
     }
 
-    private fun viewVisible() {
+    private fun visibleTapTheMoodBtn() {
         binding.detailLayout.visibility = View.VISIBLE
         binding.saveButton.visibility = View.VISIBLE
     }
 
     private fun clearMoodButtonBackGround() {
+        // 選択解除
         binding.happyButton.background = null
         binding.angerButton.background = null
         binding.sadButton.background = null
         binding.funButton.background = null
+    }
+
+    private fun hiddenRecordView() {
+        // fragment表示のためにactivityのパーツを非表示
+        binding.moodButtonLayout.visibility = View.INVISIBLE
+        binding.detailLayout.visibility = View.INVISIBLE
+        binding.saveButton.visibility = View.INVISIBLE
     }
 }

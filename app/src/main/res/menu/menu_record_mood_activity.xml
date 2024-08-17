@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/calendarButton"
-        android:title="@string/menu_calendar_button_text"
+        android:id="@+id/listButton"
+        android:title="@string/menu_list_button_text"
         app:showAsAction="never" />
     <item
         android:id="@+id/graphButton"
         android:title="@string/menu_graph_button_text"
+        android:visible="false"
         app:showAsAction="never" />
 </menu>
