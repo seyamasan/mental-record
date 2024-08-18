@@ -1,11 +1,13 @@
 package com.example.mentalrecordapplication.record_mood.viewmodel
 
 import android.app.Application
+import android.view.MenuItem
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.mentalrecordapplication.record_mood.param.Mood
+import com.example.mentalrecordapplication.record_mood.view.RecordListFragment
 import com.example.mentalrecordapplication.repository.MoodRepository
 import com.example.mentalrecordapplication.room.MoodEntity
 import kotlinx.coroutines.Dispatchers
@@ -15,10 +17,21 @@ import kotlinx.coroutines.withContext
 class RecordMoodActivityViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _repo: MoodRepository = MoodRepository(application)
+
+    private var _recordListFragment: RecordListFragment? = null
+    val recordListFragment: RecordListFragment?
+        get() = _recordListFragment
+
     private var _selectedMood: String? = null
+    val selectedMood: String?
+        get() = _selectedMood
     private var _selectedDate: String? = null
+    val selectedDate: String?
+        get() = _selectedDate
     private var _selectedTimeZone: String? = null
     private var _enteredMemo: String = ""
+    val enteredMemo: String
+        get() = _enteredMemo
 
     private var _saveResult = MutableLiveData<Int>()
     val saveResult: LiveData<Int>
@@ -27,6 +40,10 @@ class RecordMoodActivityViewModel(application: Application) : AndroidViewModel(a
     private var _recordDetailsList = MutableLiveData<List<MoodEntity>?>()
     val recordDetailsList: LiveData<List<MoodEntity>?>
         get() = _recordDetailsList
+
+    fun setRecordListFragment(fragment: RecordListFragment?) {
+        _recordListFragment = fragment
+    }
 
     fun setHappy() {
         _selectedMood = Mood.HAPPY.getMood()
@@ -79,7 +96,7 @@ class RecordMoodActivityViewModel(application: Application) : AndroidViewModel(a
             )
             // メインスレッドで更新
             withContext(Dispatchers.Main) {
-                _saveResult.value = if (result) 0 else 999 // 999は失敗を表す値
+                _saveResult.value = if (result) 0 else -1 // -1は失敗を表す値
             }
         }
     }

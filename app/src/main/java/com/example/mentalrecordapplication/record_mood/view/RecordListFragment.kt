@@ -9,10 +9,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mentalrecordapplication.R
 import com.example.mentalrecordapplication.databinding.FragmentRecordListBinding
 import com.example.mentalrecordapplication.record_mood.param.Mood
+import com.example.mentalrecordapplication.record_mood.viewmodel.RecordListFragmentViewModel
 import com.example.mentalrecordapplication.room.MoodEntity
 import com.example.mentalrecordapplication.utils.AlertDialogUtil
 
@@ -25,6 +27,7 @@ class RecordListFragment : Fragment() {
     private var _binding: FragmentRecordListBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var _recordListFragmentViewModel: RecordListFragmentViewModel
     private var _moodDetailsList: List<MoodEntity>? = null
 
     override fun onCreateView(
@@ -35,6 +38,7 @@ class RecordListFragment : Fragment() {
         _binding = FragmentRecordListBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        setupViewModel()
         setupRecyclerView()
         return view
     }
@@ -44,10 +48,17 @@ class RecordListFragment : Fragment() {
         _binding = null
     }
 
+    private fun setupViewModel() {
+        _recordListFragmentViewModel = ViewModelProvider(this).get(RecordListFragmentViewModel::class.java)
+        if (_moodDetailsList != null) {
+            _recordListFragmentViewModel.setMoodDetailsList(_moodDetailsList)
+        }
+    }
+
     private fun setupRecyclerView() {
         binding.recordListView.layoutManager = LinearLayoutManager(requireContext())
 
-        binding.recordListView.adapter = RecordListAdapter(context, _moodDetailsList!!) { item ->
+        binding.recordListView.adapter = RecordListAdapter(context, _recordListFragmentViewModel.moodDetailsList!!) { item ->
             showMoodDetailDialog(item)
         }
     }
