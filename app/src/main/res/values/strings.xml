@@ -8,8 +8,9 @@
 
 <!--    RecordMood-->
     <string name="record_mood_activity_title">Record</string>
-    <string name="menu_calendar_button_text">カレンダー</string>
-    <string name="menu_graph_button_text">グラフ</string>
+    <string name="menu_list_button_text">List</string>
+    <string name="menu_graph_button_text">Graph</string>
+    <string name="menu_back_button_text">Back</string>
     <string name="happy_button_text">happy</string>
     <string name="anger_button_text">angry</string>
     <string name="fun_button_text">fun</string>
@@ -28,5 +29,7 @@
     <string name="null_time_zone_dialog_msg">時間帯を選択してください。</string>
     <string name="failure_save_dialog_title">失敗</string>
     <string name="failure_save_dialog_msg">保存に失敗しました。</string>
+    <string name="not_data_dialog_title">表示できません</string>
+    <string name="not_data_dialog_msg">データが存在しません。</string>
 
 </resources>
