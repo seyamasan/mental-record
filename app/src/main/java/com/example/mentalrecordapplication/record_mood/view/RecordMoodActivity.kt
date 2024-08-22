@@ -1,7 +1,6 @@
 package com.example.mentalrecordapplication.record_mood.view
 
 import android.annotation.SuppressLint
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
