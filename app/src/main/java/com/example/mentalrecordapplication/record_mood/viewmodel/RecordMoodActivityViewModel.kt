@@ -1,7 +1,6 @@
 package com.example.mentalrecordapplication.record_mood.viewmodel
 
 import android.app.Application
-import android.view.MenuItem
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
