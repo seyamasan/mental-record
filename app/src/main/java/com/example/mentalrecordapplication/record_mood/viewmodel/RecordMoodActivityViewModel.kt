@@ -1,7 +1,6 @@
 package com.example.mentalrecordapplication.record_mood.viewmodel
 
 import android.app.Application
-import android.view.MenuItem
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -32,6 +31,10 @@ class RecordMoodActivityViewModel(application: Application) : AndroidViewModel(a
     private var _enteredMemo: String = ""
     val enteredMemo: String
         get() = _enteredMemo
+
+    private var _visibleFlg: Boolean = false
+    val visibleFlg: Boolean
+        get() = _visibleFlg
 
     private var _saveResult = MutableLiveData<Int>()
     val saveResult: LiveData<Int>
@@ -71,6 +74,10 @@ class RecordMoodActivityViewModel(application: Application) : AndroidViewModel(a
 
     fun setMemo(memo: String) {
         _enteredMemo = memo
+    }
+
+    fun setVisibleFlg(flg: Boolean) {
+        _visibleFlg = flg
     }
 
     fun saveMoodDetail() {
