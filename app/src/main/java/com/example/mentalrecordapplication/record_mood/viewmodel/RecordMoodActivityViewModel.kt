@@ -1,6 +1,8 @@
 package com.example.mentalrecordapplication.record_mood.viewmodel
 
 import android.app.Application
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -108,11 +110,13 @@ class RecordMoodActivityViewModel(application: Application) : AndroidViewModel(a
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getMoodDetails() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = _repo.selectAll()
+            val sortedResult = result?.sortedBy { it.localDate } // 年月日をもとにソート
             withContext(Dispatchers.Main) {
-                _recordDetailsList.value = result
+                _recordDetailsList.value = sortedResult
             }
         }
     }
