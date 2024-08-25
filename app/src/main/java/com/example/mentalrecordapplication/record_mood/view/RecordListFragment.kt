@@ -1,5 +1,6 @@
 package com.example.mentalrecordapplication.record_mood.view
 
+import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -63,6 +64,7 @@ class RecordListFragment : Fragment() {
         }
     }
 
+    @SuppressLint("InflateParams")
     private fun showMoodDetailDialog(item: MoodEntity) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_mood_detail, null)// ダイアログのカスタムレイアウトをインフレート
 
@@ -93,9 +95,7 @@ class RecordListFragment : Fragment() {
         timeZone.text = item.timeZone
         memo.text = item.memo
 
-        if (context != null) {
-            AlertDialogUtil.showOkCustomDialog(dialogView, context!!)
-        }
+        AlertDialogUtil.showOkCustomDialog(dialogView, requireContext())
     }
 
     fun setMoodDetailsList(moodDetailsList: List<MoodEntity>?) {

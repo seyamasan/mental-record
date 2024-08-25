@@ -72,6 +72,7 @@ class RecordMoodActivity : AppCompatActivity() {
         setupObserve()
         setupTimeZoneSpinner()
         setupViewModelParam()
+        checkVisibleRecordList()
     }
 
     override fun onResume() {
@@ -231,6 +232,13 @@ class RecordMoodActivity : AppCompatActivity() {
         }
     }
 
+    private fun checkVisibleRecordList() {
+        // もっといいやり方ありそうだけど、回転するとフラグメントが表示されてしまうため
+        if (binding.viewModel?.visibleFlg == false) {
+            binding.fragmentContainer.visibility = View.INVISIBLE
+        }
+    }
+
     private fun showSavedResults(result: Int) {
         when (result) {
             0 -> {
@@ -289,6 +297,7 @@ class RecordMoodActivity : AppCompatActivity() {
             item.title = getString(R.string.menu_back_button_text)
             hiddenRecordView(true)
             binding.fragmentContainer.visibility = View.VISIBLE
+            binding.viewModel?.setVisibleFlg(true)
             binding.toolbarIcon.setImageResource(R.drawable.icon_list)
             binding.toolbarTitle.text = getString(R.string.menu_list_button_text)
             binding.viewModel?.setRecordListFragment(RecordListFragment())
@@ -298,11 +307,12 @@ class RecordMoodActivity : AppCompatActivity() {
             hiddenRecordView(false)
             binding.toolbarIcon.setImageResource(R.drawable.icon_history_edu)
             binding.toolbarTitle.text = getString(R.string.record_mood_activity_title)
+            binding.viewModel?.setVisibleFlg(false)
             supportFragmentManager.beginTransaction()
                 .remove(binding.viewModel?.recordListFragment!!)
                 .commit()
             supportFragmentManager.executePendingTransactions()
-            binding.fragmentContainer.visibility = View.INVISIBLE // なぜか消えない時があるので
+            binding.fragmentContainer.visibility = View.INVISIBLE
             binding.viewModel?.setRecordListFragment(null)
         }
     }

@@ -33,6 +33,10 @@ class RecordMoodActivityViewModel(application: Application) : AndroidViewModel(a
     val enteredMemo: String
         get() = _enteredMemo
 
+    private var _visibleFlg: Boolean = false
+    val visibleFlg: Boolean
+        get() = _visibleFlg
+
     private var _saveResult = MutableLiveData<Int>()
     val saveResult: LiveData<Int>
         get() = _saveResult
@@ -71,6 +75,10 @@ class RecordMoodActivityViewModel(application: Application) : AndroidViewModel(a
 
     fun setMemo(memo: String) {
         _enteredMemo = memo
+    }
+
+    fun setVisibleFlg(flg: Boolean) {
+        _visibleFlg = flg
     }
 
     fun saveMoodDetail() {
