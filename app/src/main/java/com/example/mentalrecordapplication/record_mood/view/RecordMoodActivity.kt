@@ -1,6 +1,7 @@
 package com.example.mentalrecordapplication.record_mood.view
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -8,6 +9,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -102,6 +104,7 @@ class RecordMoodActivity : AppCompatActivity() {
         return super.onPrepareOptionsMenu(menu)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // メニュー項目のクリックイベントを処理する
         return when (item.itemId) {
@@ -292,6 +295,7 @@ class RecordMoodActivity : AppCompatActivity() {
         binding.funButton.background = null
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun changeRecordListFragment(item: MenuItem) {
         if (item.title == getString(R.string.menu_list_button_text)) {
             item.title = getString(R.string.menu_back_button_text)
