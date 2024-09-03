@@ -18,4 +18,4 @@ MVVM + Repository
 
 # Local DB
 
-Room
+SQLite
