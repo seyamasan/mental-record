@@ -12,6 +12,10 @@ https://github.com/user-attachments/assets/a16a45aa-a711-44b0-b3a5-b1e958d43916
 
 https://github.com/user-attachments/assets/bcb91b5e-2cdc-4b1e-8df5-48cebd3c526a
 
+# Framework
+
+Jetpack Compose
+
 # Architecture
 
 MVVM + Repository
