@@ -1,6 +1,6 @@
 # Overview
 
-This is version 1.0.0. I plan to update it little by little.
+This is version "1.0.0". I plan to update it little by little.
 
 # Function introduction
 
