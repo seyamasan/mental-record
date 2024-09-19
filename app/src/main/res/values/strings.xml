@@ -3,8 +3,6 @@
     <string name="mental_record_app_name">MENTAL RECORD</string>
     <string name="mental_name">MENTAL</string>
     <string name="record_name">RECORD</string>
-    <string name="author_name">created by seyamasan</string>
-    <string name="app_ver">ver 1.0.0</string>
 
 <!--    RecordMood-->
     <string name="record_mood_activity_title">Record</string>
