@@ -23,7 +23,6 @@ import com.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 import com.example.mentalrecordapplication.utils.TextUtil
 
 /*
-* 一番最初に使うActivity
 * タイトルだけ表示している
 */
 
