@@ -1,10 +1,5 @@
-package com.example.mentalrecordapplication.main.view
+package com.example.mentalrecordapplication.ui.main
 
-import android.content.Intent
-import android.os.Bundle
-import android.os.Handler
-import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,35 +13,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mentalrecordapplication.R
-import com.example.mentalrecordapplication.record_mood.view.RecordMoodActivity
 import com.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 import com.example.mentalrecordapplication.utils.TextUtil
-
-/*
-* タイトルだけ表示している
-*/
-
-class MainActivity : AppCompatActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setContent {
-            MentalRecordAppTheme {
-                MainView(modifier = Modifier.fillMaxSize())
-            }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        Handler().postDelayed( {
-            val intent = Intent(this,RecordMoodActivity::class.java)
-            startActivity(intent)
-        }, 3000)
-    }
-}
 
 @Composable
 fun MainView(modifier: Modifier = Modifier) {
