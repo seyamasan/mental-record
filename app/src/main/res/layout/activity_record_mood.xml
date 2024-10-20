@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="viewModel" type="com.example.mentalrecordapplication.record_mood.viewmodel.RecordMoodActivityViewModel" />
+        <variable name="viewModel" type="jp.example.mentalrecordapplication.record_mood.viewmodel.RecordMoodActivityViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
