@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -58,12 +59,14 @@ fun MainView(modifier: Modifier = Modifier) {
         ) {
             Text(
                 text = stringResource(id = R.string.mental_name),
-                fontSize = TextUtil.dpToSp(dp = 32.dp)
+                fontSize = TextUtil.dpToSp(dp = 32.dp),
+                color = Color.White
             )
 
             Text(
                 text = stringResource(id = R.string.record_name),
-                fontSize = TextUtil.dpToSp(dp = 32.dp)
+                fontSize = TextUtil.dpToSp(dp = 32.dp),
+                color = Color.White
             )
         }
     }
