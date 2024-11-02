@@ -73,19 +73,19 @@ class RecordListFragment : Fragment() {
         val timeZone = dialogView.findViewById<TextView>(R.id.dialogTimeZone)
         val memo = dialogView.findViewById<TextView>(R.id.dialogMemo)
         when (item.mood) {
-            Mood.HAPPY.getMood() -> {
+            context?.let { Mood.HAPPY.getMood(context = it) } -> {
                 icon.setImageResource(R.drawable.icon_happy)
                 icon.imageTintList =  ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.salmon_pink))
             }
-            Mood.ANGER.getMood() -> {
+            context?.let { Mood.ANGER.getMood(context = it) } -> {
                 icon.setImageResource(R.drawable.icon_anger)
                 icon.imageTintList =  ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.dahlia_purple))
             }
-            Mood.SAD.getMood() -> {
+            context?.let { Mood.SAD.getMood(context = it) } -> {
                 icon.setImageResource(R.drawable.icon_sad)
                 icon.imageTintList =  ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.cerulean_blue))
             }
-            Mood.FUN.getMood() -> {
+            context?.let { Mood.FUN.getMood(context = it) } -> {
                 icon.setImageResource(R.drawable.icon_fun)
                 icon.imageTintList =  ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.chartreuse_yellow))
             }

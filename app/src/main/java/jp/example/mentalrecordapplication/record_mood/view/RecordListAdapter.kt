@@ -1,5 +1,6 @@
 package jp.example.mentalrecordapplication.record_mood.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
@@ -41,35 +42,28 @@ class RecordListAdapter(
 
     override fun getItemCount(): Int = items.size
 
+    @SuppressLint("UseCompatTextViewDrawableApis")
     private fun setMoodButton(holder: RecordListViewHolder, mood: String) {
         when (mood) {
-            Mood.HAPPY.getMood() -> {
-                holder.moodButton.text = Mood.HAPPY.getMood()
+            context?.let { Mood.HAPPY.getMood(context = it) } -> {
+                holder.moodButton.text = Mood.HAPPY.getMood(context = context)
                 holder.moodButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.icon_happy, 0, 0)
-                if (context != null) {
-                    holder.moodButton.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.salmon_pink))
-                }
+                holder.moodButton.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.salmon_pink))
             }
-            Mood.ANGER.getMood() -> {
-                holder.moodButton.text = Mood.ANGER.getMood()
+            context?.let { Mood.ANGER.getMood(context = it) } -> {
+                holder.moodButton.text = Mood.ANGER.getMood(context = context)
                 holder.moodButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.icon_anger, 0, 0)
-                if (context != null) {
-                    holder.moodButton.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.dahlia_purple))
-                }
+                holder.moodButton.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.dahlia_purple))
             }
-            Mood.SAD.getMood() -> {
-                holder.moodButton.text = Mood.SAD.getMood()
+            context?.let { Mood.SAD.getMood(context = it) } -> {
+                holder.moodButton.text = Mood.SAD.getMood(context = context)
                 holder.moodButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.icon_sad, 0, 0)
-                if (context != null) {
-                    holder.moodButton.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.cerulean_blue))
-                }
+                holder.moodButton.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.cerulean_blue))
             }
-            Mood.FUN.getMood() -> {
-                holder.moodButton.text = Mood.FUN.getMood()
+            context?.let { Mood.FUN.getMood(context = it) } -> {
+                holder.moodButton.text = Mood.FUN.getMood(context = context)
                 holder.moodButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.icon_fun, 0, 0)
-                if (context != null) {
-                    holder.moodButton.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.chartreuse_yellow))
-                }
+                holder.moodButton.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.chartreuse_yellow))
             }
         }
     }

@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/record_mood_activity_title"
-                android:textSize="60px"
+                android:textSize="25sp"
                 android:textColor="@color/white"
                 android:layout_toStartOf="@id/toolbarIcon"
                 android:layout_marginStart="16dp"/>
@@ -64,6 +64,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:gravity="center"
+                    android:text="@string/menu_support_message_text"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"/>
+
                 <LinearLayout
                     android:id="@+id/moodButtonLayout"
                     android:layout_width="match_parent"
@@ -81,43 +89,43 @@
                         android:textColor="@color/white"
                         android:drawableTop="@drawable/icon_happy"
                         android:drawableTint="@color/salmon_pink"
-                        android:textSize="50px"/>
+                        android:textSize="20sp"/>
 
                     <TextView
                         android:id="@+id/angerButton"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20sp"
                         android:gravity="center"
                         android:text="@string/anger_button_text"
                         android:textColor="@color/white"
                         android:drawableTop="@drawable/icon_anger"
                         android:drawableTint="@color/dahlia_purple"
-                        android:textSize="50px"/>
+                        android:textSize="20sp"/>
 
                     <TextView
                         android:id="@+id/sadButton"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20sp"
                         android:gravity="center"
                         android:text="@string/sad_button_text"
                         android:textColor="@color/white"
                         android:drawableTop="@drawable/icon_sad"
                         android:drawableTint="@color/cerulean_blue"
-                        android:textSize="50px"/>
+                        android:textSize="20sp"/>
 
                     <TextView
                         android:id="@+id/funButton"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20sp"
                         android:gravity="center"
                         android:text="@string/fun_button_text"
                         android:textColor="@color/white"
                         android:drawableTop="@drawable/icon_fun"
                         android:drawableTint="@color/chartreuse_yellow"
-                        android:textSize="50px"/>
+                        android:textSize="20sp"/>
 
                 </LinearLayout>
 
@@ -134,8 +142,8 @@
                         android:id="@+id/selectDateLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:padding="16dp"
+                        android:layout_marginTop="10sp"
+                        android:padding="16sp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -144,15 +152,15 @@
                             android:layout_weight="1"
                             android:text="@string/select_date_title"
                             android:textColor="@color/white"
-                            android:textSize="50px"/>
+                            android:textSize="20sp"/>
 
                         <Button
                             android:id="@+id/dateButton"
                             android:layout_width="0dp"
-                            android:layout_height="40dp"
+                            android:layout_height="50sp"
                             android:layout_weight="1"
                             android:backgroundTint="@color/white"
-                            android:textSize="40px"
+                            android:textSize="20sp"
                             android:textColor="@color/black"/>
 
                     </LinearLayout>
@@ -161,8 +169,8 @@
                         android:id="@+id/timeZoneLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:padding="16dp"
+                        android:layout_marginTop="10sp"
+                        android:padding="16sp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -171,12 +179,12 @@
                             android:layout_weight="1"
                             android:text="@string/time_zone_title"
                             android:textColor="@color/white"
-                            android:textSize="50px"/>
+                            android:textSize="20sp"/>
 
                         <androidx.appcompat.widget.AppCompatSpinner
                             android:id="@+id/timeZoneSpinner"
                             android:layout_width="0dp"
-                            android:layout_height="40dp"
+                            android:layout_height="50sp"
                             android:layout_weight="1"
                             android:background="@drawable/rounded_border_gray_1"/>
 
@@ -195,15 +203,16 @@
                             android:layout_weight="1"
                             android:text="@string/memo_title"
                             android:textColor="@color/white"
-                            android:textSize="50px"/>
+                            android:textSize="20sp"/>
 
                         <EditText
                             android:id="@+id/memoEditText"
                             android:layout_width="0dp"
-                            android:layout_height="40dp"
+                            android:layout_height="50dp"
                             android:layout_weight="1"
-                            android:textColor="@color/white"
-                            android:textSize="40px"/>
+                            android:textColor="@color/black"
+                            android:background="@drawable/rounded_border_gray_1"
+                            android:textSize="20sp"/>
 
                     </LinearLayout>
 
@@ -214,9 +223,10 @@
                     android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:layout_marginTop="60dp"
+                    android:layout_marginBottom="60dp"
                     android:layout_gravity="center"
                     android:text="@string/save_button_text"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:visibility="invisible"
                     tools:visibility="visible"/>
             </LinearLayout>

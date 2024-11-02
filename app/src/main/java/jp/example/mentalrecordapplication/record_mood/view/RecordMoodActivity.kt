@@ -34,7 +34,13 @@ class RecordMoodActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRecordMoodBinding
 
     private val _recordMoodActivityViewModel: RecordMoodActivityViewModel by viewModels()
-    private val _timeZoneArray = arrayOf("morning", "noon", "night")
+    private val _timeZoneArray: Array<String> by lazy {
+        arrayOf(
+            getString(R.string.time_zone_morning),
+            getString(R.string.time_zone_noon),
+            getString(R.string.time_zone_night)
+        )
+    }
     private var _initFlg = false // 走ってほしくない処理を制御するために
 
     private val _saveResultObserver = Observer<Int> { result ->
@@ -112,10 +118,6 @@ class RecordMoodActivity : AppCompatActivity() {
                 changeRecordListFragment(item)
                 true
             }
-            R.id.graphButton -> {
-                // 後々グラフのview入れるかも
-                true
-            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -142,25 +144,25 @@ class RecordMoodActivity : AppCompatActivity() {
         // 感情ボタン
         binding.happyButton.setOnClickListener {
             if (binding.detailLayout.visibility == View.INVISIBLE) { visibleTapTheMoodBtn() }
-            binding.viewModel?.setHappy()
+            binding.viewModel?.setMood(getString(R.string.happy_button_text))
             clearMoodButtonBackGround()
             binding.happyButton.background = ContextCompat.getDrawable(this, R.drawable.rounded_border_white)
         }
         binding.angerButton.setOnClickListener {
             if (binding.detailLayout.visibility == View.INVISIBLE) { visibleTapTheMoodBtn() }
-            binding.viewModel?.setAnger()
+            binding.viewModel?.setMood(getString(R.string.anger_button_text))
             clearMoodButtonBackGround()
             binding.angerButton.background = ContextCompat.getDrawable(this, R.drawable.rounded_border_white)
         }
         binding.sadButton.setOnClickListener {
             if (binding.detailLayout.visibility == View.INVISIBLE) { visibleTapTheMoodBtn() }
-            binding.viewModel?.setSad()
+            binding.viewModel?.setMood(getString(R.string.sad_button_text))
             clearMoodButtonBackGround()
             binding.sadButton.background = ContextCompat.getDrawable(this, R.drawable.rounded_border_white)
         }
         binding.funButton.setOnClickListener {
             if (binding.detailLayout.visibility == View.INVISIBLE) { visibleTapTheMoodBtn() }
-            binding.viewModel?.setFun()
+            binding.viewModel?.setMood(getString(R.string.fun_button_text))
             clearMoodButtonBackGround()
             binding.funButton.background = ContextCompat.getDrawable(this, R.drawable.rounded_border_white)
         }
@@ -196,6 +198,7 @@ class RecordMoodActivity : AppCompatActivity() {
 
     private fun setupTimeZoneSpinner() {
         val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, _timeZoneArray)
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.timeZoneSpinner.adapter = arrayAdapter
         // 選択されたアイテムを取得するリスナー
         binding.timeZoneSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -212,16 +215,16 @@ class RecordMoodActivity : AppCompatActivity() {
     private fun setupViewModelParam() {
         if (binding.viewModel?.selectedMood != null) {
             when (binding.viewModel?.selectedMood) {
-                Mood.HAPPY.getMood() -> {
+                Mood.HAPPY.getMood(context = applicationContext) -> {
                     binding.happyButton.performClick()
                 }
-                Mood.ANGER.getMood() -> {
+                Mood.ANGER.getMood(context = applicationContext) -> {
                     binding.angerButton.performClick()
                 }
-                Mood.SAD.getMood() -> {
+                Mood.SAD.getMood(context = applicationContext) -> {
                     binding.sadButton.performClick()
                 }
-                Mood.FUN.getMood() -> {
+                Mood.FUN.getMood(context = applicationContext) -> {
                     binding.funButton.performClick()
                 }
             }

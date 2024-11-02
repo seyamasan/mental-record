@@ -7,27 +7,30 @@
 <!--    RecordMood-->
     <string name="record_mood_activity_title">Record</string>
     <string name="menu_list_button_text">List</string>
-    <string name="menu_graph_button_text">Graph</string>
     <string name="menu_back_button_text">Back</string>
+    <string name="menu_support_message_text">How do you feel?</string>
     <string name="happy_button_text">happy</string>
     <string name="anger_button_text">angry</string>
     <string name="fun_button_text">fun</string>
     <string name="sad_button_text">sad</string>
     <string name="memo_title">memo</string>
     <string name="time_zone_title">time zone</string>
+    <string name="time_zone_morning">morning</string>
+    <string name="time_zone_noon">noon</string>
+    <string name="time_zone_night">night</string>
     <string name="select_date_title">date</string>
     <string name="save_button_text">save</string>
-    <string name="success_save_dialog_title">成功</string>
-    <string name="success_save_dialog_msg">保存に成功しました。</string>
-    <string name="null_date_dialog_title">dateが未選択です</string>
-    <string name="null_date_dialog_msg">日付を選択してください。</string>
-    <string name="null_mood_dialog_title">感情が未選択です</string>
-    <string name="null_mood_dialog_msg">一番気持ちが近いボタンをタップしてください。</string>
-    <string name="null_time_zone_dialog_title">time zoneが未入力です</string>
-    <string name="null_time_zone_dialog_msg">時間帯を選択してください。</string>
-    <string name="failure_save_dialog_title">失敗</string>
-    <string name="failure_save_dialog_msg">保存に失敗しました。</string>
-    <string name="not_data_dialog_title">表示できません</string>
-    <string name="not_data_dialog_msg">データが存在しません。</string>
+    <string name="success_save_dialog_title">Success</string>
+    <string name="success_save_dialog_msg">Saving was successful.</string>
+    <string name="null_date_dialog_title">Date not selected</string>
+    <string name="null_date_dialog_msg">Please select a date.</string>
+    <string name="null_mood_dialog_title">No emotion selected</string>
+    <string name="null_mood_dialog_msg">Tap the button that best describes how you feel.</string>
+    <string name="null_time_zone_dialog_title">Time zone is missing</string>
+    <string name="null_time_zone_dialog_msg">Please select a time slot.</string>
+    <string name="failure_save_dialog_title">Failure</string>
+    <string name="failure_save_dialog_msg">Saving failed.</string>
+    <string name="not_data_dialog_title">Unable to display</string>
+    <string name="not_data_dialog_msg">Data does not exist.</string>
 
 </resources>

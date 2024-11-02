@@ -7,7 +7,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import jp.example.mentalrecordapplication.record_mood.param.Mood
 import jp.example.mentalrecordapplication.record_mood.view.RecordListFragment
 import jp.example.mentalrecordapplication.repository.MoodRepository
 import jp.example.mentalrecordapplication.room.MoodEntity
@@ -50,20 +49,8 @@ class RecordMoodActivityViewModel(application: Application) : AndroidViewModel(a
         _recordListFragment = fragment
     }
 
-    fun setHappy() {
-        _selectedMood = Mood.HAPPY.getMood()
-    }
-
-    fun setAnger() {
-        _selectedMood = Mood.ANGER.getMood()
-    }
-
-    fun setSad() {
-        _selectedMood = Mood.SAD.getMood()
-    }
-
-    fun setFun() {
-        _selectedMood = Mood.FUN.getMood()
+    fun setMood(selectedMood: String) {
+        _selectedMood = selectedMood
     }
 
     fun setDate(date: String) {
