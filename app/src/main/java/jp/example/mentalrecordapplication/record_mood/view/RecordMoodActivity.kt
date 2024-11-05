@@ -289,15 +289,17 @@ class RecordMoodActivity : AppCompatActivity() {
     private fun changeRecordListFragment(screenIndex: Int) {
         if (screenIndex == 0) {
             // レコード画面
-            hiddenRecordView(false)
-            binding.toolbarTitle.text = getString(R.string.record_mood_activity_title)
-            binding.viewModel?.setVisibleFlg(false)
-            supportFragmentManager.beginTransaction()
-                .remove(binding.viewModel?.recordListFragment!!)
-                .commit()
-            supportFragmentManager.executePendingTransactions()
-            binding.fragmentContainer.visibility = View.INVISIBLE
-            binding.viewModel?.setRecordListFragment(null)
+            if (binding.viewModel?.recordListFragment != null) {
+                hiddenRecordView(false)
+                binding.toolbarTitle.text = getString(R.string.record_mood_activity_title)
+                binding.viewModel?.setVisibleFlg(false)
+                supportFragmentManager.beginTransaction()
+                    .remove(binding.viewModel?.recordListFragment!!)
+                    .commit()
+                supportFragmentManager.executePendingTransactions()
+                binding.fragmentContainer.visibility = View.INVISIBLE
+                binding.viewModel?.setRecordListFragment(null)
+            }
         } else if (screenIndex == 1) {
             // リスト画面
             hiddenRecordView(true)
