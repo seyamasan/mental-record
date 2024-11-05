@@ -3,8 +3,6 @@ package jp.example.mentalrecordapplication.record_mood.view
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -66,6 +64,7 @@ class RecordMoodActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -97,31 +96,6 @@ class RecordMoodActivity : AppCompatActivity() {
         binding.viewModel?.recordDetailsList?.removeObserver(_recordDetailsListObserver)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_record_mood_activity, menu)
-        return true
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        // メニューが準備できたタイミングでタイトルを変更する
-        if (binding.viewModel?.recordListFragment != null) {
-            binding.toolbar.menu.getItem(0).title = getString(R.string.menu_back_button_text)
-        }
-        return super.onPrepareOptionsMenu(menu)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // メニュー項目のクリックイベントを処理する
-        return when (item.itemId) {
-            R.id.listButton -> {
-                changeRecordListFragment(item)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     private fun setupViewModel() {
         binding.viewModel = _recordMoodActivityViewModel
     }
@@ -140,6 +114,7 @@ class RecordMoodActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setupListener() {
         // 感情ボタン
         binding.happyButton.setOnClickListener {
@@ -188,6 +163,16 @@ class RecordMoodActivity : AppCompatActivity() {
             ButtonScaleAnimationUtil.simpleScaleAnimation(binding.saveButton)
             binding.viewModel?.saveMoodDetail()
         }
+
+        // ボトムバーの記録するボタン
+        binding.recordButtonLayout.setOnClickListener {
+            changeRecordListFragment(0)
+        }
+
+        // ボトムバーのリストボタン
+        binding.listButtonLayout.setOnClickListener {
+            changeRecordListFragment(1)
+        }
     }
 
     private fun setupObserve() {
@@ -233,8 +218,8 @@ class RecordMoodActivity : AppCompatActivity() {
         binding.memoEditText.setText(binding.viewModel?.enteredMemo)
         if (binding.viewModel?.recordListFragment != null) {
             hiddenRecordView(true)
-            binding.toolbarIcon.setImageResource(R.drawable.icon_list)
             binding.toolbarTitle.text = getString(R.string.menu_list_button_text)
+            changeBottomButtonColor(1)
         }
     }
 
@@ -253,6 +238,8 @@ class RecordMoodActivity : AppCompatActivity() {
                     msg = getString(R.string.success_save_dialog_msg),
                     context = this
                 )
+                // 強制的にタップさせてリストに遷移させる
+                binding.listButtonLayout.performClick()
             }
             1 -> {
                 AlertDialogUtil.showOkDialog(
@@ -299,20 +286,10 @@ class RecordMoodActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun changeRecordListFragment(item: MenuItem) {
-        if (item.title == getString(R.string.menu_list_button_text)) {
-            item.title = getString(R.string.menu_back_button_text)
-            hiddenRecordView(true)
-            binding.fragmentContainer.visibility = View.VISIBLE
-            binding.viewModel?.setVisibleFlg(true)
-            binding.toolbarIcon.setImageResource(R.drawable.icon_list)
-            binding.toolbarTitle.text = getString(R.string.menu_list_button_text)
-            binding.viewModel?.setRecordListFragment(RecordListFragment())
-            binding.viewModel?.getMoodDetails()
-        } else {
-            item.title = getString(R.string.menu_list_button_text)
+    private fun changeRecordListFragment(screenIndex: Int) {
+        if (screenIndex == 0) {
+            // レコード画面
             hiddenRecordView(false)
-            binding.toolbarIcon.setImageResource(R.drawable.icon_history_edu)
             binding.toolbarTitle.text = getString(R.string.record_mood_activity_title)
             binding.viewModel?.setVisibleFlg(false)
             supportFragmentManager.beginTransaction()
@@ -321,7 +298,16 @@ class RecordMoodActivity : AppCompatActivity() {
             supportFragmentManager.executePendingTransactions()
             binding.fragmentContainer.visibility = View.INVISIBLE
             binding.viewModel?.setRecordListFragment(null)
+        } else if (screenIndex == 1) {
+            // リスト画面
+            hiddenRecordView(true)
+            binding.fragmentContainer.visibility = View.VISIBLE
+            binding.viewModel?.setVisibleFlg(true)
+            binding.toolbarTitle.text = getString(R.string.menu_list_button_text)
+            binding.viewModel?.setRecordListFragment(RecordListFragment())
+            binding.viewModel?.getMoodDetails()
         }
+        changeBottomButtonColor(screenIndex)
     }
 
     private fun hiddenRecordView(hidden: Boolean) {
@@ -330,6 +316,20 @@ class RecordMoodActivity : AppCompatActivity() {
             binding.moodDetailsScrollView.visibility = View.INVISIBLE
         } else {
             binding.moodDetailsScrollView.visibility = View.VISIBLE
+        }
+    }
+
+    private fun changeBottomButtonColor(screenIndex: Int) {
+        if (screenIndex == 0) {
+            binding.recordButton.setColorFilter(resources.getColor(android.R.color.holo_orange_dark, null))
+            binding.recordButtonText.setTextColor(resources.getColor(android.R.color.holo_orange_dark, null))
+            binding.listButton.setColorFilter(resources.getColor(android.R.color.white, null))
+            binding.listButtonText.setTextColor(resources.getColor(android.R.color.white, null))
+        } else if (screenIndex == 1) {
+            binding.listButton.setColorFilter(resources.getColor(android.R.color.holo_orange_dark, null))
+            binding.listButtonText.setTextColor(resources.getColor(android.R.color.holo_orange_dark, null))
+            binding.recordButton.setColorFilter(resources.getColor(android.R.color.white, null))
+            binding.recordButtonText.setTextColor(resources.getColor(android.R.color.white, null))
         }
     }
 }

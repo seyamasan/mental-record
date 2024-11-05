@@ -14,7 +14,7 @@
     <string name="fun_button_text">fun</string>
     <string name="sad_button_text">sad</string>
     <string name="memo_title">memo</string>
-    <string name="time_zone_title">time zone</string>
+    <string name="time_zone_title">time of day</string>
     <string name="time_zone_morning">morning</string>
     <string name="time_zone_noon">noon</string>
     <string name="time_zone_night">night</string>
