@@ -20,6 +20,7 @@ import jp.example.mentalrecordapplication.room.MoodEntity
 import jp.example.mentalrecordapplication.utils.AlertDialogUtil
 import jp.example.mentalrecordapplication.utils.ButtonScaleAnimationUtil
 import jp.example.mentalrecordapplication.utils.CalenderDialogUtil
+import jp.example.mentalrecordapplication.utils.OkHttpUtil
 import java.util.Calendar
 
 /*
@@ -173,6 +174,11 @@ class RecordMoodActivity : AppCompatActivity() {
         binding.listButtonLayout.setOnClickListener {
             changeRecordListFragment(1)
         }
+
+        // infoボタン
+        binding.infoButton.setOnClickListener {
+            OkHttpUtil.openWebPage(this, getString(R.string.privacy_policy_url))
+        }
     }
 
     private fun setupObserve() {
@@ -323,15 +329,15 @@ class RecordMoodActivity : AppCompatActivity() {
 
     private fun changeBottomButtonColor(screenIndex: Int) {
         if (screenIndex == 0) {
-            binding.recordButton.setColorFilter(resources.getColor(android.R.color.holo_orange_dark, null))
-            binding.recordButtonText.setTextColor(resources.getColor(android.R.color.holo_orange_dark, null))
-            binding.listButton.setColorFilter(resources.getColor(android.R.color.white, null))
-            binding.listButtonText.setTextColor(resources.getColor(android.R.color.white, null))
+            binding.recordButton.setColorFilter(resources.getColor(R.color.white, null))
+            binding.recordButtonText.setTextColor(resources.getColor(R.color.white, null))
+            binding.listButton.setColorFilter(resources.getColor(R.color.gray_1, null))
+            binding.listButtonText.setTextColor(resources.getColor(R.color.gray_1, null))
         } else if (screenIndex == 1) {
-            binding.listButton.setColorFilter(resources.getColor(android.R.color.holo_orange_dark, null))
-            binding.listButtonText.setTextColor(resources.getColor(android.R.color.holo_orange_dark, null))
-            binding.recordButton.setColorFilter(resources.getColor(android.R.color.white, null))
-            binding.recordButtonText.setTextColor(resources.getColor(android.R.color.white, null))
+            binding.listButton.setColorFilter(resources.getColor(R.color.white, null))
+            binding.listButtonText.setTextColor(resources.getColor(R.color.white, null))
+            binding.recordButton.setColorFilter(resources.getColor(R.color.gray_1, null))
+            binding.recordButtonText.setTextColor(resources.getColor(R.color.gray_1, null))
         }
     }
 }

@@ -33,4 +33,7 @@
     <string name="not_data_dialog_title">表示できません</string>
     <string name="not_data_dialog_msg">データが存在しません。</string>
 
+<!--    プライバシーポリシー-->
+    <string name="privacy_policy_url">https://doc-hosting.flycricket.io/mental-record-mentaruwoji-lu-privacy-policy/d7c7ce7e-f84a-4f56-9841-15a598e6b960/privacy</string>
+
 </resources>

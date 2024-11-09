@@ -35,6 +35,14 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"/>
 
+            <ImageView
+                android:id="@+id/infoButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="10sp"
+                android:src="@drawable/icon_info"/>
+
         </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout
@@ -224,6 +232,9 @@
                     android:layout_gravity="center"
                     android:text="@string/save_button_text"
                     android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/gray_1"
+                    android:elevation="80dp"
                     android:visibility="invisible"
                     tools:visibility="visible"/>
             </LinearLayout>
@@ -264,14 +275,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/icon_history_edu"
-                            app:tint="@android:color/holo_orange_dark"/>
+                            app:tint="@color/white"/>
 
                         <TextView
                             android:id="@+id/recordButtonText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/record_mood_activity_title"
-                            android:textColor="@android:color/holo_orange_dark" />
+                            android:textColor="@android:color/white"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -286,14 +297,15 @@
                             android:id="@+id/listButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/icon_list" />
+                            android:src="@drawable/icon_list"
+                            app:tint="@color/gray_1"/>
 
                         <TextView
                             android:id="@+id/listButtonText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/menu_list_button_text"
-                            android:textColor="@android:color/white" />
+                            android:textColor="@color/gray_1" />
                     </LinearLayout>
                 </LinearLayout>
 
