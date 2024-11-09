@@ -190,6 +190,7 @@
                             android:layout_width="0dp"
                             android:layout_height="50sp"
                             android:layout_weight="1"
+                            android:textColor="@android:color/black"
                             android:background="@drawable/rounded_border_gray_1"/>
 
                     </LinearLayout>
