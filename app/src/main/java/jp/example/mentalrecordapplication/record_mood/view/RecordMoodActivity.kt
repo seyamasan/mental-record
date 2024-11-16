@@ -297,7 +297,7 @@ class RecordMoodActivity : AppCompatActivity() {
             // レコード画面
             if (binding.viewModel?.recordListFragment != null) {
                 hiddenRecordView(false)
-                binding.toolbarTitle.text = getString(R.string.record_mood_activity_title)
+                binding.toolbarTitle.text = getString(R.string.record_screen_title)
                 binding.viewModel?.setVisibleFlg(false)
                 supportFragmentManager.beginTransaction()
                     .remove(binding.viewModel?.recordListFragment!!)

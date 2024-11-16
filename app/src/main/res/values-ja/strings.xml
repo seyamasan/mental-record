@@ -4,8 +4,8 @@
     <string name="mental_name">MENTAL</string>
     <string name="record_name">RECORD</string>
 
-<!--    RecordMood-->
-    <string name="record_mood_activity_title">記録する</string>
+<!--    RecordView-->
+    <string name="record_screen_title">記録する</string>
     <string name="menu_list_button_text">リスト</string>
     <string name="menu_back_button_text">戻る</string>
     <string name="menu_support_message_text">今の気持ちは？</string>

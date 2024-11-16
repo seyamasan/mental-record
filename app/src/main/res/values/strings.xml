@@ -4,8 +4,8 @@
     <string name="mental_name">MENTAL</string>
     <string name="record_name">RECORD</string>
 
-<!--    RecordMood-->
-    <string name="record_mood_activity_title">Record</string>
+<!--    RecordView-->
+    <string name="record_screen_title">Record</string>
     <string name="menu_list_button_text">List</string>
     <string name="menu_back_button_text">Back</string>
     <string name="menu_support_message_text">How do you feel?</string>
