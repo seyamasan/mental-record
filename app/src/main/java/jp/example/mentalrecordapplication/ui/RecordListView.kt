@@ -16,11 +16,23 @@ import jp.example.mentalrecordapplication.R
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 
 @Composable
-fun RecordView(navController: NavHostController?, screenTitle: String) {
+fun RecordListView(
+    navController: NavHostController?,
+    screenTitle: String,
+    selectedTab: Int,
+    onSelectedTab: (Int) -> Unit
+) {
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopBarView(screenTitle)
+        },
+        bottomBar = {
+            BottomNavBarView(
+                navController = navController,
+                selectedTab = selectedTab,
+                onSelectedTab = { onSelectedTab(it) }
+            )
         }
     ) { innerPadding ->
         Column(
@@ -29,18 +41,20 @@ fun RecordView(navController: NavHostController?, screenTitle: String) {
                 .padding(8.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Text(text = "aa")
+            Text(text = "リストファ")
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun RecordViewPreview() {
+fun RecordListViewPreview() {
     MentalRecordAppTheme {
-        RecordView(
-            null,
-            screenTitle = stringResource(id = R.string.record_screen_title)
+        RecordListView(
+            navController = null,
+            screenTitle = stringResource(id = R.string.record_list_screen_title),
+            selectedTab = 1,
+            onSelectedTab = {}
         )
     }
 }

@@ -5,8 +5,7 @@
     <string name="record_name">RECORD</string>
 
 <!--    RecordView-->
-    <string name="record_screen_title">Record</string>
-    <string name="menu_list_button_text">List</string>
+    <string name="mood_record_screen_title">Record</string>
     <string name="menu_back_button_text">Back</string>
     <string name="menu_support_message_text">How do you feel?</string>
     <string name="happy_button_text">happy</string>
@@ -32,6 +31,9 @@
     <string name="failure_save_dialog_msg">Saving failed.</string>
     <string name="not_data_dialog_title">Unable to display</string>
     <string name="not_data_dialog_msg">Data does not exist.</string>
+
+<!--    RecordListView-->
+    <string name="record_list_screen_title">List</string>
 
 <!--    プライバシーポリシー-->
     <string name="privacy_policy_url">https://doc-hosting.flycricket.io/mental-record-mentaruwoji-lu-privacy-policy/d7c7ce7e-f84a-4f56-9841-15a598e6b960/privacy</string>
