@@ -10,4 +10,11 @@
     <color name="cerulean_blue">#008db7</color>
     <color name="chartreuse_yellow">#e3e548</color>
     <color name="transparent">#00000000</color>
+    <color name="magenta">#ff00ff</color>
+    <color name="orange_red">#ff4500</color>
+    <color name="indigo">#4b0082</color>
+    <color name="gold">#ffd700</color>
+    <color name="darkSlateBlue">#483d8b</color>
+    <color name="mediumSlateBlue">#7b68ee</color>
+
 </resources>

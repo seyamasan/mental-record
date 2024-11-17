@@ -6,8 +6,14 @@
 
 <!--    RecordView-->
     <string name="mood_record_screen_title">Record</string>
+    <string name="support_message">How do you feel?</string>
+    <string name="mood_happy">Happy</string>
+    <string name="mood_anger">Angry</string>
+    <string name="mood_fun">Fun</string>
+    <string name="mood_sad">Sad</string>
+    <string name="mood_normal">Normal</string>
+
     <string name="menu_back_button_text">Back</string>
-    <string name="menu_support_message_text">How do you feel?</string>
     <string name="happy_button_text">happy</string>
     <string name="anger_button_text">angry</string>
     <string name="fun_button_text">fun</string>

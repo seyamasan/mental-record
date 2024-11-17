@@ -6,8 +6,14 @@
 
 <!--    MoodRecordView-->
     <string name="mood_record_screen_title">記録する</string>
+    <string name="support_message">今の気持ちは？</string>
+    <string name="mood_happy">喜</string>
+    <string name="mood_anger">怒</string>
+    <string name="mood_fun">楽</string>
+    <string name="mood_sad">哀</string>
+    <string name="mood_normal">普通</string>
+
     <string name="menu_back_button_text">戻る</string>
-    <string name="menu_support_message_text">今の気持ちは？</string>
     <string name="happy_button_text">喜</string>
     <string name="anger_button_text">怒</string>
     <string name="fun_button_text">楽</string>

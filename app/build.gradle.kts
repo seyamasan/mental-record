@@ -93,6 +93,9 @@ dependencies {
     // serialization
     implementation(libs.kotlinx.serialization.core)
 
+    // flowlayout
+    implementation(libs.accompanist.flowlayout)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
