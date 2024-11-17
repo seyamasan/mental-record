@@ -1,10 +1,5 @@
 package jp.example.mentalrecordapplication.data
 
-import android.content.Context
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
 import jp.example.mentalrecordapplication.R
 
 enum class DefaultMood(

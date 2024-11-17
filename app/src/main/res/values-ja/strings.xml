@@ -1,8 +1,6 @@
 <resources>
-<!--    Main-->
+<!--    App Name-->
     <string name="mental_record_app_name">MENTAL RECORD</string>
-    <string name="mental_name">MENTAL</string>
-    <string name="record_name">RECORD</string>
 
 <!--    MoodRecordView-->
     <string name="mood_record_screen_title">記録する</string>
@@ -12,6 +10,9 @@
     <string name="mood_fun">楽</string>
     <string name="mood_sad">哀</string>
     <string name="mood_normal">普通</string>
+    <string name="add_custom_mood">気持ちを\n追加</string>
+    <string name="select_date_title">日付</string>
+    <string name="save_button_text">保存</string>
 
     <string name="menu_back_button_text">戻る</string>
     <string name="happy_button_text">喜</string>
@@ -23,8 +24,7 @@
     <string name="time_zone_morning">朝</string>
     <string name="time_zone_noon">昼</string>
     <string name="time_zone_night">夜</string>
-    <string name="select_date_title">日付</string>
-    <string name="save_button_text">保存</string>
+
     <string name="success_save_dialog_title">成功</string>
     <string name="success_save_dialog_msg">保存に成功しました。</string>
     <string name="null_date_dialog_title">日付が未選択です</string>
