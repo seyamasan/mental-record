@@ -1,14 +1,20 @@
 <resources>
-<!--    Main-->
+<!--    App Name-->
     <string name="mental_record_app_name">MENTAL RECORD</string>
-    <string name="mental_name">MENTAL</string>
-    <string name="record_name">RECORD</string>
 
-<!--    RecordMood-->
-    <string name="record_mood_activity_title">Record</string>
-    <string name="menu_list_button_text">List</string>
+<!--    RecordView-->
+    <string name="mood_record_screen_title">Record</string>
+    <string name="support_message">How do you mood?</string>
+    <string name="mood_happy">Happy</string>
+    <string name="mood_anger">Angry</string>
+    <string name="mood_fun">Fun</string>
+    <string name="mood_sad">Sad</string>
+    <string name="mood_normal">Normal</string>
+    <string name="add_custom_mood">Add a\n mood</string>
+    <string name="select_date_title">Date</string>
+    <string name="save_button_text">Save</string>
+
     <string name="menu_back_button_text">Back</string>
-    <string name="menu_support_message_text">How do you feel?</string>
     <string name="happy_button_text">happy</string>
     <string name="anger_button_text">angry</string>
     <string name="fun_button_text">fun</string>
@@ -18,8 +24,6 @@
     <string name="time_zone_morning">morning</string>
     <string name="time_zone_noon">noon</string>
     <string name="time_zone_night">night</string>
-    <string name="select_date_title">date</string>
-    <string name="save_button_text">save</string>
     <string name="success_save_dialog_title">Success</string>
     <string name="success_save_dialog_msg">Saving was successful.</string>
     <string name="null_date_dialog_title">Date not selected</string>
@@ -32,6 +36,9 @@
     <string name="failure_save_dialog_msg">Saving failed.</string>
     <string name="not_data_dialog_title">Unable to display</string>
     <string name="not_data_dialog_msg">Data does not exist.</string>
+
+<!--    RecordListView-->
+    <string name="record_list_screen_title">List</string>
 
 <!--    プライバシーポリシー-->
     <string name="privacy_policy_url">https://doc-hosting.flycricket.io/mental-record-mentaruwoji-lu-privacy-policy/d7c7ce7e-f84a-4f56-9841-15a598e6b960/privacy</string>

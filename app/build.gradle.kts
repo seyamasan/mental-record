@@ -3,8 +3,9 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    kotlin("kapt")
-    id("org.jetbrains.kotlin.plugin.compose") version "2.0.0"
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -15,8 +16,8 @@ android {
         applicationId = "jp.example.mentalrecordapplication"
         minSdk = 24
         targetSdk = 34
-        versionCode = 7
-        versionName = "1.0.0"
+        versionCode = 1
+        versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -63,7 +64,7 @@ dependencies {
     // room
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-    kapt(libs.room.compiler)
+    ksp(libs.room.compiler)
 
     // recyclerview
     implementation("androidx.recyclerview:recyclerview:1.2.1")
@@ -85,6 +86,15 @@ dependencies {
 
     // okhttp
     implementation(libs.okhttp)
+
+    // navigation
+    implementation(libs.androidx.navigation.compose)
+
+    // serialization
+    implementation(libs.kotlinx.serialization.core)
+
+    // flowlayout
+    implementation(libs.accompanist.flowlayout)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

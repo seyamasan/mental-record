@@ -224,7 +224,7 @@ class RecordMoodActivity : AppCompatActivity() {
         binding.memoEditText.setText(binding.viewModel?.enteredMemo)
         if (binding.viewModel?.recordListFragment != null) {
             hiddenRecordView(true)
-            binding.toolbarTitle.text = getString(R.string.menu_list_button_text)
+            binding.toolbarTitle.text = getString(R.string.record_list_screen_title)
             changeBottomButtonColor(1)
         }
     }
@@ -297,7 +297,7 @@ class RecordMoodActivity : AppCompatActivity() {
             // レコード画面
             if (binding.viewModel?.recordListFragment != null) {
                 hiddenRecordView(false)
-                binding.toolbarTitle.text = getString(R.string.record_mood_activity_title)
+                binding.toolbarTitle.text = getString(R.string.mood_record_screen_title)
                 binding.viewModel?.setVisibleFlg(false)
                 supportFragmentManager.beginTransaction()
                     .remove(binding.viewModel?.recordListFragment!!)
@@ -311,7 +311,7 @@ class RecordMoodActivity : AppCompatActivity() {
             hiddenRecordView(true)
             binding.fragmentContainer.visibility = View.VISIBLE
             binding.viewModel?.setVisibleFlg(true)
-            binding.toolbarTitle.text = getString(R.string.menu_list_button_text)
+            binding.toolbarTitle.text = getString(R.string.record_list_screen_title)
             binding.viewModel?.setRecordListFragment(RecordListFragment())
             binding.viewModel?.getMoodDetails()
         }
