@@ -13,6 +13,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import jp.example.mentalrecordapplication.R
+import jp.example.mentalrecordapplication.ui.common.BottomNavBarView
+import jp.example.mentalrecordapplication.ui.common.TopBarView
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 
 @Composable

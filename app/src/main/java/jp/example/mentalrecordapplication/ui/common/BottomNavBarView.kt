@@ -1,4 +1,4 @@
-package jp.example.mentalrecordapplication.ui
+package jp.example.mentalrecordapplication.ui.common
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar

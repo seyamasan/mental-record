@@ -12,6 +12,7 @@
     <string name="mood_normal">普通</string>
     <string name="add_custom_mood">気持ちを\n追加</string>
     <string name="select_date_title">日付</string>
+    <string name="time_zone_title">時間帯</string>
     <string name="save_button_text">保存</string>
 
     <string name="menu_back_button_text">戻る</string>
@@ -20,7 +21,6 @@
     <string name="fun_button_text">楽</string>
     <string name="sad_button_text">哀</string>
     <string name="memo_title">メモ</string>
-    <string name="time_zone_title">時間帯</string>
     <string name="time_zone_morning">朝</string>
     <string name="time_zone_noon">昼</string>
     <string name="time_zone_night">夜</string>

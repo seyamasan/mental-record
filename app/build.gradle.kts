@@ -1,5 +1,3 @@
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -47,11 +45,6 @@ android {
     }
 }
 
-composeCompiler {
-    enableStrongSkippingMode = true
-    reportsDestination = layout.buildDirectory.dir("compose_compiler")
-}
-
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -83,6 +76,9 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // icons extended
+    implementation(libs.compose.material.icons.extended)
 
     // okhttp
     implementation(libs.okhttp)

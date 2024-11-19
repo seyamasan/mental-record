@@ -25,6 +25,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DatePickerState
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -54,6 +56,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import jp.example.mentalrecordapplication.R
 import jp.example.mentalrecordapplication.data.DefaultMood
+import jp.example.mentalrecordapplication.ui.common.BottomNavBarView
+import jp.example.mentalrecordapplication.ui.common.TopBarView
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -99,31 +103,12 @@ fun MoodRecordView(
             SupportMessageSection()
             MoodSection(defaultMoodList)
             AddMoodSection()
-            ElevatedCard(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                elevation = CardDefaults.cardElevation(8.dp)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(32.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    ReadOnlyDatePickerDialog(
-                        showDatePicker = showDatePicker,
-                        datePickerState = datePickerState,
-                        onTextFieldClick = { showDatePicker = true },
-                        onDateSelected = {
-                            showDatePicker = false
-                            val newDate = it
-                        }
-                    )
-
-                    RecordSaveButton()
-                }
-            }
+            InputSections(
+                showDatePicker = showDatePicker,
+                datePickerState = datePickerState,
+                onShowDatePicker = { showDatePicker = true },
+                onDateSelected = { print(it) } // 入力された日付
+            )
         }
     }
 }
@@ -211,6 +196,49 @@ private fun AddMoodSection() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+private fun InputSections(
+    showDatePicker: Boolean,
+    datePickerState: DatePickerState,
+    onShowDatePicker: () -> Unit,
+    onDateSelected: (String) -> Unit
+) {
+    ElevatedCard(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        elevation = CardDefaults.cardElevation(8.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            ReadOnlyDatePickerDialog(
+                showDatePicker = showDatePicker,
+                datePickerState = datePickerState,
+                onTextFieldClick = onShowDatePicker,
+                onDateSelected = {
+                    onDateSelected(it)
+                }
+            )
+
+            val dummyList = listOf("あ","い","う")
+            val dummySelected = "い"
+
+            TimeOfDayTextField(
+                items = dummyList,
+                selectedItem = dummySelected,
+                onItemSelected = { print(it) }
+            )
+
+            RecordSaveButton()
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
 private fun ReadOnlyDatePickerDialog(
     showDatePicker: Boolean,
     datePickerState: DatePickerState,
@@ -268,6 +296,57 @@ private fun ReadOnlyDatePickerDialog(
                         state = datePickerState
                     )
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun TimeOfDayTextField(
+    items: List<String>,
+    selectedItem: String,
+    onItemSelected: (String) -> Unit
+) {
+    var expanded by rememberSaveable { mutableStateOf(false) }
+
+    Box {
+        OutlinedTextField(
+            value = selectedItem,
+            onValueChange = {},
+            label = { Text(stringResource(id = R.string.time_zone_title)) },
+            readOnly = true,
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Default.DateRange,
+                    contentDescription = "DateRange icon"
+                )
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(64.dp)
+                .pointerInput(selectedItem) {
+                    awaitEachGesture {
+                        awaitFirstDown(pass = PointerEventPass.Initial)
+                        val upEvent = waitForUpOrCancellation(pass = PointerEventPass.Initial)
+                        if (upEvent != null) {
+                            expanded = true
+                        }
+                    }
+                }
+        )
+
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            items.forEach { item ->
+                DropdownMenuItem(
+                    text = { Text(text = item) },
+                    onClick = {
+                        onItemSelected(item)
+                        expanded = false
+                    }
+                )
             }
         }
     }
