@@ -10,9 +10,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -20,13 +20,16 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.WbSunny
+import androidx.compose.material.icons.filled.WbTwilight
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DatePickerState
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -214,6 +217,16 @@ private fun InputSections(
             verticalArrangement = Arrangement.spacedBy(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+//            val dummyList = listOf("Morning","Noon","Night")
+            val dummyList = listOf("朝","昼","夜")
+            val dummySelected = "い"
+
+            TimeOfDayChip(
+                items = dummyList,
+                selectedItem = dummySelected,
+                onItemSelected = { print(it) }
+            )
+
             ReadOnlyDatePickerDialog(
                 showDatePicker = showDatePicker,
                 datePickerState = datePickerState,
@@ -223,16 +236,54 @@ private fun InputSections(
                 }
             )
 
-            val dummyList = listOf("あ","い","う")
-            val dummySelected = "い"
-
-            TimeOfDayTextField(
-                items = dummyList,
-                selectedItem = dummySelected,
-                onItemSelected = { print(it) }
-            )
-
             RecordSaveButton()
+        }
+    }
+}
+
+@Composable
+private fun TimeOfDayChip(
+    items: List<String>,
+    selectedItem: String,
+    onItemSelected: (String) -> Unit
+) {
+    LazyRow(
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterHorizontally)
+    ) {
+        items.forEachIndexed { index, item ->
+            item {
+                AssistChip(
+                    onClick = { onItemSelected(item) },
+                    label = { Text(text = item) },
+                    leadingIcon = {
+                        when (index) {
+                            0 -> {
+                                Icon(
+                                    Icons.Filled.WbTwilight,
+                                    contentDescription = "WbTwilight icon",
+                                    Modifier.size(AssistChipDefaults.IconSize)
+                                )
+                            }
+                            1 -> {
+                                Icon(
+                                    Icons.Filled.WbSunny,
+                                    contentDescription = "WbSunny icon",
+                                    Modifier.size(AssistChipDefaults.IconSize)
+                                )
+                            }
+                            2 -> {
+                                Icon(
+                                    Icons.Filled.DarkMode,
+                                    contentDescription = "DarkMode icon",
+                                    Modifier.size(AssistChipDefaults.IconSize)
+                                )
+                            }
+                        }
+                    }
+                )
+            }
         }
     }
 }
@@ -266,7 +317,7 @@ private fun ReadOnlyDatePickerDialog(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(64.dp)
+                .wrapContentHeight()
                 .pointerInput(selectedDate) {
                     awaitEachGesture {
                         awaitFirstDown(pass = PointerEventPass.Initial)
@@ -296,57 +347,6 @@ private fun ReadOnlyDatePickerDialog(
                         state = datePickerState
                     )
                 }
-            }
-        }
-    }
-}
-
-@Composable
-private fun TimeOfDayTextField(
-    items: List<String>,
-    selectedItem: String,
-    onItemSelected: (String) -> Unit
-) {
-    var expanded by rememberSaveable { mutableStateOf(false) }
-
-    Box {
-        OutlinedTextField(
-            value = selectedItem,
-            onValueChange = {},
-            label = { Text(stringResource(id = R.string.time_zone_title)) },
-            readOnly = true,
-            trailingIcon = {
-                Icon(
-                    imageVector = Icons.Default.DateRange,
-                    contentDescription = "DateRange icon"
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(64.dp)
-                .pointerInput(selectedItem) {
-                    awaitEachGesture {
-                        awaitFirstDown(pass = PointerEventPass.Initial)
-                        val upEvent = waitForUpOrCancellation(pass = PointerEventPass.Initial)
-                        if (upEvent != null) {
-                            expanded = true
-                        }
-                    }
-                }
-        )
-
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false }
-        ) {
-            items.forEach { item ->
-                DropdownMenuItem(
-                    text = { Text(text = item) },
-                    onClick = {
-                        onItemSelected(item)
-                        expanded = false
-                    }
-                )
             }
         }
     }
