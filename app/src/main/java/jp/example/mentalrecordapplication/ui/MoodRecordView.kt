@@ -76,6 +76,7 @@ fun MoodRecordView(
 ) {
     var showDatePicker by rememberSaveable { mutableStateOf(false) }
     val datePickerState = rememberDatePickerState()
+    var timeOfDayState by rememberSaveable { mutableStateOf(listOf(false, false, false)) }
 
     val defaultMoodList = listOf(
         DefaultMood.HAPPY,
@@ -100,7 +101,7 @@ fun MoodRecordView(
             modifier = Modifier
                 .padding(innerPadding)
                 .padding(top = 16.dp, start = 16.dp, end = 16.dp)
-                .verticalScroll(rememberScrollState()), // 縦スクロールを可能に
+                .verticalScroll(rememberScrollState()), // 縦スクロールを可能にしてる
             verticalArrangement = Arrangement.spacedBy(32.dp)
         ) {
             SupportMessageSection()
@@ -217,13 +218,7 @@ private fun InputSections(
             verticalArrangement = Arrangement.spacedBy(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-//            val dummyList = listOf("Morning","Noon","Night")
-            val dummyList = listOf("朝","昼","夜")
-            val dummySelected = "い"
-
             TimeOfDayChip(
-                items = dummyList,
-                selectedItem = dummySelected,
                 onItemSelected = { print(it) }
             )
 
@@ -243,16 +238,20 @@ private fun InputSections(
 
 @Composable
 private fun TimeOfDayChip(
-    items: List<String>,
-    selectedItem: String,
     onItemSelected: (String) -> Unit
 ) {
+    val timeOfDayList = listOf(
+        stringResource(id = R.string.time_of_day_morning),
+        stringResource(id = R.string.time_of_day_noon),
+        stringResource(id = R.string.time_of_day_night)
+    )
+
     LazyRow(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterHorizontally)
     ) {
-        items.forEachIndexed { index, item ->
+        timeOfDayList.forEachIndexed { index, item ->
             item {
                 AssistChip(
                     onClick = { onItemSelected(item) },

@@ -35,9 +35,9 @@ class RecordMoodActivity : AppCompatActivity() {
     private val _recordMoodActivityViewModel: RecordMoodActivityViewModel by viewModels()
     private val _timeZoneArray: Array<String> by lazy {
         arrayOf(
-            getString(R.string.time_zone_morning),
-            getString(R.string.time_zone_noon),
-            getString(R.string.time_zone_night)
+            getString(R.string.time_of_day_morning),
+            getString(R.string.time_of_day_noon),
+            getString(R.string.time_of_day_night)
         )
     }
     private var _initFlg = false // 走ってほしくない処理を制御するために
@@ -120,25 +120,25 @@ class RecordMoodActivity : AppCompatActivity() {
         // 感情ボタン
         binding.happyButton.setOnClickListener {
             if (binding.detailLayout.visibility == View.INVISIBLE) { visibleTapTheMoodBtn() }
-            binding.viewModel?.setMood(getString(R.string.happy_button_text))
+            binding.viewModel?.setMood(getString(R.string.mood_fun))
             clearMoodButtonBackGround()
             binding.happyButton.background = ContextCompat.getDrawable(this, R.drawable.rounded_border_white)
         }
         binding.angerButton.setOnClickListener {
             if (binding.detailLayout.visibility == View.INVISIBLE) { visibleTapTheMoodBtn() }
-            binding.viewModel?.setMood(getString(R.string.anger_button_text))
+            binding.viewModel?.setMood(getString(R.string.mood_anger))
             clearMoodButtonBackGround()
             binding.angerButton.background = ContextCompat.getDrawable(this, R.drawable.rounded_border_white)
         }
         binding.sadButton.setOnClickListener {
             if (binding.detailLayout.visibility == View.INVISIBLE) { visibleTapTheMoodBtn() }
-            binding.viewModel?.setMood(getString(R.string.sad_button_text))
+            binding.viewModel?.setMood(getString(R.string.mood_sad))
             clearMoodButtonBackGround()
             binding.sadButton.background = ContextCompat.getDrawable(this, R.drawable.rounded_border_white)
         }
         binding.funButton.setOnClickListener {
             if (binding.detailLayout.visibility == View.INVISIBLE) { visibleTapTheMoodBtn() }
-            binding.viewModel?.setMood(getString(R.string.fun_button_text))
+            binding.viewModel?.setMood(getString(R.string.mood_fun))
             clearMoodButtonBackGround()
             binding.funButton.background = ContextCompat.getDrawable(this, R.drawable.rounded_border_white)
         }
