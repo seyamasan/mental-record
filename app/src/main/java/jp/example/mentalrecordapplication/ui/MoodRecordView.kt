@@ -26,10 +26,12 @@ import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material.icons.filled.WbTwilight
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DatePickerState
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -76,7 +78,7 @@ fun MoodRecordView(
 ) {
     var showDatePicker by rememberSaveable { mutableStateOf(false) }
     val datePickerState = rememberDatePickerState()
-    var timeOfDayState by rememberSaveable { mutableStateOf(listOf(false, false, false)) }
+    var timeOfDayState by rememberSaveable { mutableStateOf(listOf(true, false, false)) }
 
     val defaultMoodList = listOf(
         DefaultMood.HAPPY,
@@ -110,8 +112,15 @@ fun MoodRecordView(
             InputSections(
                 showDatePicker = showDatePicker,
                 datePickerState = datePickerState,
+                timeOfDayState = timeOfDayState,
+                timeOfDaySelectedIndex = {
+                    timeOfDayState = List(timeOfDayState.size) { i -> i == it }
+                },
                 onShowDatePicker = { showDatePicker = true },
-                onDateSelected = { print(it) } // 入力された日付
+                onDateSelected = {
+                    print(it)// 入力された日付
+                    showDatePicker = false
+                }
             )
         }
     }
@@ -203,6 +212,8 @@ private fun AddMoodSection() {
 private fun InputSections(
     showDatePicker: Boolean,
     datePickerState: DatePickerState,
+    timeOfDayState: List<Boolean>,
+    timeOfDaySelectedIndex: (Int) -> Unit,
     onShowDatePicker: () -> Unit,
     onDateSelected: (String) -> Unit
 ) {
@@ -219,6 +230,8 @@ private fun InputSections(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TimeOfDayChip(
+                timeOfDayState,
+                timeOfDaySelectedIndex = { timeOfDaySelectedIndex(it) },
                 onItemSelected = { print(it) }
             )
 
@@ -238,6 +251,8 @@ private fun InputSections(
 
 @Composable
 private fun TimeOfDayChip(
+    timeOfDayState: List<Boolean>,
+    timeOfDaySelectedIndex: (Int) -> Unit,
     onItemSelected: (String) -> Unit
 ) {
     val timeOfDayList = listOf(
@@ -252,10 +267,18 @@ private fun TimeOfDayChip(
         horizontalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterHorizontally)
     ) {
         timeOfDayList.forEachIndexed { index, item ->
+            val isSelected = timeOfDayState[index]
             item {
                 AssistChip(
-                    onClick = { onItemSelected(item) },
+                    onClick = {
+                        timeOfDaySelectedIndex(index)
+                        onItemSelected(item)
+                    },
                     label = { Text(text = item) },
+                    colors = AssistChipDefaults.assistChipColors(
+                        containerColor = if (isSelected) MaterialTheme.colorScheme.primaryContainer
+                        else MaterialTheme.colorScheme.surface
+                    ),
                     leadingIcon = {
                         when (index) {
                             0 -> {
@@ -353,7 +376,15 @@ private fun ReadOnlyDatePickerDialog(
 
 @Composable
 private fun RecordSaveButton() {
-    OutlinedButton(onClick = {  }) {
+    ElevatedButton(
+        modifier = Modifier.padding(8.dp),
+        colors = ButtonDefaults.elevatedButtonColors(
+            containerColor = MaterialTheme.colorScheme.background,
+            contentColor = MaterialTheme.colorScheme.primary
+        ),
+        elevation = ButtonDefaults.elevatedButtonElevation(8.dp),
+        onClick = {  }
+    ) {
         Text(text = stringResource(id = R.string.save_button_text))
     }
 }
