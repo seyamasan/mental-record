@@ -16,9 +16,11 @@
     <string name="time_of_day_morning">Morning</string>
     <string name="time_of_day_noon">Noon</string>
     <string name="time_of_day_night">Night</string>
+    <string name="memo_title">Memo</string>
+
 
     <string name="menu_back_button_text">Back</string>
-    <string name="memo_title">memo</string>
+
 
     <string name="success_save_dialog_title">Success</string>
     <string name="success_save_dialog_msg">Saving was successful.</string>

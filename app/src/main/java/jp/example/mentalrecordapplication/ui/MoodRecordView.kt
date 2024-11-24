@@ -20,12 +20,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material.icons.filled.WbTwilight
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DatePicker
@@ -36,15 +38,19 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDatePickerState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -64,6 +70,8 @@ import jp.example.mentalrecordapplication.data.DefaultMood
 import jp.example.mentalrecordapplication.ui.common.BottomNavBarView
 import jp.example.mentalrecordapplication.ui.common.TopBarView
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -244,6 +252,16 @@ private fun InputSections(
                 }
             )
 
+            val dummyText = ""
+            var dummySwitch by rememberSaveable { mutableStateOf(false) }
+            MemoTextFieldSheet(
+                enteredMemo = dummyText,
+                showSheet = dummySwitch,
+                onTextFieldClick = { dummySwitch = true },
+                onDismissRequest = { dummySwitch = false },
+                onChangeTextField = {print(it)}
+            )
+
             RecordSaveButton()
         }
     }
@@ -368,6 +386,78 @@ private fun ReadOnlyDatePickerDialog(
                         showModeToggle = false, // カレンダーのみで入力モードなし
                         state = datePickerState
                     )
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun MemoTextFieldSheet(
+    enteredMemo: String,
+    showSheet: Boolean,
+    onTextFieldClick: () -> Unit,
+    onDismissRequest: () -> Unit,
+    onChangeTextField: (String) -> Unit
+) {
+    val coroutineScope = rememberCoroutineScope()
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
+
+    OutlinedTextField(
+        value = enteredMemo,
+        onValueChange = {},
+        label = { Text(stringResource(id = R.string.memo_title)) },
+        readOnly = true,
+        trailingIcon = {
+            Icon(
+                imageVector = Icons.Default.Create,
+                contentDescription = "Create icon"
+            )
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .pointerInput(enteredMemo) {
+                awaitEachGesture {
+                    awaitFirstDown(pass = PointerEventPass.Initial)
+                    val upEvent = waitForUpOrCancellation(pass = PointerEventPass.Initial)
+                    if (upEvent != null) {
+                        onTextFieldClick()
+                    }
+                }
+            }
+    )
+
+    if (showSheet) {
+        ModalBottomSheet(
+            sheetState = sheetState,
+            onDismissRequest = onDismissRequest
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(text = "Enter your text")
+                TextField(
+                    value = enteredMemo,
+                    onValueChange = { onChangeTextField(it) },
+                    modifier = Modifier.fillMaxWidth(),
+                    placeholder = { Text("Type here...") }
+                )
+                Button(
+                    onClick = {
+                        coroutineScope.launch { sheetState.hide() }.invokeOnCompletion {
+                            if (!sheetState.isVisible) {
+                                onDismissRequest()
+                            }
+                        }
+                    },
+                    modifier = Modifier.align(Alignment.End)
+                ) {
+                    Text("Submit")
                 }
             }
         }

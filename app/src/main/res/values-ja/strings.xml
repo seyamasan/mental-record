@@ -16,9 +16,11 @@
     <string name="time_of_day_morning">朝</string>
     <string name="time_of_day_noon">昼</string>
     <string name="time_of_day_night">夜</string>
+    <string name="memo_title">メモ</string>
+
 
     <string name="menu_back_button_text">戻る</string>
-    <string name="memo_title">メモ</string>
+
 
     <string name="success_save_dialog_title">成功</string>
     <string name="success_save_dialog_msg">保存に成功しました。</string>
