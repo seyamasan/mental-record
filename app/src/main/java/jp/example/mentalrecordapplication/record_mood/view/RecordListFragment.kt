@@ -17,7 +17,6 @@ import jp.example.mentalrecordapplication.databinding.FragmentRecordListBinding
 import jp.example.mentalrecordapplication.record_mood.param.Mood
 import jp.example.mentalrecordapplication.record_mood.viewmodel.RecordListFragmentViewModel
 import jp.example.mentalrecordapplication.room.MoodEntity
-import jp.example.mentalrecordapplication.utils.AlertDialogUtil
 
 /*
 * 記録されているデータをリストで表示するFragment
@@ -95,7 +94,7 @@ class RecordListFragment : Fragment() {
         timeZone.text = item.timeZone
         memo.text = item.memo
 
-        AlertDialogUtil.showOkCustomDialog(dialogView, requireContext())
+//        AlertDialogUtil.showOkCustomDialog(dialogView, requireContext())
     }
 
     fun setMoodDetailsList(moodDetailsList: List<MoodEntity>?) {

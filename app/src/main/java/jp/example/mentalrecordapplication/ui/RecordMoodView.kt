@@ -1,6 +1,7 @@
 package jp.example.mentalrecordapplication.ui
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
@@ -20,9 +21,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.SmsFailed
 import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material.icons.filled.WbTwilight
 import androidx.compose.material3.AssistChip
@@ -49,6 +52,7 @@ import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -68,25 +72,31 @@ import androidx.navigation.NavHostController
 import jp.example.mentalrecordapplication.R
 import jp.example.mentalrecordapplication.data.DefaultMood
 import jp.example.mentalrecordapplication.ui.common.BottomNavBarView
+import jp.example.mentalrecordapplication.ui.common.OkOnlyAlertDialogExample
 import jp.example.mentalrecordapplication.ui.common.TopBarView
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
-import kotlinx.coroutines.awaitAll
+import jp.example.mentalrecordapplication.viewmodel.RecordMoodViewModel
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MoodRecordView(
+fun RecordMoodView(
+    viewModel: RecordMoodViewModel = koinViewModel(),
     navController: NavHostController?,
     screenTitle: String,
     selectedTab: Int,
     onSelectedTab: (Int) -> Unit
 ) {
     var showDatePicker by rememberSaveable { mutableStateOf(false) }
+    var timeOfDayState by rememberSaveable { mutableStateOf(listOf(false, false, false)) }
     val datePickerState = rememberDatePickerState()
-    var timeOfDayState by rememberSaveable { mutableStateOf(listOf(true, false, false)) }
+    var showMemoSheet by rememberSaveable { mutableStateOf(false) }
+    val enteredMemo = viewModel.enteredMemo
+    val saveResult by viewModel.saveResult.observeAsState(null)
 
     val defaultMoodList = listOf(
         DefaultMood.HAPPY,
@@ -94,6 +104,12 @@ fun MoodRecordView(
         DefaultMood.SAD,
         DefaultMood.FUN,
         DefaultMood.Normal
+    )
+
+    val timeOfDayList = listOf(
+        stringResource(id = R.string.time_of_day_morning),
+        stringResource(id = R.string.time_of_day_noon),
+        stringResource(id = R.string.time_of_day_night)
     )
 
     Scaffold(
@@ -115,21 +131,71 @@ fun MoodRecordView(
             verticalArrangement = Arrangement.spacedBy(32.dp)
         ) {
             SupportMessageSection()
-            MoodSection(defaultMoodList)
+            MoodSection(defaultMoodList, onMoodClick = { viewModel.updateMood(it) })
             AddMoodSection()
             InputSections(
                 showDatePicker = showDatePicker,
-                datePickerState = datePickerState,
+                timeOfDayList = timeOfDayList,
                 timeOfDayState = timeOfDayState,
+                datePickerState = datePickerState,
+                showMemoSheet = showMemoSheet,
+                enteredMemo = enteredMemo,
                 timeOfDaySelectedIndex = {
                     timeOfDayState = List(timeOfDayState.size) { i -> i == it }
+                    viewModel.updateTimeOfDate(timeOfDayList[it])
                 },
                 onShowDatePicker = { showDatePicker = true },
                 onDateSelected = {
-                    print(it)// 入力された日付
+                    viewModel.updateDate(it)
                     showDatePicker = false
+                },
+                onShowMemoSheet = {
+                    showMemoSheet = it
+                },
+                onChangeMemoTextField = {
+                    viewModel.updateMemo(it)
+                },
+                onSaveClick = {
+                    viewModel.saveMoodDetail()
                 }
             )
+
+            if (saveResult != null) {
+                var title = ""
+                var msg = ""
+                var icon = Icons.Default.SmsFailed
+                when (saveResult) {
+                    0 -> {
+                        title = stringResource(id = R.string.success_save_dialog_title)
+                        msg = stringResource(id = R.string.success_save_dialog_msg)
+                        icon = Icons.Default.Check
+                    }
+                    1 -> {
+                        title = stringResource(id = R.string.null_mood_dialog_title)
+                        msg = stringResource(id = R.string.null_mood_dialog_msg)
+                    }
+                    2 -> {
+                        title = stringResource(id = R.string.null_time_zone_dialog_title)
+                        msg = stringResource(id = R.string.null_time_zone_dialog_msg)
+                    }
+                    3 -> {
+                        title = stringResource(id = R.string.null_date_dialog_title)
+                        msg = stringResource(id = R.string.null_date_dialog_msg)
+                    }
+                    -1 -> {
+                        title = stringResource(id = R.string.failure_save_dialog_title)
+                        msg = stringResource(id = R.string.failure_save_dialog_msg)
+                    }
+                }
+
+                OkOnlyAlertDialogExample(
+                    onDismissRequest = { viewModel.resetResult() },
+                    onConfirmation = { viewModel.resetResult() },
+                    dialogTitle = title,
+                    dialogText = msg,
+                    icon = icon
+                )
+            }
         }
     }
 }
@@ -154,16 +220,19 @@ private fun SupportMessageSection() {
 }
 
 @Composable
-private fun MoodSection(defaultMoodList: List<DefaultMood>) {
+private fun MoodSection(defaultMoodList: List<DefaultMood>, onMoodClick: (String) -> Unit) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center
     ) {
         defaultMoodList.forEach {
             item {
+                val moodName = stringResource(id = it.getName())
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .clickable { onMoodClick(moodName) }
                 ) {
                     Icon(
                         painter = painterResource(id = it.getIcon()),
@@ -171,7 +240,7 @@ private fun MoodSection(defaultMoodList: List<DefaultMood>) {
                         tint = colorResource(id = it.getColor())
                     )
                     Text(
-                        text = stringResource(id = it.getName())
+                        text = moodName
                     )
                 }
             }
@@ -219,11 +288,17 @@ private fun AddMoodSection() {
 @Composable
 private fun InputSections(
     showDatePicker: Boolean,
-    datePickerState: DatePickerState,
+    timeOfDayList: List<String>,
     timeOfDayState: List<Boolean>,
+    datePickerState: DatePickerState,
+    showMemoSheet: Boolean,
+    enteredMemo: String,
     timeOfDaySelectedIndex: (Int) -> Unit,
     onShowDatePicker: () -> Unit,
-    onDateSelected: (String) -> Unit
+    onDateSelected: (String) -> Unit,
+    onShowMemoSheet: (Boolean) -> Unit,
+    onChangeMemoTextField: (String) -> Unit,
+    onSaveClick: () -> Unit
 ) {
     ElevatedCard(
         modifier = Modifier
@@ -238,6 +313,7 @@ private fun InputSections(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TimeOfDayChip(
+                timeOfDayList,
                 timeOfDayState,
                 timeOfDaySelectedIndex = { timeOfDaySelectedIndex(it) },
                 onItemSelected = { print(it) }
@@ -251,33 +327,27 @@ private fun InputSections(
                     onDateSelected(it)
                 }
             )
-
-            val dummyText = ""
-            var dummySwitch by rememberSaveable { mutableStateOf(false) }
+            
             MemoTextFieldSheet(
-                enteredMemo = dummyText,
-                showSheet = dummySwitch,
-                onTextFieldClick = { dummySwitch = true },
-                onDismissRequest = { dummySwitch = false },
-                onChangeTextField = {print(it)}
+                enteredMemo = enteredMemo,
+                showSheet = showMemoSheet,
+                onTextFieldClick = { onShowMemoSheet(true) },
+                onDismissRequest = { onShowMemoSheet(false) },
+                onChangeTextField = { onChangeMemoTextField(it) }
             )
 
-            RecordSaveButton()
+            RecordSaveButton(onSaveClick = onSaveClick)
         }
     }
 }
 
 @Composable
 private fun TimeOfDayChip(
+    timeOfDayList: List<String>,
     timeOfDayState: List<Boolean>,
     timeOfDaySelectedIndex: (Int) -> Unit,
     onItemSelected: (String) -> Unit
 ) {
-    val timeOfDayList = listOf(
-        stringResource(id = R.string.time_of_day_morning),
-        stringResource(id = R.string.time_of_day_noon),
-        stringResource(id = R.string.time_of_day_night)
-    )
 
     LazyRow(
         modifier = Modifier
@@ -440,12 +510,12 @@ private fun MemoTextFieldSheet(
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text(text = "Enter your text")
+                Text(text = stringResource(id = R.string.memo_support_message))
                 TextField(
                     value = enteredMemo,
                     onValueChange = { onChangeTextField(it) },
                     modifier = Modifier.fillMaxWidth(),
-                    placeholder = { Text("Type here...") }
+                    placeholder = { Text(stringResource(id = R.string.memo_placeholder)) }
                 )
                 Button(
                     onClick = {
@@ -457,7 +527,7 @@ private fun MemoTextFieldSheet(
                     },
                     modifier = Modifier.align(Alignment.End)
                 ) {
-                    Text("Submit")
+                    Text("OK")
                 }
             }
         }
@@ -465,7 +535,7 @@ private fun MemoTextFieldSheet(
 }
 
 @Composable
-private fun RecordSaveButton() {
+private fun RecordSaveButton(onSaveClick: () -> Unit) {
     ElevatedButton(
         modifier = Modifier.padding(8.dp),
         colors = ButtonDefaults.elevatedButtonColors(
@@ -473,7 +543,7 @@ private fun RecordSaveButton() {
             contentColor = MaterialTheme.colorScheme.primary
         ),
         elevation = ButtonDefaults.elevatedButtonElevation(8.dp),
-        onClick = {  }
+        onClick = onSaveClick
     ) {
         Text(text = stringResource(id = R.string.save_button_text))
     }
@@ -489,7 +559,7 @@ private fun convertMillisToDate(millis: Long): String {
 @Composable
 fun RecordViewPreview() {
     MentalRecordAppTheme {
-        MoodRecordView(
+        RecordMoodView(
             navController = null,
             screenTitle = stringResource(id = R.string.mood_record_screen_title),
             selectedTab = 0,

@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 class Screens {
     companion object {
         val screenList = listOf(
-            MoodRecordView(),
+            RecordMoodView(),
             RecordListView()
         )
 
@@ -20,7 +20,7 @@ class Screens {
     }
 
     @Serializable
-    data class MoodRecordView (
+    data class RecordMoodView (
         override val screenTitleResId: Int = R.string.mood_record_screen_title
     ):ScreenData
 

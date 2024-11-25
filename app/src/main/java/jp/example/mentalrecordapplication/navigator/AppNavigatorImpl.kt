@@ -11,7 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import jp.example.mentalrecordapplication.screens.Screens
-import jp.example.mentalrecordapplication.ui.MoodRecordView
+import jp.example.mentalrecordapplication.ui.RecordMoodView
 import jp.example.mentalrecordapplication.ui.RecordListView
 
 class AppNavigatorImpl (private val navController: NavHostController) : AppNavigator {
@@ -22,10 +22,10 @@ class AppNavigatorImpl (private val navController: NavHostController) : AppNavig
         NavHost(
             navController = navController, Screens.screenList.first() // 初期表示画面
         ) {
-            // MoodRecordView
-            composable<Screens.MoodRecordView> { backStackEntry ->
-                val moodRecordView: Screens.MoodRecordView = backStackEntry.toRoute()
-                MoodRecordView(
+            // RecordMoodView
+            composable<Screens.RecordMoodView> { backStackEntry ->
+                val moodRecordView: Screens.RecordMoodView = backStackEntry.toRoute()
+                RecordMoodView(
                     navController = navController,
                     screenTitle = stringResource(id = moodRecordView.screenTitleResId),
                     selectedTab = selectedTab,

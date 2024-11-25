@@ -17,7 +17,8 @@
     <string name="time_of_day_noon">Noon</string>
     <string name="time_of_day_night">Night</string>
     <string name="memo_title">Memo</string>
-
+    <string name="memo_support_message">Enter the memo you want to make.</string>
+    <string name="memo_placeholder">Type here…</string>
 
     <string name="menu_back_button_text">Back</string>
 
@@ -28,8 +29,8 @@
     <string name="null_date_dialog_msg">Please select a date.</string>
     <string name="null_mood_dialog_title">No emotion selected</string>
     <string name="null_mood_dialog_msg">Tap the button that best describes how you feel.</string>
-    <string name="null_time_zone_dialog_title">Time zone is missing</string>
-    <string name="null_time_zone_dialog_msg">Please select a time slot.</string>
+    <string name="null_time_zone_dialog_title">No time of day has been selected.</string>
+    <string name="null_time_zone_dialog_msg">Please select from morning, noon, or night.</string>
     <string name="failure_save_dialog_title">Failure</string>
     <string name="failure_save_dialog_msg">Saving failed.</string>
     <string name="not_data_dialog_title">Unable to display</string>

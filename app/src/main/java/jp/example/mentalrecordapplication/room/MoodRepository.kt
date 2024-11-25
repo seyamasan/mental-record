@@ -1,25 +1,15 @@
-package jp.example.mentalrecordapplication.repository
-
-import android.app.Application
-import jp.example.mentalrecordapplication.room.MoodDao
-import jp.example.mentalrecordapplication.room.MoodDataBase
-import jp.example.mentalrecordapplication.room.MoodEntity
+package jp.example.mentalrecordapplication.room
 
 /*
 * mood_databaseのmood_tableを操作する
 */
 
-class MoodRepository(application: Application) {
-    private val _dao: MoodDao
-    init {
-        val db = MoodDataBase.buildDatabase(application)
-        _dao = db.moodDao() // 使うDaoを指定
-    }
+class MoodRepository(private val moodDao: MoodDao) {
 
     // DBにデータを保存
     suspend fun insert(mood:String, date:String, timeZone: String, memo: String): Boolean {
         return try {
-            _dao.insert(
+            moodDao.insert(
                 MoodEntity(
                     id = 0, // 自動的にIDを入れるときは0を入れる
                     mood = mood,
@@ -36,7 +26,7 @@ class MoodRepository(application: Application) {
 
     // DBのデータ全部取得
     suspend fun selectAll(): List<MoodEntity>? {
-        val data = _dao.selectAll()
+        val data = moodDao.selectAll()
         data.ifEmpty {
             return null
         }
@@ -46,7 +36,7 @@ class MoodRepository(application: Application) {
     // DBの内容を全て消す
     suspend fun deleteAll(): Boolean {
         return try {
-            _dao.deleteAll()
+            moodDao.deleteAll()
             true
         } catch (e: Exception) {
             false

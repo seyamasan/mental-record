@@ -2,7 +2,7 @@
 <!--    App Name-->
     <string name="mental_record_app_name">MENTAL RECORD</string>
 
-<!--    MoodRecordView-->
+<!--    RecordMoodView-->
     <string name="mood_record_screen_title">記録する</string>
     <string name="support_message">今の気持ちは？</string>
     <string name="mood_happy">喜</string>
@@ -17,6 +17,8 @@
     <string name="time_of_day_noon">昼</string>
     <string name="time_of_day_night">夜</string>
     <string name="memo_title">メモ</string>
+    <string name="memo_support_message">メモしたいことを入力してください。</string>
+    <string name="memo_placeholder">ここに入力…</string>
 
 
     <string name="menu_back_button_text">戻る</string>
@@ -28,8 +30,8 @@
     <string name="null_date_dialog_msg">日付を選択してください。</string>
     <string name="null_mood_dialog_title">感情が未選択です</string>
     <string name="null_mood_dialog_msg">一番気持ちが近いボタンをタップしてください。</string>
-    <string name="null_time_zone_dialog_title">時間帯が未入力です</string>
-    <string name="null_time_zone_dialog_msg">時間帯を選択してください。</string>
+    <string name="null_time_zone_dialog_title">時間帯が未選択です。</string>
+    <string name="null_time_zone_dialog_msg">朝・昼・夜から選択してください。</string>
     <string name="failure_save_dialog_title">失敗</string>
     <string name="failure_save_dialog_msg">保存に失敗しました。</string>
     <string name="not_data_dialog_title">表示できません</string>
