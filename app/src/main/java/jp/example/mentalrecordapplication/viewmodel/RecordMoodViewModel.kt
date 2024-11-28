@@ -7,12 +7,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.example.mentalrecordapplication.room.MoodRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class RecordMoodViewModel(private val repository: MoodRepository) : ViewModel() {
+@HiltViewModel
+class RecordMoodViewModel @Inject constructor(
+    private val repository: MoodRepository
+) : ViewModel() {
 
     private var selectedMood by mutableStateOf("")
     private var selectedTimeOfDate by mutableStateOf("")

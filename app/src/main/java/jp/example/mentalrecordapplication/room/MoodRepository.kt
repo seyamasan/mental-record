@@ -1,10 +1,16 @@
 package jp.example.mentalrecordapplication.room
 
+import javax.inject.Inject
+import javax.inject.Singleton
+
 /*
 * mood_databaseのmood_tableを操作する
 */
 
-class MoodRepository(private val moodDao: MoodDao) {
+@Singleton
+class MoodRepository@Inject constructor(
+    private val moodDao: MoodDao
+) {
 
     // DBにデータを保存
     suspend fun insert(mood:String, date:String, timeZone: String, memo: String): Boolean {

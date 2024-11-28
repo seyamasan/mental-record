@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -96,9 +97,10 @@ dependencies {
     // lifecycle-viewmodel-compose
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
-    // koin
-    implementation(libs.koin.android)
-    implementation(libs.koin.androidx.compose)
+    // hilt
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    ksp(libs.hilt.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -1,14 +1,28 @@
 package jp.example.mentalrecordapplication.di
 
+import android.app.Application
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import jp.example.mentalrecordapplication.room.MoodDao
 import jp.example.mentalrecordapplication.room.MoodDataBase
 import jp.example.mentalrecordapplication.room.MoodRepository
-import jp.example.mentalrecordapplication.viewmodel.RecordMoodViewModel
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.module.dsl.viewModel
-import org.koin.dsl.module
+import javax.inject.Singleton
 
-val moodModule = module {
-    single { MoodDataBase.buildDatabase(androidContext()).moodDao() }
-    single { MoodRepository(get()) }
-    viewModel { RecordMoodViewModel(get()) }
+@InstallIn(SingletonComponent::class)
+@Module
+object MoodModule {
+
+    @Provides
+    @Singleton
+    fun provideMoodDao(application: Application): MoodDao {
+        return MoodDataBase.buildDatabase(application.applicationContext).moodDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMoodRepository(moodDao: MoodDao): MoodRepository {
+        return MoodRepository(moodDao)
+    }
 }

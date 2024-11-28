@@ -68,6 +68,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import jp.example.mentalrecordapplication.R
 import jp.example.mentalrecordapplication.data.DefaultMood
@@ -77,7 +78,6 @@ import jp.example.mentalrecordapplication.ui.common.TopBarView
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 import jp.example.mentalrecordapplication.viewmodel.RecordMoodViewModel
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -85,7 +85,7 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecordMoodView(
-    viewModel: RecordMoodViewModel = koinViewModel(),
+    viewModel: RecordMoodViewModel = hiltViewModel(),
     navController: NavHostController?,
     screenTitle: String,
     selectedTab: Int,
