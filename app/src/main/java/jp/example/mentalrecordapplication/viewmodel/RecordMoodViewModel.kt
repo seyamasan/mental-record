@@ -60,7 +60,7 @@ class RecordMoodViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val result = repository.insert(
                 mood = selectedMood,
-                date = selectedTimeOfDate,
+                date = selectedDate,
                 timeZone = selectedTimeOfDate,
                 memo = enteredMemo
             )
@@ -74,14 +74,4 @@ class RecordMoodViewModel @Inject constructor(
     fun resetResult() {
         _saveResult.value = null
     }
-
-//    fun getMoodDetails() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            val result = repository.selectAll()
-////            val sortedResult = result?.sortedBy { it.localDate } // 年月日をもとにソート
-//            withContext(Dispatchers.Main) {
-//                print(result)
-//            }
-//        }
-//    }
 }

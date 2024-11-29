@@ -1,9 +1,11 @@
 package jp.example.mentalrecordapplication.di
 
-import android.app.Application
+import android.content.Context
+import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import jp.example.mentalrecordapplication.room.MoodDao
 import jp.example.mentalrecordapplication.room.MoodDataBase
@@ -16,8 +18,12 @@ object MoodModule {
 
     @Provides
     @Singleton
-    fun provideMoodDao(application: Application): MoodDao {
-        return MoodDataBase.buildDatabase(application.applicationContext).moodDao()
+    fun provideMoodDao(@ApplicationContext context: Context): MoodDao {
+        return Room.databaseBuilder(
+            context,
+            MoodDataBase::class.java,
+            "mood_database"
+        ).build().moodDao()
     }
 
     @Provides

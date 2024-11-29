@@ -1,5 +1,7 @@
 package jp.example.mentalrecordapplication.navigator
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -16,6 +18,7 @@ import jp.example.mentalrecordapplication.ui.RecordListView
 
 class AppNavigatorImpl (private val navController: NavHostController) : AppNavigator {
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @Composable
     override fun NavigateTo() {
         var selectedTab by rememberSaveable { mutableIntStateOf(0) }
