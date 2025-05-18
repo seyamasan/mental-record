@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material.icons.filled.SmsFailed
 import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material.icons.filled.WbTwilight
@@ -161,25 +162,29 @@ fun RecordMoodView(
                 var icon = Icons.Default.SmsFailed
                 when (saveResult) {
                     0 -> {
-                        title = stringResource(id = R.string.success_save_dialog_title)
+                        title = stringResource(id = R.string.success)
                         msg = stringResource(id = R.string.success_save_dialog_msg)
                         icon = Icons.Default.Check
                     }
                     1 -> {
                         title = stringResource(id = R.string.null_mood_dialog_title)
                         msg = stringResource(id = R.string.null_mood_dialog_msg)
+                        icon = Icons.Default.ErrorOutline
                     }
                     2 -> {
                         title = stringResource(id = R.string.null_time_zone_dialog_title)
                         msg = stringResource(id = R.string.null_time_zone_dialog_msg)
+                        icon = Icons.Default.ErrorOutline
                     }
                     3 -> {
                         title = stringResource(id = R.string.null_date_dialog_title)
                         msg = stringResource(id = R.string.null_date_dialog_msg)
+                        icon = Icons.Default.ErrorOutline
                     }
                     -1 -> {
-                        title = stringResource(id = R.string.failure_save_dialog_title)
+                        title = stringResource(id = R.string.failure)
                         msg = stringResource(id = R.string.failure_save_dialog_msg)
+                        icon = Icons.Default.ErrorOutline
                     }
                 }
 

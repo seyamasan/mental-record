@@ -9,6 +9,9 @@ interface MoodDao {
     @Insert
     suspend fun insert(moodEntity: MoodEntity)
 
+    @Query("DELETE FROM mood_table WHERE id = :id")
+    suspend fun deleteById(id: Int)
+
     @Query("SELECT * FROM mood_table")
     suspend fun selectAll(): List<MoodEntity>
 

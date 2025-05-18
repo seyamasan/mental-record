@@ -2,6 +2,10 @@
 <!--    App Name-->
     <string name="mental_record_app_name">MENTAL RECORD</string>
 
+<!--    Common-->
+    <string name="success">Success</string>
+    <string name="failure">Failure</string>
+
 <!--    RecordView-->
     <string name="mood_record_screen_title">Record</string>
     <string name="support_message">How do you mood?</string>
@@ -19,11 +23,7 @@
     <string name="memo_title">Memo</string>
     <string name="memo_support_message">Enter the memo you want to make.</string>
     <string name="memo_placeholder">Type here…</string>
-
     <string name="menu_back_button_text">Back</string>
-
-
-    <string name="success_save_dialog_title">Success</string>
     <string name="success_save_dialog_msg">Saving was successful.</string>
     <string name="null_date_dialog_title">Date not selected</string>
     <string name="null_date_dialog_msg">Please select a date.</string>
@@ -31,7 +31,6 @@
     <string name="null_mood_dialog_msg">Tap the button that best describes how you feel.</string>
     <string name="null_time_zone_dialog_title">No time of day has been selected.</string>
     <string name="null_time_zone_dialog_msg">Please select from morning, noon, or night.</string>
-    <string name="failure_save_dialog_title">Failure</string>
     <string name="failure_save_dialog_msg">Saving failed.</string>
     <string name="not_data_dialog_title">Unable to display</string>
     <string name="not_data_dialog_msg">Data does not exist.</string>
@@ -40,6 +39,8 @@
 
 <!--    RecordListView-->
     <string name="record_list_screen_title">List</string>
+    <string name="failed_to_delete_record_msg">Failed to delete record.</string>
+    <string name="no_record_exists">No records seem to exist!</string>
 
 <!--    プライバシーポリシー-->
     <string name="privacy_policy_url">https://doc-hosting.flycricket.io/mental-record-mentaruwoji-lu-privacy-policy/d7c7ce7e-f84a-4f56-9841-15a598e6b960/privacy</string>

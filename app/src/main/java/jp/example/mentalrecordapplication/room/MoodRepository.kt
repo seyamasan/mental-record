@@ -30,6 +30,16 @@ class MoodRepository@Inject constructor(
         }
     }
 
+    // 指定したidのデータを削除
+    suspend fun deleteById(id: Int): Boolean {
+        return try {
+            moodDao.deleteById(id = id)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
     // DBのデータ全部取得
     suspend fun selectAll(): List<MoodEntity>? {
         val data = moodDao.selectAll()
