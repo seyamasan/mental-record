@@ -8,7 +8,6 @@ import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,11 +15,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.DarkMode
@@ -42,7 +39,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -65,13 +61,13 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import jp.example.mentalrecordapplication.R
 import jp.example.mentalrecordapplication.data.DefaultMood
+import jp.example.mentalrecordapplication.screens.Screens
 import jp.example.mentalrecordapplication.ui.common.BottomNavBarView
 import jp.example.mentalrecordapplication.ui.common.OkOnlyAlertDialogExample
 import jp.example.mentalrecordapplication.ui.common.TopBarView
@@ -93,9 +89,9 @@ fun RecordMoodView(
 ) {
     var showDatePicker by rememberSaveable { mutableStateOf(false) }
     var timeOfDayState by rememberSaveable { mutableStateOf(listOf(false, false, false)) }
-    val datePickerState = rememberDatePickerState()
     var showMemoSheet by rememberSaveable { mutableStateOf(false) }
-    val enteredMemo = viewModel.enteredMemo
+    val datePickerState = rememberDatePickerState()
+
     val saveResult by viewModel.saveResult.observeAsState(null)
 
     val defaultMoodList = listOf(
@@ -131,15 +127,14 @@ fun RecordMoodView(
             verticalArrangement = Arrangement.spacedBy(32.dp)
         ) {
             SupportMessageSection()
-            MoodSection(defaultMoodList, onMoodClick = { viewModel.updateMood(it) })
-            AddMoodSection()
+            MoodSection(viewModel = viewModel, defaultMoodList = defaultMoodList)
             InputSections(
+                viewModel = viewModel,
                 showDatePicker = showDatePicker,
                 timeOfDayList = timeOfDayList,
                 timeOfDayState = timeOfDayState,
                 datePickerState = datePickerState,
                 showMemoSheet = showMemoSheet,
-                enteredMemo = enteredMemo,
                 timeOfDaySelectedIndex = {
                     timeOfDayState = List(timeOfDayState.size) { i -> i == it }
                     viewModel.updateTimeOfDate(timeOfDayList[it])
@@ -189,8 +184,18 @@ fun RecordMoodView(
                 }
 
                 OkOnlyAlertDialogExample(
-                    onDismissRequest = { viewModel.resetResult() },
-                    onConfirmation = { viewModel.resetResult() },
+                    onDismissRequest = {
+                        if (saveResult == 0) {
+                            transitionToTheRecordListView(navController, onSelectedTab)
+                        }
+                        viewModel.resetResult()
+                    },
+                    onConfirmation = {
+                        if (saveResult == 0) {
+                            transitionToTheRecordListView(navController, onSelectedTab)
+                        }
+                        viewModel.resetResult()
+                    },
                     dialogTitle = title,
                     dialogText = msg,
                     icon = icon
@@ -220,24 +225,41 @@ private fun SupportMessageSection() {
 }
 
 @Composable
-private fun MoodSection(defaultMoodList: List<DefaultMood>, onMoodClick: (String) -> Unit) {
+private fun MoodSection(
+    viewModel: RecordMoodViewModel,
+    defaultMoodList: List<DefaultMood>
+) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center
     ) {
-        defaultMoodList.forEach {
+        defaultMoodList.forEachIndexed { index, mood ->
             item {
-                val moodName = stringResource(id = it.getName())
+                val moodName = stringResource(id = mood.getName())
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .clickable { onMoodClick(moodName) }
+                        .then(
+                            if (viewModel.selectedMoodIndex == index) {
+                                Modifier.border(
+                                    width = 2.dp,
+                                    color = MaterialTheme.colorScheme.primary,
+                                    shape = RoundedCornerShape(8.dp)
+                                )
+                            } else {
+                                Modifier
+                            }
+                        )
+                        .padding(16.dp)
+                        .clickable {
+                            viewModel.updateMood(moodName)
+                            viewModel.updateSelectedMoodIndex(index)
+                        }
                 ) {
                     Icon(
-                        painter = painterResource(id = it.getIcon()),
+                        painter = painterResource(id = mood.getIcon()),
                         contentDescription = "Mood Icon",
-                        tint = colorResource(id = it.getColor())
+                        tint = colorResource(id = mood.getColor())
                     )
                     Text(
                         text = moodName
@@ -248,51 +270,15 @@ private fun MoodSection(defaultMoodList: List<DefaultMood>, onMoodClick: (String
     }
 }
 
-@Composable
-private fun AddMoodSection() {
-    Box(
-        modifier = Modifier.fillMaxWidth(),
-        contentAlignment = Alignment.Center
-    ) {
-        OutlinedButton(
-            onClick = { print("") },
-            shape = CircleShape,
-            modifier = Modifier
-                .size(100.dp),
-            contentPadding = PaddingValues(12.dp)
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = "Add icon.",
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(32.dp)
-                )
-                Text(
-                    text = stringResource(id = R.string.add_custom_mood),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                    textAlign = TextAlign.Center,
-                    maxLines = 2,
-                    modifier = Modifier.padding(top = 4.dp)
-                )
-            }
-        }
-    }
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun InputSections(
+    viewModel: RecordMoodViewModel,
     showDatePicker: Boolean,
     timeOfDayList: List<String>,
     timeOfDayState: List<Boolean>,
     datePickerState: DatePickerState,
     showMemoSheet: Boolean,
-    enteredMemo: String,
     timeOfDaySelectedIndex: (Int) -> Unit,
     onShowDatePicker: () -> Unit,
     onDateSelected: (String) -> Unit,
@@ -329,7 +315,7 @@ private fun InputSections(
             )
             
             MemoTextFieldSheet(
-                enteredMemo = enteredMemo,
+                enteredMemo = viewModel.enteredMemo,
                 showSheet = showMemoSheet,
                 onTextFieldClick = { onShowMemoSheet(true) },
                 onDismissRequest = { onShowMemoSheet(false) },
@@ -547,6 +533,14 @@ private fun RecordSaveButton(onSaveClick: () -> Unit) {
     ) {
         Text(text = stringResource(id = R.string.save_button_text))
     }
+}
+
+private fun transitionToTheRecordListView(
+    navController: NavHostController?,
+    onSelectedTab: (Int) -> Unit
+) {
+    onSelectedTab(Screens.recordListView.navBarIndex)
+    navController?.navigate(Screens.recordListView)
 }
 
 private fun convertMillisToDate(millis: Long): String {

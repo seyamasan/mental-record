@@ -6,26 +6,28 @@ import androidx.compose.material.icons.filled.List
 import jp.example.mentalrecordapplication.R
 import kotlinx.serialization.Serializable
 
-class Screens {
-    companion object {
-        val screenList = listOf(
-            RecordMoodView(),
-            RecordListView()
-        )
+object Screens {
+    val recordListView = RecordListView()
 
-        val iconList = listOf(
-            Icons.Filled.Create,
-            Icons.Filled.List
-        )
-    }
+    val screenList = listOf(
+        RecordMoodView(),
+        recordListView
+    )
+
+    val iconList = listOf(
+        Icons.Filled.Create,
+        Icons.Filled.List
+    )
 
     @Serializable
     data class RecordMoodView (
-        override val screenTitleResId: Int = R.string.mood_record_screen_title
+        override val screenTitleResId: Int = R.string.mood_record_screen_title,
+        val navBarIndex: Int = 0
     ):ScreenData
 
     @Serializable
     data class RecordListView (
-        override val screenTitleResId: Int = R.string.record_list_screen_title
+        override val screenTitleResId: Int = R.string.record_list_screen_title,
+        val navBarIndex: Int = 1
     ):ScreenData
 }

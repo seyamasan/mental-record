@@ -23,3 +23,7 @@ MVVM + Repository
 # Local DB
 
 SQLite
+
+# DI
+
+Dagger Hilt

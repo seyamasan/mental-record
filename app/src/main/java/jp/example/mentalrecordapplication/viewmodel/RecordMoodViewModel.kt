@@ -1,6 +1,7 @@
 package jp.example.mentalrecordapplication.viewmodel
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
@@ -19,49 +20,58 @@ class RecordMoodViewModel @Inject constructor(
     private val repository: MoodRepository
 ) : ViewModel() {
 
-    private var selectedMood by mutableStateOf("")
-    private var selectedTimeOfDate by mutableStateOf("")
-    private var selectedDate by mutableStateOf("")
-    var enteredMemo by mutableStateOf("")
-        private set
+    private var _selectedMood by mutableStateOf("")
+    private var _selectedTimeOfDate by mutableStateOf("")
+    private var _selectedDate by mutableStateOf("")
+
+    private var _enteredMemo by mutableStateOf("")
+    val enteredMemo get() = _enteredMemo
+
+    private var _selectedMoodIndex by mutableIntStateOf(-1)
+    val selectedMoodIndex get() = _selectedMoodIndex
+
     private val _saveResult = MutableLiveData<Int?>()
     val saveResult: LiveData<Int?> get() = _saveResult
 
     fun updateMood(mood: String) {
-        selectedMood = mood
+        _selectedMood = mood
+    }
+
+    fun updateSelectedMoodIndex(index: Int) {
+        _selectedMoodIndex = index
     }
 
     fun updateTimeOfDate(timeOdDate: String) {
-        selectedTimeOfDate = timeOdDate
+        _selectedTimeOfDate = timeOdDate
     }
 
     fun updateDate(date: String) {
-        selectedDate = date
+        _selectedDate = date
     }
 
     fun updateMemo(memo: String) {
-        enteredMemo = memo
+        _enteredMemo = memo
     }
 
     fun saveMoodDetail() {
-        if (selectedMood.isEmpty()) {
+        if (_selectedMood.isEmpty()) {
             _saveResult.value = 1
             return
         }
-        if (selectedTimeOfDate.isEmpty()) {
+        if (_selectedTimeOfDate.isEmpty()) {
             _saveResult.value = 2
             return
         }
-        if (selectedDate.isEmpty()) {
+        if (_selectedDate.isEmpty()) {
             _saveResult.value = 3
             return
         }
 
         viewModelScope.launch(Dispatchers.IO) {
             val result = repository.insert(
-                mood = selectedMood,
-                date = selectedDate,
-                timeZone = selectedTimeOfDate,
+                mood = _selectedMood,
+                date = _selectedDate,
+                timeZone = _selectedTimeOfDate,
                 memo = enteredMemo
             )
             // メインスレッドで更新
