@@ -1,87 +1,122 @@
 package jp.example.mentalrecordapplication.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.example.mentalrecordapplication.room.MoodRepository
+import jp.example.mentalrecordapplication.ui.recordmood.RecordMoodState
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class RecordMoodViewModel @Inject constructor(
-    private val repository: MoodRepository
-) : ViewModel() {
+class RecordMoodViewModel @Inject constructor(private val repository: MoodRepository) : ViewModel() {
+    private val _uiState = MutableStateFlow(RecordMoodState())
+    val uiState: StateFlow<RecordMoodState> = _uiState.asStateFlow()
 
-    private var _selectedMood by mutableStateOf("")
-    private var _selectedTimeOfDate by mutableStateOf("")
-    private var _selectedDate by mutableStateOf("")
-
-    private var _enteredMemo by mutableStateOf("")
-    val enteredMemo get() = _enteredMemo
-
-    private var _selectedMoodIndex by mutableIntStateOf(-1)
-    val selectedMoodIndex get() = _selectedMoodIndex
-
-    private val _saveResult = MutableLiveData<Int?>()
-    val saveResult: LiveData<Int?> get() = _saveResult
-
-    fun updateMood(mood: String) {
-        _selectedMood = mood
+    fun updateIsDatePickerVisible(newState: Boolean) {
+        _uiState.update { state ->
+            state.copy(
+                isDatePickerVisible = newState
+            )
+        }
     }
 
-    fun updateSelectedMoodIndex(index: Int) {
-        _selectedMoodIndex = index
+    fun updateTimeOfDayState(newState: List<Boolean>) {
+        _uiState.update { state ->
+            state.copy(
+                timeOfDayState = newState
+            )
+        }
     }
 
-    fun updateTimeOfDate(timeOdDate: String) {
-        _selectedTimeOfDate = timeOdDate
+    fun updateIsMemoSheetVisible(newState: Boolean) {
+        _uiState.update { state ->
+            state.copy(
+                isMemoSheetVisible = newState
+            )
+        }
     }
 
-    fun updateDate(date: String) {
-        _selectedDate = date
+    fun updateMood(newState: String) {
+        _uiState.update { state ->
+            state.copy(
+                selectedMood = newState
+            )
+        }
     }
 
-    fun updateMemo(memo: String) {
-        _enteredMemo = memo
+    fun updateSelectedMoodIndex(newState: Int) {
+        _uiState.update { state ->
+            state.copy(
+                selectedMoodIndex = newState
+            )
+        }
+    }
+
+    fun updateTimeOfDate(newState: String) {
+        _uiState.update { state ->
+            state.copy(
+                selectedTimeOfDate = newState
+            )
+        }
+    }
+
+    fun updateDate(newState: String) {
+        _uiState.update { state ->
+            state.copy(
+                selectedDate = newState
+            )
+        }
+    }
+
+    fun updateMemo(newState: String) {
+        _uiState.update { state ->
+            state.copy(
+                enteredMemo = newState
+            )
+        }
+    }
+
+    fun updateSaveResult(newState: Int?) {
+        _uiState.update { state ->
+            state.copy(
+                saveResult = newState
+            )
+        }
     }
 
     fun saveMoodDetail() {
-        if (_selectedMood.isEmpty()) {
-            _saveResult.value = 1
+        if (_uiState.value.selectedMood.isEmpty()) {
+            updateSaveResult(newState = 1)
             return
         }
-        if (_selectedTimeOfDate.isEmpty()) {
-            _saveResult.value = 2
+        if (_uiState.value.selectedTimeOfDate.isEmpty()) {
+            updateSaveResult(newState = 2)
             return
         }
-        if (_selectedDate.isEmpty()) {
-            _saveResult.value = 3
+        if (_uiState.value.selectedDate.isEmpty()) {
+            updateSaveResult(newState = 3)
             return
         }
 
         viewModelScope.launch(Dispatchers.IO) {
             val result = repository.insert(
-                mood = _selectedMood,
-                date = _selectedDate,
-                timeZone = _selectedTimeOfDate,
-                memo = enteredMemo
+                mood = _uiState.value.selectedMood,
+                date = _uiState.value.selectedDate,
+                timeZone = _uiState.value.selectedTimeOfDate,
+                memo = _uiState.value.enteredMemo
             )
-            // メインスレッドで更新
-            withContext(Dispatchers.Main) {
-                _saveResult.value = if (result) 0 else -1 // -1は失敗を表す値
+
+            if (result) {
+                updateSaveResult(newState = 0)
+            } else {
+                updateSaveResult(newState = -1) // -1は失敗を表す値
             }
         }
-    }
-
-    fun resetResult() {
-        _saveResult.value = null
     }
 }

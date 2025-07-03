@@ -13,7 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import jp.example.mentalrecordapplication.screens.Screens
-import jp.example.mentalrecordapplication.ui.RecordMoodView
+import jp.example.mentalrecordapplication.ui.recordmood.RecordMoodView
 import jp.example.mentalrecordapplication.ui.RecordListView
 
 class AppNavigatorImpl (private val navController: NavHostController) : AppNavigator {
