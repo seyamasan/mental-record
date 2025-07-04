@@ -1,4 +1,4 @@
-package jp.example.mentalrecordapplication.ui
+package jp.example.mentalrecordapplication.ui.recordlist
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -32,7 +32,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -50,7 +49,6 @@ import jp.example.mentalrecordapplication.ui.common.BottomNavBarView
 import jp.example.mentalrecordapplication.ui.common.OkOnlyAlertDialogExample
 import jp.example.mentalrecordapplication.ui.common.TopBarView
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
-import jp.example.mentalrecordapplication.viewmodel.RecordListViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -61,8 +59,7 @@ fun RecordListView(
     selectedTab: Int,
     onSelectedTab: (Int) -> Unit
 ) {
-    val listItem by viewModel.listItem.collectAsState()
-    val deleteByIdResult by viewModel.deleteByIdResult.observeAsState(null)
+    val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.fetchAllItems()
@@ -82,7 +79,7 @@ fun RecordListView(
         }
     ) { innerPadding ->
 
-        if (listItem.isNullOrEmpty()) {
+        if (uiState.listItem.isNullOrEmpty()) {
             NoDataView(padding = innerPadding)
         } else {
             LazyColumn(
@@ -91,7 +88,7 @@ fun RecordListView(
                     .fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                listItem?.forEach {
+                uiState.listItem?.forEach {
                     item {
                         MoodCard(viewModel = viewModel, moodEntity = it)
                     }
@@ -99,11 +96,11 @@ fun RecordListView(
             }
         }
 
-        if (deleteByIdResult != null) {
+        if (uiState.deleteByIdResult != null) {
             var title = ""
             var msg = ""
             var icon = Icons.Default.SmsFailed
-            when (deleteByIdResult) {
+            when (uiState.deleteByIdResult) {
                 -1 -> {
                     title = stringResource(id = R.string.failure)
                     msg = stringResource(id = R.string.failed_to_delete_record_msg)
@@ -113,10 +110,10 @@ fun RecordListView(
 
             OkOnlyAlertDialogExample(
                 onDismissRequest = {
-                    viewModel.resetDeleteByIdResult()
+                    viewModel.updateDeleteByIdResult(newState = null)
                 },
                 onConfirmation = {
-                    viewModel.resetDeleteByIdResult()
+                    viewModel.updateDeleteByIdResult(newState = null)
                 },
                 dialogTitle = title,
                 dialogText = msg,

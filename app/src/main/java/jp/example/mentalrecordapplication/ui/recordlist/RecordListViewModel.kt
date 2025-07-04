@@ -1,9 +1,7 @@
-package jp.example.mentalrecordapplication.viewmodel
+package jp.example.mentalrecordapplication.ui.recordlist
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,29 +10,30 @@ import jp.example.mentalrecordapplication.room.MoodRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class RecordListViewModel @Inject constructor(
-    private val repository: MoodRepository
-) : ViewModel() {
+class RecordListViewModel @Inject constructor(private val repository: MoodRepository) : ViewModel() {
+    private val _uiState = MutableStateFlow(RecordListState())
+    val uiState: StateFlow<RecordListState> = _uiState.asStateFlow()
 
-    private val _listItem = MutableStateFlow<List<MoodEntity>?>(emptyList())
-    val listItem: StateFlow<List<MoodEntity>?> get() = _listItem
-
-    private val _deleteByIdResult = MutableLiveData<Int?>()
-    val deleteByIdResult: LiveData<Int?> get() = _deleteByIdResult
+    fun updateDeleteByIdResult(newState: Int?) {
+        _uiState.update { state ->
+            state.copy(
+                deleteByIdResult = newState
+            )
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun fetchAllItems() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = repository.selectAll()
             val sortedResult = result?.sortedBy { it.localDate } // 年月日をもとにソート
-            withContext(Dispatchers.Main) {
-                _listItem.value = sortedResult
-            }
+            updateListItem(newState = sortedResult)
         }
     }
 
@@ -42,17 +41,19 @@ class RecordListViewModel @Inject constructor(
     fun deleteById(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = repository.deleteById(id = id)
-            if (!result) {
-                withContext(Dispatchers.Main) {
-                    _deleteByIdResult.value = 1
-                }
-            } else {
+            if (result) {
                 fetchAllItems()
+            } else {
+                updateDeleteByIdResult(newState = -1) // -1は失敗
             }
         }
     }
 
-    fun resetDeleteByIdResult() {
-        _deleteByIdResult.value = null
+    private fun updateListItem(newState: List<MoodEntity>?) {
+        _uiState.update { state ->
+            state.copy(
+                listItem = newState
+            )
+        }
     }
 }

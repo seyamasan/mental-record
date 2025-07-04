@@ -71,7 +71,6 @@ import jp.example.mentalrecordapplication.ui.common.OkOnlyAlertDialogExample
 import jp.example.mentalrecordapplication.ui.common.TopBarView
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 import jp.example.mentalrecordapplication.utils.DateUtil
-import jp.example.mentalrecordapplication.viewmodel.RecordMoodViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

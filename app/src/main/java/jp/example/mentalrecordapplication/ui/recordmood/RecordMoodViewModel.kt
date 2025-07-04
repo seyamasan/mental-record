@@ -1,10 +1,9 @@
-package jp.example.mentalrecordapplication.viewmodel
+package jp.example.mentalrecordapplication.ui.recordmood
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.example.mentalrecordapplication.room.MoodRepository
-import jp.example.mentalrecordapplication.ui.recordmood.RecordMoodState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
