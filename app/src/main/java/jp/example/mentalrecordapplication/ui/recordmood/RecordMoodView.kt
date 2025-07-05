@@ -8,11 +8,15 @@ import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,10 +30,10 @@ import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material.icons.filled.SmsFailed
 import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material.icons.filled.WbTwilight
-import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
@@ -37,6 +41,7 @@ import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -45,6 +50,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
+import androidx.compose.material3.ToggleButton
+import androidx.compose.material3.ToggleButtonDefaults
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -58,6 +65,9 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -267,7 +277,7 @@ private fun InputSections(
             verticalArrangement = Arrangement.spacedBy(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TimeOfDayChip(
+            TimeOfDayButtonGroup(
                 timeOfDayList,
                 uiState.timeOfDayState,
                 timeOfDaySelectedIndex = {
@@ -301,58 +311,66 @@ private fun InputSections(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-private fun TimeOfDayChip(
+fun TimeOfDayButtonGroup(
     timeOfDayList: List<String>,
     timeOfDayState: List<Boolean>,
     timeOfDaySelectedIndex: (Int) -> Unit,
     onItemSelected: (String) -> Unit
 ) {
-
-    LazyRow(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterHorizontally)
+    FlowRow(
+        Modifier.fillMaxWidth()
+            .wrapContentWidth(Alignment.CenterHorizontally) // これでFlowRow自体を中央に寄せる
+            .padding(horizontal = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
+        verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
-        timeOfDayList.forEachIndexed { index, item ->
+        timeOfDayList.forEachIndexed { index, timeOdDay ->
             val isSelected = timeOfDayState[index]
-            item {
-                AssistChip(
-                    onClick = {
-                        timeOfDaySelectedIndex(index)
-                        onItemSelected(item)
+            ToggleButton(
+                checked = isSelected,
+                onCheckedChange = {
+                    timeOfDaySelectedIndex(index)
+                    onItemSelected(timeOdDay)
+                },
+                shapes =
+                    when (index) {
+                        0 -> ButtonGroupDefaults.connectedLeadingButtonShapes()
+                        timeOfDayList.lastIndex -> ButtonGroupDefaults.connectedTrailingButtonShapes()
+                        else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
                     },
-                    label = { Text(text = item) },
-                    colors = AssistChipDefaults.assistChipColors(
-                        containerColor = if (isSelected) MaterialTheme.colorScheme.primaryContainer
-                        else MaterialTheme.colorScheme.surface
-                    ),
-                    leadingIcon = {
-                        when (index) {
-                            0 -> {
-                                Icon(
-                                    Icons.Filled.WbTwilight,
-                                    contentDescription = "WbTwilight icon",
-                                    Modifier.size(AssistChipDefaults.IconSize)
-                                )
-                            }
-                            1 -> {
-                                Icon(
-                                    Icons.Filled.WbSunny,
-                                    contentDescription = "WbSunny icon",
-                                    Modifier.size(AssistChipDefaults.IconSize)
-                                )
-                            }
-                            2 -> {
-                                Icon(
-                                    Icons.Filled.DarkMode,
-                                    contentDescription = "DarkMode icon",
-                                    Modifier.size(AssistChipDefaults.IconSize)
-                                )
-                            }
-                        }
+                colors = ToggleButtonDefaults.toggleButtonColors(
+                    containerColor = if (isSelected) MaterialTheme.colorScheme.primaryContainer
+                    else MaterialTheme.colorScheme.background
+                ),
+                modifier = Modifier.semantics { role = Role.RadioButton }
+            ) {
+                when (index) {
+                    0 -> {
+                        Icon(
+                            Icons.Filled.WbTwilight,
+                            contentDescription = "WbTwilight icon",
+                            Modifier.size(AssistChipDefaults.IconSize)
+                        )
                     }
-                )
+                    1 -> {
+                        Icon(
+                            Icons.Filled.WbSunny,
+                            contentDescription = "WbSunny icon",
+                            Modifier.size(AssistChipDefaults.IconSize)
+                        )
+                    }
+                    2 -> {
+                        Icon(
+                            Icons.Filled.DarkMode,
+                            contentDescription = "DarkMode icon",
+                            Modifier.size(AssistChipDefaults.IconSize)
+                        )
+                    }
+                }
+                Spacer(Modifier.size(ToggleButtonDefaults.IconSpacing))
+                Text(timeOdDay)
             }
         }
     }
@@ -494,18 +512,21 @@ private fun MemoTextFieldSheet(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun RecordSaveButton(onSaveClick: () -> Unit) {
+    val size = ButtonDefaults.LargeContainerHeight
     ElevatedButton(
-        modifier = Modifier.padding(8.dp),
+        modifier = Modifier.heightIn(size),
         colors = ButtonDefaults.elevatedButtonColors(
             containerColor = MaterialTheme.colorScheme.background,
             contentColor = MaterialTheme.colorScheme.primary
         ),
+        contentPadding = ButtonDefaults.contentPaddingFor(size),
         elevation = ButtonDefaults.elevatedButtonElevation(8.dp),
         onClick = onSaveClick
     ) {
-        Text(text = stringResource(id = R.string.save_button_text))
+        Text(text = stringResource(id = R.string.save_button_text), style = ButtonDefaults.textStyleFor(size))
     }
 }
 

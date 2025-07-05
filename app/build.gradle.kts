@@ -60,9 +60,6 @@ dependencies {
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
 
-    // recyclerview
-    implementation("androidx.recyclerview:recyclerview:1.2.1")
-
     // jetpack compose
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
