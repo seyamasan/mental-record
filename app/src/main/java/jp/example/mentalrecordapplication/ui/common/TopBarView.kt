@@ -1,5 +1,6 @@
 package jp.example.mentalrecordapplication.ui.common
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
@@ -66,6 +67,7 @@ fun TopBarView(title: String) {
 }
 
 @Preview(showBackground = true)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun TopBarViewPreview() {
     MentalRecordAppTheme {

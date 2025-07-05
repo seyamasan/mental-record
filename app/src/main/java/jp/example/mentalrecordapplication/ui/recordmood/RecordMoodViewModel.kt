@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.example.mentalrecordapplication.room.MoodRepository
+import jp.example.mentalrecordapplication.utils.types.RecordMoodSaveResultType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,10 +26,10 @@ class RecordMoodViewModel @Inject constructor(private val repository: MoodReposi
         }
     }
 
-    fun updateTimeOfDayState(newState: List<Boolean>) {
+    fun updateSelectedTimeOfDayIndex(newState: Int) {
         _uiState.update { state ->
             state.copy(
-                timeOfDayState = newState
+                selectedTimeOfDayIndex = newState
             )
         }
     }
@@ -57,10 +58,10 @@ class RecordMoodViewModel @Inject constructor(private val repository: MoodReposi
         }
     }
 
-    fun updateTimeOfDate(newState: String) {
+    fun updateTimeOfDay(newState: String) {
         _uiState.update { state ->
             state.copy(
-                selectedTimeOfDate = newState
+                selectedTimeOfDay = newState
             )
         }
     }
@@ -81,7 +82,7 @@ class RecordMoodViewModel @Inject constructor(private val repository: MoodReposi
         }
     }
 
-    fun updateSaveResult(newState: Int?) {
+    fun updateSaveResult(newState: RecordMoodSaveResultType?) {
         _uiState.update { state ->
             state.copy(
                 saveResult = newState
@@ -91,15 +92,15 @@ class RecordMoodViewModel @Inject constructor(private val repository: MoodReposi
 
     fun saveMoodDetail() {
         if (_uiState.value.selectedMood.isEmpty()) {
-            updateSaveResult(newState = 1)
+            updateSaveResult(newState = RecordMoodSaveResultType.INVALID_MOOD)
             return
         }
-        if (_uiState.value.selectedTimeOfDate.isEmpty()) {
-            updateSaveResult(newState = 2)
+        if (_uiState.value.selectedTimeOfDay.isEmpty()) {
+            updateSaveResult(newState = RecordMoodSaveResultType.INVALID_TIME_OF_DAY)
             return
         }
         if (_uiState.value.selectedDate.isEmpty()) {
-            updateSaveResult(newState = 3)
+            updateSaveResult(newState = RecordMoodSaveResultType.INVALID_DATE)
             return
         }
 
@@ -107,14 +108,14 @@ class RecordMoodViewModel @Inject constructor(private val repository: MoodReposi
             val result = repository.insert(
                 mood = _uiState.value.selectedMood,
                 date = _uiState.value.selectedDate,
-                timeZone = _uiState.value.selectedTimeOfDate,
+                timeZone = _uiState.value.selectedTimeOfDay,
                 memo = _uiState.value.enteredMemo
             )
 
             if (result) {
-                updateSaveResult(newState = 0)
+                updateSaveResult(newState = RecordMoodSaveResultType.SUCCESS)
             } else {
-                updateSaveResult(newState = -1) // -1は失敗を表す値
+                updateSaveResult(newState = RecordMoodSaveResultType.FAILURE)
             }
         }
     }

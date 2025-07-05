@@ -1,4 +1,4 @@
-package jp.example.mentalrecordapplication.utils
+package jp.example.mentalrecordapplication.utils.types
 
 import jp.example.mentalrecordapplication.R
 

@@ -43,10 +43,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import jp.example.mentalrecordapplication.R
-import jp.example.mentalrecordapplication.utils.DefaultMoodType
+import jp.example.mentalrecordapplication.utils.types.DefaultMoodType
 import jp.example.mentalrecordapplication.room.MoodEntity
 import jp.example.mentalrecordapplication.ui.common.BottomNavBarView
-import jp.example.mentalrecordapplication.ui.common.OkOnlyAlertDialogExample
+import jp.example.mentalrecordapplication.ui.common.OkOnlyAlertDialog
 import jp.example.mentalrecordapplication.ui.common.TopBarView
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 
@@ -108,16 +108,16 @@ fun RecordListView(
                 }
             }
 
-            OkOnlyAlertDialogExample(
+            OkOnlyAlertDialog(
+                dialogTitle = title,
+                dialogText = msg,
+                icon = icon,
                 onDismissRequest = {
                     viewModel.updateDeleteByIdResult(newState = null)
                 },
                 onConfirmation = {
                     viewModel.updateDeleteByIdResult(newState = null)
-                },
-                dialogTitle = title,
-                dialogText = msg,
-                icon = icon
+                }
             )
         }
     }

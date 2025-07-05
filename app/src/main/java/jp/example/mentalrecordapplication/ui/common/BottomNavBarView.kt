@@ -1,5 +1,6 @@
 package jp.example.mentalrecordapplication.ui.common
 
+import android.content.res.Configuration
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -33,6 +34,7 @@ fun BottomNavBarView(
 }
 
 @Preview(showBackground = true)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun BottomNavBarViewPreview() {
     MentalRecordAppTheme {
