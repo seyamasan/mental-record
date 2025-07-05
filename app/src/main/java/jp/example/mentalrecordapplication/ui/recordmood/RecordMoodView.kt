@@ -64,7 +64,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import jp.example.mentalrecordapplication.R
-import jp.example.mentalrecordapplication.data.DefaultMood
+import jp.example.mentalrecordapplication.utils.DefaultMoodType
 import jp.example.mentalrecordapplication.screens.Screens
 import jp.example.mentalrecordapplication.ui.common.BottomNavBarView
 import jp.example.mentalrecordapplication.ui.common.OkOnlyAlertDialogExample
@@ -199,11 +199,11 @@ private fun MoodSection(
     uiState: RecordMoodState
 ) {
     val defaultMoodList = listOf(
-        DefaultMood.HAPPY,
-        DefaultMood.ANGER,
-        DefaultMood.SAD,
-        DefaultMood.FUN,
-        DefaultMood.Normal
+        DefaultMoodType.HAPPY,
+        DefaultMoodType.ANGER,
+        DefaultMoodType.SAD,
+        DefaultMoodType.FUN,
+        DefaultMoodType.Normal
     )
 
     LazyRow(

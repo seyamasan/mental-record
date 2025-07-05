@@ -1,8 +1,8 @@
-package jp.example.mentalrecordapplication.data
+package jp.example.mentalrecordapplication.utils
 
 import jp.example.mentalrecordapplication.R
 
-enum class DefaultMood(
+enum class DefaultMoodType(
     private val nameResId: Int,
     private val iconResId: Int,
     private val colorResId: Int

@@ -43,7 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import jp.example.mentalrecordapplication.R
-import jp.example.mentalrecordapplication.data.DefaultMood
+import jp.example.mentalrecordapplication.utils.DefaultMoodType
 import jp.example.mentalrecordapplication.room.MoodEntity
 import jp.example.mentalrecordapplication.ui.common.BottomNavBarView
 import jp.example.mentalrecordapplication.ui.common.OkOnlyAlertDialogExample
@@ -157,30 +157,30 @@ private fun MoodCard(
     val noon = stringResource(id = R.string.time_of_day_noon)
     val night = stringResource(id = R.string.time_of_day_night)
 
-    var iconName = stringResource(id = DefaultMood.Normal.getName())
-    var icon = painterResource(id = DefaultMood.Normal.getIcon())
-    var iconColor = colorResource(id = DefaultMood.Normal.getColor())
+    var iconName = stringResource(id = DefaultMoodType.Normal.getName())
+    var icon = painterResource(id = DefaultMoodType.Normal.getIcon())
+    var iconColor = colorResource(id = DefaultMoodType.Normal.getColor())
 
     when (moodEntity.mood) {
         stringResource(id = R.string.mood_happy) -> {
-            iconName = stringResource(id = DefaultMood.HAPPY.getName())
-            icon = painterResource(id = DefaultMood.HAPPY.getIcon())
-            iconColor = colorResource(id = DefaultMood.HAPPY.getColor())
+            iconName = stringResource(id = DefaultMoodType.HAPPY.getName())
+            icon = painterResource(id = DefaultMoodType.HAPPY.getIcon())
+            iconColor = colorResource(id = DefaultMoodType.HAPPY.getColor())
         }
         stringResource(id = R.string.mood_anger) -> {
-            iconName = stringResource(id = DefaultMood.ANGER.getName())
-            icon = painterResource(id = DefaultMood.ANGER.getIcon())
-            iconColor = colorResource(id = DefaultMood.ANGER.getColor())
+            iconName = stringResource(id = DefaultMoodType.ANGER.getName())
+            icon = painterResource(id = DefaultMoodType.ANGER.getIcon())
+            iconColor = colorResource(id = DefaultMoodType.ANGER.getColor())
         }
         stringResource(id = R.string.mood_sad) -> {
-            iconName = stringResource(id = DefaultMood.SAD.getName())
-            icon = painterResource(id = DefaultMood.SAD.getIcon())
-            iconColor = colorResource(id = DefaultMood.SAD.getColor())
+            iconName = stringResource(id = DefaultMoodType.SAD.getName())
+            icon = painterResource(id = DefaultMoodType.SAD.getIcon())
+            iconColor = colorResource(id = DefaultMoodType.SAD.getColor())
         }
         stringResource(id = R.string.mood_fun) -> {
-            iconName = stringResource(id = DefaultMood.FUN.getName())
-            icon = painterResource(id = DefaultMood.FUN.getIcon())
-            iconColor = colorResource(id = DefaultMood.FUN.getColor())
+            iconName = stringResource(id = DefaultMoodType.FUN.getName())
+            icon = painterResource(id = DefaultMoodType.FUN.getIcon())
+            iconColor = colorResource(id = DefaultMoodType.FUN.getColor())
         }
     }
 
