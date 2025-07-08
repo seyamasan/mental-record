@@ -1,4 +1,4 @@
-package jp.example.mentalrecordapplication.screens
+package jp.example.mentalrecordapplication.navigator.screens
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
@@ -23,11 +23,11 @@ object Screens {
     data class RecordMoodView (
         override val screenTitleResId: Int = R.string.mood_record_screen_title,
         val navBarIndex: Int = 0
-    ):ScreenData
+    ): ScreenData
 
     @Serializable
     data class RecordListView (
         override val screenTitleResId: Int = R.string.record_list_screen_title,
         val navBarIndex: Int = 1
-    ):ScreenData
+    ): ScreenData
 }

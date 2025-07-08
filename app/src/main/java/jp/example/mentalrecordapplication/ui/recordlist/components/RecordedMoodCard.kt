@@ -33,7 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import jp.example.mentalrecordapplication.R
-import jp.example.mentalrecordapplication.room.MoodEntity
+import jp.example.mentalrecordapplication.data.local.room.MoodEntity
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 import jp.example.mentalrecordapplication.utils.types.DefaultMoodType
 

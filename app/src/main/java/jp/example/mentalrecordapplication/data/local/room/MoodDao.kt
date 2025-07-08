@@ -1,4 +1,4 @@
-package jp.example.mentalrecordapplication.room
+package jp.example.mentalrecordapplication.data.local.room
 
 import androidx.room.Dao
 import androidx.room.Insert

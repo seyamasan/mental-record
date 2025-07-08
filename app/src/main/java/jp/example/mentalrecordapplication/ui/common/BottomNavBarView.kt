@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
-import jp.example.mentalrecordapplication.screens.Screens
+import jp.example.mentalrecordapplication.navigator.screens.Screens
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 
 @Composable

@@ -12,7 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import jp.example.mentalrecordapplication.screens.Screens
+import jp.example.mentalrecordapplication.navigator.screens.Screens
 import jp.example.mentalrecordapplication.ui.recordmood.RecordMoodView
 import jp.example.mentalrecordapplication.ui.recordlist.RecordListView
 

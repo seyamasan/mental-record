@@ -3,9 +3,8 @@ package jp.example.mentalrecordapplication.ui.recordmood
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jp.example.mentalrecordapplication.room.MoodRepository
+import jp.example.mentalrecordapplication.data.repository.MoodRepositoryInterface
 import jp.example.mentalrecordapplication.utils.types.RecordMoodSaveResultType
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RecordMoodViewModel @Inject constructor(private val repository: MoodRepository) : ViewModel() {
+class RecordMoodViewModel @Inject constructor(private val repository: MoodRepositoryInterface) : ViewModel() {
     private val _uiState = MutableStateFlow(RecordMoodState())
     val uiState: StateFlow<RecordMoodState> = _uiState.asStateFlow()
 
@@ -91,20 +90,9 @@ class RecordMoodViewModel @Inject constructor(private val repository: MoodReposi
     }
 
     fun saveMoodDetail() {
-        if (_uiState.value.selectedMood.isEmpty()) {
-            updateSaveResult(newState = RecordMoodSaveResultType.INVALID_MOOD)
-            return
-        }
-        if (_uiState.value.selectedTimeOfDay.isEmpty()) {
-            updateSaveResult(newState = RecordMoodSaveResultType.INVALID_TIME_OF_DAY)
-            return
-        }
-        if (_uiState.value.selectedDate.isEmpty()) {
-            updateSaveResult(newState = RecordMoodSaveResultType.INVALID_DATE)
-            return
-        }
+        viewModelScope.launch {
+            if (!validateInputState()) { return@launch }
 
-        viewModelScope.launch(Dispatchers.IO) {
             val result = repository.insert(
                 mood = _uiState.value.selectedMood,
                 date = _uiState.value.selectedDate,
@@ -118,5 +106,21 @@ class RecordMoodViewModel @Inject constructor(private val repository: MoodReposi
                 updateSaveResult(newState = RecordMoodSaveResultType.FAILURE)
             }
         }
+    }
+
+    private fun validateInputState(): Boolean {
+        if (_uiState.value.selectedMood.isEmpty()) {
+            updateSaveResult(newState = RecordMoodSaveResultType.INVALID_MOOD)
+            return false
+        }
+        if (_uiState.value.selectedTimeOfDay.isEmpty()) {
+            updateSaveResult(newState = RecordMoodSaveResultType.INVALID_TIME_OF_DAY)
+            return false
+        }
+        if (_uiState.value.selectedDate.isEmpty()) {
+            updateSaveResult(newState = RecordMoodSaveResultType.INVALID_DATE)
+            return false
+        }
+        return true
     }
 }

@@ -1,4 +1,4 @@
-package jp.example.mentalrecordapplication.room
+package jp.example.mentalrecordapplication.data.local.room
 
 import android.os.Build
 import androidx.annotation.RequiresApi

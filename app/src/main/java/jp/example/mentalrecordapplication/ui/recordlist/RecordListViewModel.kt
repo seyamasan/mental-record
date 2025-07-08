@@ -5,9 +5,8 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jp.example.mentalrecordapplication.room.MoodEntity
-import jp.example.mentalrecordapplication.room.MoodRepository
-import kotlinx.coroutines.Dispatchers
+import jp.example.mentalrecordapplication.data.local.room.MoodEntity
+import jp.example.mentalrecordapplication.data.repository.MoodRepositoryInterface
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RecordListViewModel @Inject constructor(private val repository: MoodRepository) : ViewModel() {
+class RecordListViewModel @Inject constructor(private val repository: MoodRepositoryInterface) : ViewModel() {
     private val _uiState = MutableStateFlow(RecordListState())
     val uiState: StateFlow<RecordListState> = _uiState.asStateFlow()
 
@@ -30,7 +29,7 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun fetchAllItems() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val result = repository.selectAll()
             val sortedResult = result?.sortedBy { it.localDate } // 年月日をもとにソート
             updateListItem(newState = sortedResult)
@@ -39,7 +38,7 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun deleteById(id: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val result = repository.deleteById(id = id)
             if (result) {
                 fetchAllItems()
