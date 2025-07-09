@@ -7,6 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import jp.example.mentalrecordapplication.data.local.MoodDataSource
+import jp.example.mentalrecordapplication.data.local.MoodDataSourceInterface
 import jp.example.mentalrecordapplication.data.local.room.MoodDao
 import jp.example.mentalrecordapplication.data.local.room.MoodDataBase
 import jp.example.mentalrecordapplication.data.repository.MoodRepository
@@ -29,7 +31,13 @@ object MoodModule {
 
     @Provides
     @Singleton
-    fun provideMoodRepository(moodDao: MoodDao): MoodRepositoryInterface {
-        return MoodRepository(moodDao)
+    fun provideMoodDataSource(moodDao: MoodDao): MoodDataSourceInterface {
+        return MoodDataSource(moodDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMoodRepository(dataSource: MoodDataSourceInterface): MoodRepositoryInterface {
+        return MoodRepository(dataSource)
     }
 }

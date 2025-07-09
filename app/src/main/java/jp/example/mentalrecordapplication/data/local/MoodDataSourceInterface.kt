@@ -1,8 +1,8 @@
-package jp.example.mentalrecordapplication.data.repository
+package jp.example.mentalrecordapplication.data.local
 
 import jp.example.mentalrecordapplication.data.local.room.MoodEntity
 
-interface MoodRepositoryInterface {
+interface MoodDataSourceInterface {
     suspend fun insert(entity: MoodEntity): Boolean
     suspend fun deleteById(id: Int): Boolean
     suspend fun selectAll(): List<MoodEntity>?

@@ -3,6 +3,7 @@ package jp.example.mentalrecordapplication.ui.recordmood
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import jp.example.mentalrecordapplication.data.local.room.MoodEntity
 import jp.example.mentalrecordapplication.data.repository.MoodRepositoryInterface
 import jp.example.mentalrecordapplication.utils.types.RecordMoodSaveResultType
 import kotlinx.coroutines.flow.asStateFlow
@@ -94,10 +95,13 @@ class RecordMoodViewModel @Inject constructor(private val repository: MoodReposi
             if (!validateInputState()) { return@launch }
 
             val result = repository.insert(
-                mood = _uiState.value.selectedMood,
-                date = _uiState.value.selectedDate,
-                timeZone = _uiState.value.selectedTimeOfDay,
-                memo = _uiState.value.enteredMemo
+                MoodEntity(
+                    id = 0, // 自動的にIDを入れるときは0を入れる
+                    mood = _uiState.value.selectedMood,
+                    date = _uiState.value.selectedDate,
+                    timeZone = _uiState.value.selectedTimeOfDay,
+                    memo = _uiState.value.enteredMemo
+                )
             )
 
             if (result) {
