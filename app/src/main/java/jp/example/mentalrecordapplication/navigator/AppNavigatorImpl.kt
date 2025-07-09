@@ -21,13 +21,16 @@ class AppNavigatorImpl (private val navController: NavHostController) : AppNavig
     @RequiresApi(Build.VERSION_CODES.O)
     @Composable
     override fun NavigateTo() {
-        var selectedTab by rememberSaveable { mutableIntStateOf(0) }
+        var selectedTab by rememberSaveable { mutableIntStateOf(Screens.recordMoodView.navBarIndex) }
+
         NavHost(
-            navController = navController, Screens.screenList.first() // 初期表示画面
+            navController = navController, Screens.recordMoodView // 初期表示画面
         ) {
             // RecordMoodView
             composable<Screens.RecordMoodView> { backStackEntry ->
                 val moodRecordView: Screens.RecordMoodView = backStackEntry.toRoute()
+                selectedTab = Screens.recordMoodView.navBarIndex
+
                 RecordMoodView(
                     navController = navController,
                     screenTitle = stringResource(id = moodRecordView.screenTitleResId),
@@ -39,6 +42,8 @@ class AppNavigatorImpl (private val navController: NavHostController) : AppNavig
             // RecordListView
             composable<Screens.RecordListView> { backStackEntry ->
                 val recordListView: Screens.RecordListView = backStackEntry.toRoute()
+                selectedTab = Screens.recordListView.navBarIndex
+
                 RecordListView(
                     navController = navController,
                     screenTitle = stringResource(id = recordListView.screenTitleResId),

@@ -27,6 +27,7 @@ import jp.example.mentalrecordapplication.ui.recordmood.components.DefaultMoodSe
 import jp.example.mentalrecordapplication.ui.recordmood.components.RecordMoodInputSectionsCard
 import jp.example.mentalrecordapplication.ui.recordmood.components.SupportMessage
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
+import jp.example.mentalrecordapplication.utils.NavigationUtil
 import jp.example.mentalrecordapplication.utils.types.RecordMoodSaveResultType
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -84,14 +85,20 @@ fun RecordMoodView(
                     onDismissRequest = {
                         if (it == RecordMoodSaveResultType.SUCCESS) {
                             onSelectedTab(Screens.recordListView.navBarIndex)
-                            navController?.navigate(Screens.recordListView)
+                            NavigationUtil.navigate(
+                                navController = navController,
+                                screen = Screens.recordListView
+                            )
                         }
                         viewModel.updateSaveResult(null)
                     },
                     onConfirmation = {
                         if (it == RecordMoodSaveResultType.SUCCESS) {
                             onSelectedTab(Screens.recordListView.navBarIndex)
-                            navController?.navigate(Screens.recordListView)
+                            NavigationUtil.navigate(
+                                navController = navController,
+                                screen = Screens.recordListView
+                            )
                         }
                         viewModel.updateSaveResult(null)
                     }
