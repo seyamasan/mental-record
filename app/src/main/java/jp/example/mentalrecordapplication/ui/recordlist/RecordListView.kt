@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ErrorOutline
-import androidx.compose.material.icons.filled.SmsFailed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -78,22 +77,11 @@ fun RecordListView(
             }
         }
 
-        if (uiState.deleteByIdResult != null) {
-            var title = ""
-            var msg = ""
-            var icon = Icons.Default.SmsFailed
-            when (uiState.deleteByIdResult) {
-                -1 -> {
-                    title = stringResource(id = R.string.failure)
-                    msg = stringResource(id = R.string.failed_to_delete_record_msg)
-                    icon = Icons.Default.ErrorOutline
-                }
-            }
-
+        if (uiState.deleteByIdResult == false) {
             OkOnlyAlertDialog(
-                dialogTitle = title,
-                dialogText = msg,
-                icon = icon,
+                dialogTitle = stringResource(id = R.string.failure),
+                dialogText = stringResource(id = R.string.failed_to_delete_record_msg),
+                icon = Icons.Default.ErrorOutline,
                 onDismissRequest = {
                     viewModel.updateDeleteByIdResult(newState = null)
                 },

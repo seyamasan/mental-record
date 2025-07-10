@@ -19,7 +19,7 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
     private val _uiState = MutableStateFlow(RecordListState())
     val uiState: StateFlow<RecordListState> = _uiState.asStateFlow()
 
-    fun updateDeleteByIdResult(newState: Int?) {
+    fun updateDeleteByIdResult(newState: Boolean?) {
         _uiState.update { state ->
             state.copy(
                 deleteByIdResult = newState
@@ -40,11 +40,8 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
     fun deleteById(id: Int) {
         viewModelScope.launch {
             val result = repository.deleteById(id = id)
-            if (result) {
-                fetchAllItems()
-            } else {
-                updateDeleteByIdResult(newState = -1) // -1は失敗
-            }
+            if (result) { fetchAllItems() }
+            updateDeleteByIdResult(newState = result)
         }
     }
 
