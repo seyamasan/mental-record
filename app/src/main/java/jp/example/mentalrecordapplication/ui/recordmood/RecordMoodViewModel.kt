@@ -105,6 +105,7 @@ class RecordMoodViewModel @Inject constructor(private val repository: MoodReposi
             )
 
             if (result) {
+                clearInputState() // After successful saving, the input is cleared. (保存に成功したら入力内容はクリアする。)
                 updateSaveResult(newState = RecordMoodSaveResultType.SUCCESS)
             } else {
                 updateSaveResult(newState = RecordMoodSaveResultType.FAILURE)
@@ -126,5 +127,18 @@ class RecordMoodViewModel @Inject constructor(private val repository: MoodReposi
             return false
         }
         return true
+    }
+
+    private fun clearInputState() {
+        _uiState.update { state ->
+            state.copy(
+                selectedMood = "",
+                selectedTimeOfDay = "",
+                selectedDate = "",
+                enteredMemo = "",
+                selectedMoodIndex = -1,
+                selectedTimeOfDayIndex = null
+            )
+        }
     }
 }

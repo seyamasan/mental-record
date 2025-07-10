@@ -8,8 +8,8 @@ data class RecordMoodState(
     val selectedDate: String = "",
     val enteredMemo: String = "",
     val selectedMoodIndex: Int = -1,
-    val isDatePickerVisible: Boolean = false,
     val selectedTimeOfDayIndex: Int? = null,
+    val isDatePickerVisible: Boolean = false,
     val isMemoSheetVisible: Boolean = false,
     val saveResult: RecordMoodSaveResultType? = null
 )

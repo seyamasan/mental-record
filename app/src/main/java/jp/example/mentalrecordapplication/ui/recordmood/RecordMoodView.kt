@@ -42,6 +42,18 @@ fun RecordMoodView(
     val uiState by viewModel.uiState.collectAsState()
     val datePickerState = rememberDatePickerState()
 
+    val handleResult: (RecordMoodSaveResultType) -> Unit = {
+        if (it == RecordMoodSaveResultType.SUCCESS) {
+            datePickerState.selectedDateMillis = null
+            onSelectedTab(Screens.recordListView.navBarIndex)
+            NavigationUtil.navigate(
+                navController = navController,
+                screen = Screens.recordListView
+            )
+        }
+        viewModel.updateSaveResult(null)
+    }
+
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         topBar = { TopBarView(screenTitle) },
@@ -75,33 +87,12 @@ fun RecordMoodView(
             )
 
             uiState.saveResult?.let {
-                val title = stringResource(id = it.getDialogTitleStringResourceId())
-                val msg = stringResource(id = it.getDialogMessageStringResourceId())
-
                 OkOnlyAlertDialog(
-                    dialogTitle = title,
-                    dialogText = msg,
+                    dialogTitle = stringResource(id = it.getDialogTitleStringResourceId()),
+                    dialogText = stringResource(id = it.getDialogMessageStringResourceId()),
                     icon = it.getIcon(),
-                    onDismissRequest = {
-                        if (it == RecordMoodSaveResultType.SUCCESS) {
-                            onSelectedTab(Screens.recordListView.navBarIndex)
-                            NavigationUtil.navigate(
-                                navController = navController,
-                                screen = Screens.recordListView
-                            )
-                        }
-                        viewModel.updateSaveResult(null)
-                    },
-                    onConfirmation = {
-                        if (it == RecordMoodSaveResultType.SUCCESS) {
-                            onSelectedTab(Screens.recordListView.navBarIndex)
-                            NavigationUtil.navigate(
-                                navController = navController,
-                                screen = Screens.recordListView
-                            )
-                        }
-                        viewModel.updateSaveResult(null)
-                    }
+                    onDismissRequest = { handleResult(it) },
+                    onConfirmation = { handleResult(it) }
                 )
             }
         }
