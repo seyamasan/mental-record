@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.example.mentalrecordapplication.data.local.room.MoodEntity
-import jp.example.mentalrecordapplication.data.repository.MoodRepositoryInterface
+import jp.example.mentalrecordapplication.data.repository.MoodRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RecordListViewModel @Inject constructor(private val repository: MoodRepositoryInterface) : ViewModel() {
+class RecordListViewModel @Inject constructor(private val repository: MoodRepository) : ViewModel() {
     private val _uiState = MutableStateFlow(RecordListState())
     val uiState: StateFlow<RecordListState> = _uiState.asStateFlow()
 
