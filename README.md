@@ -1,4 +1,4 @@
-# Overview
+# mental-record
 
 This application records the URL mentality of the store.
 
@@ -14,16 +14,20 @@ Google Play Storeにリリース済み。
 
 # Framework
 
-Jetpack Compose
+- Jetpack Compose
 
 # Architecture
 
-MVVM + Repository
+- [Android Developers Recommended Architecture](https://developer.android.com/topic/architecture?hl=ja)
+
+The domain layer is omitted in this project.
+
+このプロジェクトでは、ドメイン層は省略しています。
 
 # Local DB
 
-SQLite
+- Room
 
 # DI
 
-Dagger Hilt
+- Dagger Hilt
