@@ -47,30 +47,30 @@ fun RecordedMoodCard(
     val noon = stringResource(id = R.string.time_of_day_noon)
     val night = stringResource(id = R.string.time_of_day_night)
 
-    var iconName = stringResource(id = DefaultMoodType.Normal.getName())
-    var icon = painterResource(id = DefaultMoodType.Normal.getIcon())
-    var iconColor = colorResource(id = DefaultMoodType.Normal.getColor())
+    var iconName = stringResource(id = DefaultMoodType.Normal.nameResId)
+    var icon = painterResource(id = DefaultMoodType.Normal.iconResId)
+    var iconColor = colorResource(id = DefaultMoodType.Normal.colorResId)
 
     when (moodEntity.mood) {
         stringResource(id = R.string.mood_happy) -> {
-            iconName = stringResource(id = DefaultMoodType.HAPPY.getName())
-            icon = painterResource(id = DefaultMoodType.HAPPY.getIcon())
-            iconColor = colorResource(id = DefaultMoodType.HAPPY.getColor())
+            iconName = stringResource(id = DefaultMoodType.HAPPY.nameResId)
+            icon = painterResource(id = DefaultMoodType.HAPPY.iconResId)
+            iconColor = colorResource(id = DefaultMoodType.HAPPY.colorResId)
         }
         stringResource(id = R.string.mood_anger) -> {
-            iconName = stringResource(id = DefaultMoodType.ANGER.getName())
-            icon = painterResource(id = DefaultMoodType.ANGER.getIcon())
-            iconColor = colorResource(id = DefaultMoodType.ANGER.getColor())
+            iconName = stringResource(id = DefaultMoodType.ANGER.nameResId)
+            icon = painterResource(id = DefaultMoodType.ANGER.iconResId)
+            iconColor = colorResource(id = DefaultMoodType.ANGER.colorResId)
         }
         stringResource(id = R.string.mood_sad) -> {
-            iconName = stringResource(id = DefaultMoodType.SAD.getName())
-            icon = painterResource(id = DefaultMoodType.SAD.getIcon())
-            iconColor = colorResource(id = DefaultMoodType.SAD.getColor())
+            iconName = stringResource(id = DefaultMoodType.SAD.nameResId)
+            icon = painterResource(id = DefaultMoodType.SAD.iconResId)
+            iconColor = colorResource(id = DefaultMoodType.SAD.colorResId)
         }
         stringResource(id = R.string.mood_fun) -> {
-            iconName = stringResource(id = DefaultMoodType.FUN.getName())
-            icon = painterResource(id = DefaultMoodType.FUN.getIcon())
-            iconColor = colorResource(id = DefaultMoodType.FUN.getColor())
+            iconName = stringResource(id = DefaultMoodType.FUN.nameResId)
+            icon = painterResource(id = DefaultMoodType.FUN.iconResId)
+            iconColor = colorResource(id = DefaultMoodType.FUN.colorResId)
         }
     }
 

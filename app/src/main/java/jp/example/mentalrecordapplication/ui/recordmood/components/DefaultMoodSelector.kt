@@ -43,7 +43,7 @@ fun DefaultMoodSelector(
     ) {
         defaultMoodList.forEachIndexed { index, mood ->
             item {
-                val moodName = stringResource(id = mood.getName())
+                val moodName = stringResource(id = mood.nameResId)
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
@@ -65,9 +65,9 @@ fun DefaultMoodSelector(
                         }
                 ) {
                     Icon(
-                        painter = painterResource(id = mood.getIcon()),
+                        painter = painterResource(id = mood.iconResId),
                         contentDescription = "Mood Icon",
-                        tint = colorResource(id = mood.getColor())
+                        tint = colorResource(id = mood.colorResId)
                     )
                     Text(
                         text = moodName
