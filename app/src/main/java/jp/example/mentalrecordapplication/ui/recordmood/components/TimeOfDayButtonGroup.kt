@@ -49,7 +49,7 @@ fun TimeOfDayButtonGroup(
         verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
         timeOfDayList.forEachIndexed { index, timeOdDay ->
-            val timeOdDayString = stringResource(id = timeOdDay.stringResourceId)
+            val timeOdDayString = stringResource(id = timeOdDay.stringResId)
 
             ToggleButton(
                 checked = selectedTimeOfDay == index,
@@ -70,7 +70,7 @@ fun TimeOfDayButtonGroup(
                 modifier = Modifier.semantics { role = Role.RadioButton }
             ) {
                 Icon(
-                    if (selectedTimeOfDay == index) timeOdDay.getCheckedIcon() else timeOdDay.getUnCheckedIcon(),
+                    if (selectedTimeOfDay == index) timeOdDay.checkedIcon else timeOdDay.unCheckedIcon,
                     contentDescription = "Time Of Day Icon",
                     Modifier.size(AssistChipDefaults.IconSize)
                 )
