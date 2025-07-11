@@ -25,17 +25,15 @@
     <string name="memo_placeholder">Type here…</string>
     <string name="menu_back_button_text">Back</string>
     <string name="success_save_dialog_msg">Saving was successful.</string>
-    <string name="null_date_dialog_title">Date not selected</string>
-    <string name="null_date_dialog_msg">Please select a date.</string>
-    <string name="null_mood_dialog_title">No emotion selected</string>
-    <string name="null_mood_dialog_msg">Tap the button that best describes how you feel.</string>
-    <string name="null_time_zone_dialog_title">No time of day has been selected.</string>
-    <string name="null_time_zone_dialog_msg">Please select from morning, noon, or night.</string>
+    <string name="unselected_date_dialog_title">Date not selected</string>
+    <string name="unselected_date_dialog_msg">Please select a date.</string>
+    <string name="unselected_mood_dialog_title">No emotion selected</string>
+    <string name="unselected_mood_dialog_msg">Tap the button that best describes how you feel.</string>
+    <string name="unselected_time_zone_dialog_title">No time of day has been selected.</string>
+    <string name="unselected_time_zone_dialog_msg">Please select from morning, noon, or night.</string>
     <string name="failure_save_dialog_msg">Saving failed.</string>
     <string name="not_data_dialog_title">Unable to display</string>
     <string name="not_data_dialog_msg">Data does not exist.</string>
-
-    <string name="time_zone_title">Time of day</string>
 
 <!--    RecordListView-->
     <string name="record_list_screen_title">List</string>

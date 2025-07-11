@@ -16,9 +16,9 @@ enum class RecordMoodSaveResultType {
     fun getDialogTitleStringResourceId(): Int {
         return when (this) {
             SUCCESS -> R.string.success
-            INVALID_MOOD -> R.string.null_mood_dialog_title
-            INVALID_TIME_OF_DAY -> R.string.null_time_zone_dialog_title
-            INVALID_DATE -> R.string.null_date_dialog_title
+            INVALID_MOOD -> R.string.unselected_mood_dialog_title
+            INVALID_TIME_OF_DAY -> R.string.unselected_time_zone_dialog_title
+            INVALID_DATE -> R.string.unselected_date_dialog_title
             FAILURE -> R.string.failure
         }
     }
@@ -26,9 +26,9 @@ enum class RecordMoodSaveResultType {
     fun getDialogMessageStringResourceId(): Int {
         return when (this) {
             SUCCESS -> R.string.success_save_dialog_msg
-            INVALID_MOOD -> R.string.null_mood_dialog_msg
-            INVALID_TIME_OF_DAY -> R.string.null_time_zone_dialog_msg
-            INVALID_DATE -> R.string.null_date_dialog_msg
+            INVALID_MOOD -> R.string.unselected_mood_dialog_msg
+            INVALID_TIME_OF_DAY -> R.string.unselected_time_zone_dialog_msg
+            INVALID_DATE -> R.string.unselected_date_dialog_msg
             FAILURE -> R.string.failure_save_dialog_msg
         }
     }

@@ -25,17 +25,15 @@
     <string name="memo_placeholder">ここに入力…</string>
     <string name="menu_back_button_text">戻る</string>
     <string name="success_save_dialog_msg">保存に成功しました。</string>
-    <string name="null_date_dialog_title">日付が未選択です</string>
-    <string name="null_date_dialog_msg">日付を選択してください。</string>
-    <string name="null_mood_dialog_title">感情が未選択です</string>
-    <string name="null_mood_dialog_msg">一番気持ちが近いボタンをタップしてください。</string>
-    <string name="null_time_zone_dialog_title">時間帯が未選択です。</string>
-    <string name="null_time_zone_dialog_msg">朝・昼・夜から選択してください。</string>
+    <string name="unselected_date_dialog_title">日付が未選択です</string>
+    <string name="unselected_date_dialog_msg">日付を選択してください。</string>
+    <string name="unselected_mood_dialog_title">感情が未選択です</string>
+    <string name="unselected_mood_dialog_msg">一番気持ちが近いボタンをタップしてください。</string>
+    <string name="unselected_time_zone_dialog_title">時間帯が未選択です。</string>
+    <string name="unselected_time_zone_dialog_msg">朝・昼・夜から選択してください。</string>
     <string name="failure_save_dialog_msg">保存に失敗しました。</string>
     <string name="not_data_dialog_title">表示できません</string>
     <string name="not_data_dialog_msg">データが存在しません。</string>
-
-    <string name="time_zone_title">時間帯</string>
 
 <!--    RecordListView-->
     <string name="record_list_screen_title">リスト</string>
