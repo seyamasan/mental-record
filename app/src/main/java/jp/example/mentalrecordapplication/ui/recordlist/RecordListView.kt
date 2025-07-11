@@ -58,7 +58,7 @@ fun RecordListView(
     ) { innerPadding ->
 
         if (uiState.listItem.isNullOrEmpty()) {
-            NoRecordView(padding = innerPadding)
+            NoRecordView()
         } else {
             LazyColumn(
                 modifier = Modifier

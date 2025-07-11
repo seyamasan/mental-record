@@ -14,7 +14,6 @@
     <string name="mood_fun">Fun</string>
     <string name="mood_sad">Sad</string>
     <string name="mood_normal">Normal</string>
-    <string name="add_custom_mood">Add a\n mood</string>
     <string name="select_date_title">Date</string>
     <string name="save_button_text">Save</string>
     <string name="time_of_day_morning">Morning</string>
@@ -32,13 +31,11 @@
     <string name="unselected_time_zone_dialog_title">No time of day has been selected.</string>
     <string name="unselected_time_zone_dialog_msg">Please select from morning, noon, or night.</string>
     <string name="failure_save_dialog_msg">Saving failed.</string>
-    <string name="not_data_dialog_title">Unable to display</string>
-    <string name="not_data_dialog_msg">Data does not exist.</string>
 
 <!--    RecordListView-->
     <string name="record_list_screen_title">List</string>
     <string name="failed_to_delete_record_msg">Failed to delete record.</string>
-    <string name="no_record_exists">No records seem to exist!</string>
+    <string name="no_record_exists">Hi there. Want to take a moment to record how you\'re feeling today?</string>
 
 <!--    プライバシーポリシー-->
     <string name="privacy_policy_url">https://doc-hosting.flycricket.io/mental-record-mentaruwoji-lu-privacy-policy/d7c7ce7e-f84a-4f56-9841-15a598e6b960/privacy</string>

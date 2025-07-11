@@ -14,7 +14,6 @@
     <string name="mood_fun">楽</string>
     <string name="mood_sad">哀</string>
     <string name="mood_normal">普通</string>
-    <string name="add_custom_mood">気持ちを\n追加</string>
     <string name="select_date_title">日付</string>
     <string name="save_button_text">保存</string>
     <string name="time_of_day_morning">朝</string>
@@ -32,13 +31,11 @@
     <string name="unselected_time_zone_dialog_title">時間帯が未選択です。</string>
     <string name="unselected_time_zone_dialog_msg">朝・昼・夜から選択してください。</string>
     <string name="failure_save_dialog_msg">保存に失敗しました。</string>
-    <string name="not_data_dialog_title">表示できません</string>
-    <string name="not_data_dialog_msg">データが存在しません。</string>
 
 <!--    RecordListView-->
     <string name="record_list_screen_title">リスト</string>
     <string name="failed_to_delete_record_msg">記録の削除に失敗しました。</string>
-    <string name="no_record_exists">記録が存在していないようです！</string>
+    <string name="no_record_exists">こんにちは。今日のメンタル、少しだけ記録してみませんか？</string>
 
 <!--    プライバシーポリシー-->
     <string name="privacy_policy_url">https://doc-hosting.flycricket.io/mental-record-mentaruwoji-lu-privacy-policy/d7c7ce7e-f84a-4f56-9841-15a598e6b960/privacy</string>
