@@ -35,7 +35,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MemoTextFieldSheet(
-    enteredMemo: String,
+    enteredMemo: String?,
     showSheet: Boolean,
     onTextFieldClick: () -> Unit,
     onDismissRequest: () -> Unit,
@@ -45,7 +45,7 @@ fun MemoTextFieldSheet(
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
 
     OutlinedTextField(
-        value = enteredMemo,
+        value = enteredMemo ?: "",
         onValueChange = {},
         label = { Text(stringResource(id = R.string.memo_title)) },
         readOnly = true,
@@ -82,7 +82,7 @@ fun MemoTextFieldSheet(
             ) {
                 Text(text = stringResource(id = R.string.memo_support_message))
                 TextField(
-                    value = enteredMemo,
+                    value = enteredMemo ?: "",
                     onValueChange = { onChangeTextField(it) },
                     modifier = Modifier.fillMaxWidth(),
                     placeholder = { Text(stringResource(id = R.string.memo_placeholder)) }
@@ -110,7 +110,7 @@ fun MemoTextFieldSheet(
 fun MemoTextFieldSheetPreview() {
     MentalRecordAppTheme {
         MemoTextFieldSheet(
-            enteredMemo = "",
+            enteredMemo = null,
             showSheet = false,
             onTextFieldClick = {},
             onDismissRequest = {},

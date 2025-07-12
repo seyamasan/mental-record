@@ -11,8 +11,8 @@
     <string name="support_message">How do you mood?</string>
     <string name="mood_happy">Happy</string>
     <string name="mood_anger">Angry</string>
-    <string name="mood_fun">Fun</string>
     <string name="mood_sad">Sad</string>
+    <string name="mood_fun">Fun</string>
     <string name="mood_normal">Normal</string>
     <string name="select_date_title">Date</string>
     <string name="save_button_text">Save</string>

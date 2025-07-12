@@ -38,8 +38,7 @@ fun RecordMoodInputSectionsCard(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TimeOfDayButtonGroup(
-                uiState.selectedTimeOfDayIndex,
-                onTimeOfDaySelectedIndex = { viewModel.updateSelectedTimeOfDayIndex(newState = it) },
+                uiState.selectedTimeOfDay,
                 onItemSelected = { viewModel.updateTimeOfDay(it) }
             )
 

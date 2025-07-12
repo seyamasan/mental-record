@@ -75,8 +75,7 @@ fun RecordMoodView(
             SupportMessage()
 
             DefaultMoodSelector(
-                selectedIndex = uiState.selectedMoodIndex,
-                onSelectedIndex = { viewModel.updateSelectedMoodIndex(it) },
+                selectedMood = uiState.selectedMood,
                 onSelectedMood = { viewModel.updateMood(it) }
             )
 

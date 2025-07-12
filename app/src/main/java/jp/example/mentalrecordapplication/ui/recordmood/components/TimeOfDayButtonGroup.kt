@@ -31,9 +31,8 @@ import jp.example.mentalrecordapplication.utils.types.TimeOfDayType
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun TimeOfDayButtonGroup(
-    selectedTimeOfDay: Int?,
-    onTimeOfDaySelectedIndex: (Int) -> Unit,
-    onItemSelected: (String) -> Unit
+    selectedTimeOfDay: TimeOfDayType?,
+    onItemSelected: (TimeOfDayType) -> Unit
 ) {
     val timeOfDayList: List<TimeOfDayType> = listOf(
         TimeOfDayType.MORNING,
@@ -48,29 +47,28 @@ fun TimeOfDayButtonGroup(
         horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
         verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
-        timeOfDayList.forEachIndexed { index, timeOdDay ->
+        timeOfDayList.forEach { timeOdDay ->
             val timeOdDayString = stringResource(id = timeOdDay.stringResId)
 
             ToggleButton(
-                checked = selectedTimeOfDay == index,
+                checked = selectedTimeOfDay == timeOdDay,
                 onCheckedChange = {
-                    onTimeOfDaySelectedIndex(index)
-                    onItemSelected(timeOdDayString)
+                    onItemSelected(timeOdDay)
                 },
                 shapes =
-                    when (index) {
-                        0 -> ButtonGroupDefaults.connectedLeadingButtonShapes()
-                        timeOfDayList.lastIndex -> ButtonGroupDefaults.connectedTrailingButtonShapes()
+                    when (timeOdDay) {
+                        TimeOfDayType.MORNING -> ButtonGroupDefaults.connectedLeadingButtonShapes()
+                        TimeOfDayType.NIGHT -> ButtonGroupDefaults.connectedTrailingButtonShapes()
                         else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
                     },
                 colors = ToggleButtonDefaults.toggleButtonColors(
-                    containerColor = if (selectedTimeOfDay == index) MaterialTheme.colorScheme.primaryContainer
+                    containerColor = if (selectedTimeOfDay == timeOdDay) MaterialTheme.colorScheme.primaryContainer
                     else MaterialTheme.colorScheme.background
                 ),
                 modifier = Modifier.semantics { role = Role.RadioButton }
             ) {
                 Icon(
-                    if (selectedTimeOfDay == index) timeOdDay.checkedIcon else timeOdDay.unCheckedIcon,
+                    if (selectedTimeOfDay == timeOdDay) timeOdDay.checkedIcon else timeOdDay.unCheckedIcon,
                     contentDescription = "Time Of Day Icon",
                     Modifier.size(AssistChipDefaults.IconSize)
                 )
@@ -88,7 +86,6 @@ fun TimeOfDayButtonGroupPreview() {
     MentalRecordAppTheme {
         TimeOfDayButtonGroup(
             selectedTimeOfDay = null,
-            onTimeOfDaySelectedIndex = {},
             onItemSelected = {}
         )
     }

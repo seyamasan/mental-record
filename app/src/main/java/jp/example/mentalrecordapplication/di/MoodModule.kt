@@ -9,6 +9,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import jp.example.mentalrecordapplication.data.local.MoodDataSourceImpl
 import jp.example.mentalrecordapplication.data.local.MoodDataSource
+import jp.example.mentalrecordapplication.data.local.room.MIGRATION_1_2
 import jp.example.mentalrecordapplication.data.local.room.MoodDao
 import jp.example.mentalrecordapplication.data.local.room.MoodDataBase
 import jp.example.mentalrecordapplication.data.repository.MoodRepositoryImpl
@@ -22,11 +23,15 @@ object MoodModule {
     @Provides
     @Singleton
     fun provideMoodDao(@ApplicationContext context: Context): MoodDao {
-        return Room.databaseBuilder(
+        val db = Room.databaseBuilder(
             context,
             MoodDataBase::class.java,
             "mood_database"
-        ).build().moodDao()
+        )
+        .addMigrations(MIGRATION_1_2)
+        .build()
+
+        return db.moodDao()
     }
 
     @Provides

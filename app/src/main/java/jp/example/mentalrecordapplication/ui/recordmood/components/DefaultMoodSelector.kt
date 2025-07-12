@@ -25,9 +25,8 @@ import jp.example.mentalrecordapplication.utils.types.DefaultMoodType
 
 @Composable
 fun DefaultMoodSelector(
-    selectedIndex: Int?,
-    onSelectedIndex: (Int) -> Unit,
-    onSelectedMood: (String) -> Unit
+    selectedMood: DefaultMoodType?,
+    onSelectedMood: (DefaultMoodType) -> Unit
 ) {
     val defaultMoodList = listOf(
         DefaultMoodType.HAPPY,
@@ -41,14 +40,14 @@ fun DefaultMoodSelector(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center
     ) {
-        defaultMoodList.forEachIndexed { index, mood ->
+        defaultMoodList.forEach { mood ->
             item {
                 val moodName = stringResource(id = mood.nameResId)
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                         .then(
-                            if (selectedIndex == index) {
+                            if (selectedMood == mood) {
                                 Modifier.border(
                                     width = 2.dp,
                                     color = MaterialTheme.colorScheme.primary,
@@ -59,19 +58,14 @@ fun DefaultMoodSelector(
                             }
                         )
                         .padding(16.dp)
-                        .clickable {
-                            onSelectedIndex(index)
-                            onSelectedMood(moodName)
-                        }
+                        .clickable { onSelectedMood(mood) }
                 ) {
                     Icon(
                         painter = painterResource(id = mood.iconResId),
                         contentDescription = "Mood Icon",
                         tint = colorResource(id = mood.colorResId)
                     )
-                    Text(
-                        text = moodName
-                    )
+                    Text(text = moodName)
                 }
             }
         }
@@ -84,8 +78,7 @@ fun DefaultMoodSelector(
 fun DefaultMoodSelectorPreview() {
     MentalRecordAppTheme {
         DefaultMoodSelector(
-            selectedIndex = 0,
-            onSelectedIndex = {},
+            selectedMood = DefaultMoodType.HAPPY,
             onSelectedMood = {}
         )
     }

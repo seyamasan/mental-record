@@ -11,10 +11,10 @@ import java.time.format.DateTimeFormatter
 @Entity (tableName = "mood_table")
 data class MoodEntity (
     @PrimaryKey(autoGenerate = true) val id: Int,
-    @ColumnInfo(name = "mood") val mood: String,
+    @ColumnInfo(name = "mood") val mood: Int,
     @ColumnInfo(name = "date") val date: String,
-    @ColumnInfo(name = "time_zone") val timeZone: String,
-    @ColumnInfo(name = "memo") val memo: String,
+    @ColumnInfo(name = "time_of_day") val timeOfDay: Int,
+    @ColumnInfo(name = "memo") val memo: String?
 ) {
     // dateをLocalDateに変換するプロパティ
     val localDate: LocalDate
