@@ -2,6 +2,7 @@ package jp.example.mentalrecordapplication.data.local.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
@@ -10,6 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
     entities = [MoodEntity::class],
     exportSchema = false
 )
+@TypeConverters(RoomConverters::class)
 abstract class MoodDataBase: RoomDatabase() {
     abstract  fun moodDao(): MoodDao
 }

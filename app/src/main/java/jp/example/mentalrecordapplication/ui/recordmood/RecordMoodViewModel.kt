@@ -83,9 +83,9 @@ class RecordMoodViewModel @Inject constructor(private val repository: MoodReposi
             val result = repository.insert(
                 MoodEntity(
                     id = 0, // 自動的にIDを入れるときは0を入れる
-                    mood = _uiState.value.selectedMood?.typeNumber ?: DefaultMoodType.HAPPY.typeNumber,
+                    mood = _uiState.value.selectedMood ?: DefaultMoodType.HAPPY,
                     date = _uiState.value.selectedDate ?: DEFAULT_DATE,
-                    timeOfDay = _uiState.value.selectedTimeOfDay?.typeNumber ?: TimeOfDayType.MORNING.typeNumber,
+                    timeOfDay = _uiState.value.selectedTimeOfDay ?: TimeOfDayType.MORNING,
                     memo = _uiState.value.enteredMemo
                 )
             )

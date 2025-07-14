@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.WbTwilight
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.ElevatedCard
@@ -42,8 +41,8 @@ fun RecordedMoodCard(
     moodEntity: MoodEntity,
     onDeleteButtonTap: (Int) -> Unit
 ) {
-    val timeOfDayType = TimeOfDayType.entries.firstOrNull { it.typeNumber == moodEntity.timeOfDay }
-    val moodType = DefaultMoodType.entries.firstOrNull { it.typeNumber == moodEntity.mood }
+    val timeOfDayType = TimeOfDayType.fromInt(moodEntity.timeOfDay.typeNumber)
+    val moodType = DefaultMoodType.fromInt(moodEntity.mood.typeNumber)
 
     ElevatedCard(
         modifier = Modifier
@@ -83,10 +82,10 @@ fun RecordedMoodCard(
             // 時間帯
             AssistChip(
                 onClick = {},
-                label = { Text(stringResource(id = timeOfDayType?.stringResId ?: TimeOfDayType.MORNING.stringResId)) },
+                label = { Text(stringResource(id = timeOfDayType.stringResId)) },
                 leadingIcon = {
                     Icon(
-                        timeOfDayType?.checkedIcon ?: Icons.Filled.WbTwilight,
+                        timeOfDayType.checkedIcon,
                         contentDescription = "Time of day icon",
                         Modifier.size(AssistChipDefaults.IconSize)
                     )
@@ -100,12 +99,12 @@ fun RecordedMoodCard(
                     .padding(horizontal = 16.dp)
             ) {
                 Icon(
-                    painter = painterResource(id = moodType?.iconResId ?:DefaultMoodType.Normal.iconResId),
+                    painter = painterResource(id = moodType.iconResId),
                     contentDescription = "Mood Icon",
-                    tint = colorResource(id = moodType?.colorResId ?:DefaultMoodType.Normal.colorResId)
+                    tint = colorResource(id = moodType.colorResId)
                 )
                 Text(
-                    text = stringResource(id = moodType?.nameResId ?: DefaultMoodType.Normal.nameResId)
+                    text = stringResource(id = moodType.nameResId)
                 )
             }
 
@@ -142,9 +141,9 @@ fun RecordedMoodCardPreview() {
         RecordedMoodCard(
             moodEntity = MoodEntity(
                 id = 0,
-                mood = DefaultMoodType.HAPPY.typeNumber,
+                mood = DefaultMoodType.HAPPY,
                 date = "2025/7/6",
-                timeOfDay = TimeOfDayType.MORNING.typeNumber,
+                timeOfDay = TimeOfDayType.MORNING,
                 memo = "Hello!"
             ),
             onDeleteButtonTap = {}

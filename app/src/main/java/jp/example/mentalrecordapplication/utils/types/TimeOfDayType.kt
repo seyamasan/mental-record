@@ -19,4 +19,8 @@ enum class TimeOfDayType(
     MORNING(0, R.string.time_of_day_morning, Icons.Filled.WbTwilight, Icons.Outlined.WbTwilight),
     NOON(1, R.string.time_of_day_noon, Icons.Filled.WbSunny, Icons.Outlined.WbSunny),
     NIGHT(2, R.string.time_of_day_night, Icons.Filled.DarkMode, Icons.Outlined.DarkMode);
+
+    companion object {
+        fun fromInt(value: Int): TimeOfDayType = TimeOfDayType.entries.first { it.typeNumber == value }
+    }
 }
