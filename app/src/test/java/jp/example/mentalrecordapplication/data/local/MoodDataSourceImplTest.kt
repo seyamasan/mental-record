@@ -15,16 +15,18 @@ import org.junit.Test
 class MoodDataSourceImplTest {
 
     companion object {
-        private lateinit var dao: MoodDao
-        private lateinit var dataSource: MoodDataSourceImpl
+        private const val DUMMY_ID = 1
 
-        private var dummyEntity: MoodEntity = MoodEntity(
+        private val dummyEntity: MoodEntity = MoodEntity(
             id = 0,
             mood = DefaultMoodType.HAPPY,
             date = "2024/11/11",
             timeOfDay = TimeOfDayType.MORNING,
             memo = "memo"
         )
+
+        private lateinit var dao: MoodDao
+        private lateinit var dataSource: MoodDataSourceImpl
 
         @JvmStatic
         @BeforeClass
@@ -63,27 +65,27 @@ class MoodDataSourceImplTest {
     @Test
     fun deleteById_succeeds() = runTest {
         // Given
-        coEvery { dao.deleteById(1) } returns Unit
+        coEvery { dao.deleteById(DUMMY_ID) } returns Unit
 
         // When
-        val result = dataSource.deleteById(1)
+        val result = dataSource.deleteById(DUMMY_ID)
 
         // Then
         assertThat(result).isTrue()
-        coVerify { dao.deleteById(1) }
+        coVerify { dao.deleteById(DUMMY_ID) }
     }
 
     @Test
     fun deleteById_should_fail_for_unknown_reason() = runTest {
         // Given
-        coEvery { dao.deleteById(1) } throws Exception("DB error")
+        coEvery { dao.deleteById(DUMMY_ID) } throws Exception("DB error")
 
         // When
-        val result = dataSource.deleteById(1)
+        val result = dataSource.deleteById(DUMMY_ID)
 
         // Then
         assertThat(result).isFalse()
-        coVerify { dao.deleteById(1) }
+        coVerify { dao.deleteById(DUMMY_ID) }
     }
 
     @Test
