@@ -17,7 +17,7 @@ class MoodRepositoryImplTest {
     companion object {
         private const val DUMMY_ID = 1
 
-        private var dummyEntity: MoodEntity = MoodEntity(
+        private val dummyEntity: MoodEntity = MoodEntity(
             id = 0,
             mood = DefaultMoodType.HAPPY,
             date = "2024/11/11",
