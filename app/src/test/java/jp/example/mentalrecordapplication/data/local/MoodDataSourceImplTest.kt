@@ -14,28 +14,6 @@ import org.junit.Test
 
 class MoodDataSourceImplTest {
 
-    companion object {
-        private const val DUMMY_ID = 1
-
-        private val dummyEntity: MoodEntity = MoodEntity(
-            id = 0,
-            mood = DefaultMoodType.HAPPY,
-            date = "2024/11/11",
-            timeOfDay = TimeOfDayType.MORNING,
-            memo = "memo"
-        )
-
-        private lateinit var dao: MoodDao
-        private lateinit var dataSource: MoodDataSourceImpl
-
-        @JvmStatic
-        @BeforeClass
-        fun setup() {
-            dao = mockk(relaxed = true)
-            dataSource = MoodDataSourceImpl(dao)
-        }
-    }
-
     @Test
     fun insert_succeeds() = runTest {
         // Given
@@ -125,5 +103,27 @@ class MoodDataSourceImplTest {
         // Then
         assertThat(result).isFalse()
         coVerify { dao.deleteAll() }
+    }
+
+    companion object {
+        private const val DUMMY_ID = 1
+
+        private val dummyEntity: MoodEntity = MoodEntity(
+            id = 0,
+            mood = DefaultMoodType.HAPPY,
+            date = "2024/11/11",
+            timeOfDay = TimeOfDayType.MORNING,
+            memo = "memo"
+        )
+
+        private lateinit var dao: MoodDao
+        private lateinit var dataSource: MoodDataSourceImpl
+
+        @JvmStatic
+        @BeforeClass
+        fun setup() {
+            dao = mockk(relaxed = true)
+            dataSource = MoodDataSourceImpl(dao)
+        }
     }
 }

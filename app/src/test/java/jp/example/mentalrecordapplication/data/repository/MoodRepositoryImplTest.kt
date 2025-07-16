@@ -14,28 +14,6 @@ import org.junit.Test
 
 class MoodRepositoryImplTest {
 
-    companion object {
-        private const val DUMMY_ID = 1
-
-        private val dummyEntity: MoodEntity = MoodEntity(
-            id = 0,
-            mood = DefaultMoodType.HAPPY,
-            date = "2024/11/11",
-            timeOfDay = TimeOfDayType.MORNING,
-            memo = "memo"
-        )
-
-        private lateinit var dataSource: MoodDataSource
-        private lateinit var repository: MoodRepositoryImpl
-
-        @JvmStatic
-        @BeforeClass
-        fun setup() {
-            dataSource = mockk(relaxed = true)
-            repository = MoodRepositoryImpl(dataSource)
-        }
-    }
-
     @Test
     fun insert_returns_true() = runTest {
         // Given
@@ -125,5 +103,27 @@ class MoodRepositoryImplTest {
         // Then
         assertThat(result).isFalse()
         coVerify { repository.deleteAll() }
+    }
+
+    companion object {
+        private const val DUMMY_ID = 1
+
+        private val dummyEntity: MoodEntity = MoodEntity(
+            id = 0,
+            mood = DefaultMoodType.HAPPY,
+            date = "2024/11/11",
+            timeOfDay = TimeOfDayType.MORNING,
+            memo = "memo"
+        )
+
+        private lateinit var dataSource: MoodDataSource
+        private lateinit var repository: MoodRepositoryImpl
+
+        @JvmStatic
+        @BeforeClass
+        fun setup() {
+            dataSource = mockk(relaxed = true)
+            repository = MoodRepositoryImpl(dataSource)
+        }
     }
 }
