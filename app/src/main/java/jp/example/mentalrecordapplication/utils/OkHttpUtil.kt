@@ -3,27 +3,31 @@ package jp.example.mentalrecordapplication.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.util.Log
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
+import androidx.core.net.toUri
+import jp.example.mentalrecordapplication.R
 
 object OkHttpUtil {
     fun openWebPage(context: Context, url: String) {
         try {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            // インテントを解決できるアクティビティがあるか確認
-            if (intent.resolveActivity(context.packageManager) != null) {
+            val intent = Intent(Intent.ACTION_VIEW, url.toUri())
+            val resolveActivity = intent.resolveActivity(context.packageManager)
+            if (resolveActivity != null) {
                 context.startActivity(intent)
             } else {
-                // アクティビティが見つからない場合の処理（例えば、Snackbarで通知）
-                Snackbar.make((context as Activity).findViewById(android.R.id.content), "No browser found", Snackbar.LENGTH_SHORT).show()
+                if (context is Activity) {
+                    Snackbar.make(
+                        context.findViewById(android.R.id.content),
+                        context.getString(R.string.opening_the_link_failed),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
             }
         } catch (e: Exception) {
-            // 例外が発生した場合の処理（エラーメッセージをログに出力）
-            Log.e("OpenWebPageError", "Error opening web page", e)
-            // 必要に応じてユーザーに通知することもできます
-            Toast.makeText(context, "Failed to open web page", Toast.LENGTH_SHORT).show()
+            if (context is Activity) {
+                Toast.makeText(context, context.getString(R.string.error_opening_link), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

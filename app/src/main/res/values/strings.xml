@@ -37,7 +37,11 @@
     <string name="failed_to_delete_record_msg">Failed to delete record.</string>
     <string name="no_record_exists">Hi there. Want to take a moment to record how you\'re feeling today?</string>
 
-<!--    プライバシーポリシー-->
+<!--    OkHttpUtil-->
+    <string name="opening_the_link_failed">Opening the link failed.</string>
+    <string name="error_opening_link">Failed to open the link due to an error.</string>
+
+<!--    Privacy Policy-->
     <string name="privacy_policy_url">https://doc-hosting.flycricket.io/mental-record-mentaruwoji-lu-privacy-policy/d7c7ce7e-f84a-4f56-9841-15a598e6b960/privacy</string>
 
 </resources>

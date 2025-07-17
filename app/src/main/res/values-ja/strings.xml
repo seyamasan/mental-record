@@ -37,6 +37,10 @@
     <string name="failed_to_delete_record_msg">記録の削除に失敗しました。</string>
     <string name="no_record_exists">こんにちは。今日のメンタル、少しだけ記録してみませんか？</string>
 
+<!--    OkHttpUtil-->
+    <string name="opening_the_link_failed">リンクを開くことができませんでした。</string>
+    <string name="error_opening_link">リンクを開く際にエラーが発生しました。</string>
+
 <!--    プライバシーポリシー-->
     <string name="privacy_policy_url">https://doc-hosting.flycricket.io/mental-record-mentaruwoji-lu-privacy-policy/d7c7ce7e-f84a-4f56-9841-15a598e6b960/privacy</string>
 
