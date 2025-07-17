@@ -15,6 +15,6 @@ enum class DefaultMoodType(
     Normal(4, R.string.mood_normal, R.drawable.icon_normal, R.color.mist);
 
     companion object {
-        fun fromInt(value: Int): DefaultMoodType = entries.first { it.typeNumber == value }
+        fun fromInt(value: Int): DefaultMoodType = entries.firstOrNull { it.typeNumber == value } ?: HAPPY
     }
 }

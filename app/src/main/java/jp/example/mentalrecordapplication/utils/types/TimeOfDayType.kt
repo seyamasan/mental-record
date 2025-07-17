@@ -21,6 +21,6 @@ enum class TimeOfDayType(
     NIGHT(2, R.string.time_of_day_night, Icons.Filled.DarkMode, Icons.Outlined.DarkMode);
 
     companion object {
-        fun fromInt(value: Int): TimeOfDayType = TimeOfDayType.entries.first { it.typeNumber == value }
+        fun fromInt(value: Int): TimeOfDayType = TimeOfDayType.entries.firstOrNull { it.typeNumber == value } ?: MORNING
     }
 }
