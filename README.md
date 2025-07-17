@@ -37,6 +37,17 @@ Click the button shown to the left of the class or function in the test file ope
 
 Android Studio 上でテスト対象ファイルを開いてクラス、関数の左側に表示されているボタンをクリックする。
 
+|<img width="635" height="530" alt="unit_test_file" src="https://github.com/user-attachments/assets/d12253b0-8d5b-453a-b156-317a60d10220" />|
+|-|
+
 Alternatively, run the Gradle task from the Run Anything window.
 
 または、Run Anything ウィンドウで Gradle タスクを実行する。
+
+|Debug|
+|-|
+|<img width="671" height="88" alt="unit_test_debug" src="https://github.com/user-attachments/assets/91870c1a-623d-4ea5-894f-2ff5d3858c59" />|
+
+|Release|
+|-|
+|<img width="665" height="90" alt="unit_test_release" src="https://github.com/user-attachments/assets/1cc538d2-c36b-456e-b812-4a7830f36679" />|
