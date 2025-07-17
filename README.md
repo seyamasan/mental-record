@@ -8,15 +8,20 @@ Already released to Google Play Store.
 
 Google Play Storeにリリース済み。
 
-# Store URL
+## 📱 Store URL
 
 - [MENTAL RECORD](https://play.google.com/store/apps/details?id=jp.example.mentalrecordapplication&hl=gsw&pcampaignid=APPU_1_FlIoaOHaJq-k2roP8_j5cA)
 
-# Framework
+## 🛠️ Technology used
 
 - Jetpack Compose
+- Room
+- Dagger Hilt
+- JUnit4
+- Truth
+- MockK
 
-# Architecture
+## 🏗️ Architecture
 
 - [Android Developers Recommended Architecture](https://developer.android.com/topic/architecture?hl=ja)
 
@@ -24,10 +29,14 @@ The domain layer is omitted in this project.
 
 このプロジェクトでは、ドメイン層は省略しています。
 
-# Local DB
+## 🧪 Test
 
-- Room
+### Unit Test
 
-# DI
+Click the button shown to the left of the class or function in the test file opened in Android Studio.
 
-- Dagger Hilt
+Android Studio 上でテスト対象ファイルを開いてクラス、関数の左側に表示されているボタンをクリックする。
+
+Alternatively, run the Gradle task from the Run Anything window.
+
+または、Run Anything ウィンドウで Gradle タスクを実行する。
