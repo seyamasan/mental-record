@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -15,19 +17,33 @@ android {
         applicationId = "jp.example.mentalrecordapplication"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
+        versionCode = 8
         versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            val localProperties = Properties().apply {
+                load(rootProject.file("local.properties").inputStream())
+            }
+            storeFile = file(localProperties["release_store_file"] as String)
+            storePassword = localProperties["release_store_password"] as String
+            keyAlias = localProperties["release_key_alias"] as String
+            keyPassword = localProperties["release_key_password"] as String
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
+            isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 
@@ -48,7 +64,6 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
         compose = true
     }
 
