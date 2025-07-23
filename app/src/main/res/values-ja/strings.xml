@@ -22,7 +22,6 @@
     <string name="memo_title">メモ</string>
     <string name="memo_support_message">メモしたいことを入力してください。</string>
     <string name="memo_placeholder">ここに入力…</string>
-    <string name="menu_back_button_text">戻る</string>
     <string name="success_save_dialog_msg">保存に成功しました。</string>
     <string name="unselected_date_dialog_title">日付が未選択です</string>
     <string name="unselected_date_dialog_msg">日付を選択してください。</string>
