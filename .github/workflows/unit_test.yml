@@ -7,7 +7,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
+  unit_test_android:
 
     runs-on: ubuntu-latest
 
