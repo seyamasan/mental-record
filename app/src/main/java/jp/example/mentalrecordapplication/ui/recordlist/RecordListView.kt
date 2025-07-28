@@ -3,9 +3,11 @@ package jp.example.mentalrecordapplication.ui.recordlist
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material3.MaterialTheme
@@ -25,6 +27,7 @@ import jp.example.mentalrecordapplication.ui.common.BottomNavBarView
 import jp.example.mentalrecordapplication.ui.common.NoRecordView
 import jp.example.mentalrecordapplication.ui.common.OkOnlyAlertDialog
 import jp.example.mentalrecordapplication.ui.common.TopBarView
+import jp.example.mentalrecordapplication.ui.recordlist.components.FilterSortButton
 import jp.example.mentalrecordapplication.ui.recordlist.components.RecordedMoodCard
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 
@@ -60,18 +63,24 @@ fun RecordListView(
         if (uiState.listItem.isNullOrEmpty()) {
             NoRecordView()
         } else {
-            LazyColumn(
+            Column(
                 modifier = Modifier
                     .padding(innerPadding)
-                    .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                uiState.listItem?.forEach {
-                    item {
-                        RecordedMoodCard(
-                            moodEntity = it,
-                            onDeleteButtonTap = { viewModel.deleteById(it) }
-                        )
+                FilterSortButton(onTapped = {})
+
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    uiState.listItem?.let { list ->
+                        items(list) { item ->
+                            RecordedMoodCard(
+                                moodEntity = item,
+                                onDeleteButtonTap = { viewModel.deleteById(item.id) }
+                            )
+                        }
                     }
                 }
             }
