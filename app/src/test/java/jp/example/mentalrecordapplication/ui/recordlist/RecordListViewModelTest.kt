@@ -49,7 +49,7 @@ class RecordListViewModelTest {
         val state = viewModel.uiState.first()
 
         // Then
-        assertThat(state.listItem?.first()).isEqualTo(dummyEntity1)
+        assertThat(state.listItem?.first()).isEqualTo(dummyEntity2)
         assertThat(state.listItem?.count()).isEqualTo(2)
         coVerify { repository.selectAll() }
     }
