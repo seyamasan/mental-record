@@ -31,7 +31,7 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
     fun fetchAllItems() {
         viewModelScope.launch {
             val result = repository.selectAll()
-            val sortedResult = result?.sortedBy { it.localDate } // 年月日をもとにソート
+            val sortedResult = result?.sortedByDescending { it.localDate }
             updateListItem(newState = sortedResult)
         }
     }
