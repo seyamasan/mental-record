@@ -40,6 +40,64 @@ class RecordListViewModelTest {
     }
 
     @Test
+    fun toggleIsNewestFirst_shouldToggleIsNewestFirstValue() = runTest {
+        // When
+        viewModel.toggleIsNewestFirst()
+        val state1 = viewModel.uiState.first()
+
+        // Then
+        assertThat(state1.isNewestFirst).isFalse()
+
+        // When
+        viewModel.toggleIsNewestFirst()
+        val state2 = viewModel.uiState.first()
+
+        // Then
+        assertThat(state2.isNewestFirst).isTrue()
+    }
+
+    @Test
+    fun sortAndUpdateResult_should_sort_by_newest_first_when_isNewestFirst_true() = runTest {
+        // Given
+        val list = listOf(dummyEntity1, dummyEntity2)
+
+        // When
+        viewModel.toggleIsNewestFirst()
+        viewModel.toggleIsNewestFirst()
+        viewModel.sortAndUpdateResult(list)
+        val state = viewModel.uiState.first()
+
+        // Then
+        assertThat(state.listItem?.first()).isEqualTo(dummyEntity2)
+        assertThat(state.listItem?.last()).isEqualTo(dummyEntity1)
+    }
+
+    @Test
+    fun sortAndUpdateResult_should_sort_by_oldest_first_when_isNewestFirst_false() = runTest {
+        // Given
+        val list = listOf(dummyEntity2, dummyEntity1)
+
+        // When
+        viewModel.toggleIsNewestFirst()
+        viewModel.sortAndUpdateResult(list)
+        val state = viewModel.uiState.first()
+
+        // Then
+        assertThat(state.listItem?.first()).isEqualTo(dummyEntity1)
+        assertThat(state.listItem?.last()).isEqualTo(dummyEntity2)
+    }
+
+    @Test
+    fun sortAndUpdateResult_should_handle_null_listItem() = runTest {
+        // When
+        viewModel.sortAndUpdateResult(null)
+        val state = viewModel.uiState.first()
+
+        // Then
+        assertThat(state.listItem).isNull()
+    }
+
+    @Test
     fun fetchAllItems_should_update_listItem_sorted() = runTest {
         // Given
         coEvery { repository.selectAll() } returns listOf(dummyEntity2, dummyEntity1)
