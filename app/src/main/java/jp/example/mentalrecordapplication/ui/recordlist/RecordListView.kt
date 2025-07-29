@@ -28,6 +28,7 @@ import jp.example.mentalrecordapplication.ui.common.NoRecordView
 import jp.example.mentalrecordapplication.ui.common.OkOnlyAlertDialog
 import jp.example.mentalrecordapplication.ui.common.TopBarView
 import jp.example.mentalrecordapplication.ui.recordlist.components.FilterSortButton
+import jp.example.mentalrecordapplication.ui.recordlist.components.FilterSortDialog
 import jp.example.mentalrecordapplication.ui.recordlist.components.RecordedMoodCard
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 
@@ -67,7 +68,9 @@ fun RecordListView(
                 modifier = Modifier
                     .padding(innerPadding)
             ) {
-                FilterSortButton(onTapped = {})
+                FilterSortButton(
+                    onTapped = { viewModel.updateShowFilterSortDialog(newState = true) }
+                )
 
                 LazyColumn(
                     modifier = Modifier
@@ -97,6 +100,17 @@ fun RecordListView(
                 onConfirmation = {
                     viewModel.updateDeleteByIdResult(newState = null)
                 }
+            )
+        }
+
+        if (uiState.showFilterSortDialog) {
+            FilterSortDialog(
+                isAscending = uiState.isNewestFirst,
+                onToggleSortOrder = {
+                    viewModel.toggleIsNewestFirst()
+                    viewModel.sortAndUpdateResult(uiState.listItem)
+                },
+                onDismissRequest = { viewModel.updateShowFilterSortDialog(newState = false) }
             )
         }
     }

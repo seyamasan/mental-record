@@ -35,6 +35,8 @@
     <string name="record_list_screen_title">List</string>
     <string name="failed_to_delete_record_msg">Failed to delete record.</string>
     <string name="no_record_exists">Hi there. Want to take a moment to record how you\'re feeling today?</string>
+    <string name="setting">Setting</string>
+    <string name="newest_first">Newest First</string>
 
 <!--    OkHttpUtil-->
     <string name="opening_the_link_failed">Opening the link failed.</string>

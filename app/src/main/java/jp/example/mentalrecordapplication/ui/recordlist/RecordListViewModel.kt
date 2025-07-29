@@ -27,12 +27,44 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
         }
     }
 
+    fun updateShowFilterSortDialog(newState: Boolean) {
+        _uiState.update { state ->
+            state.copy(
+                showFilterSortDialog = newState
+            )
+        }
+    }
+
+    fun toggleIsNewestFirst() {
+        _uiState.update { state ->
+            state.copy(
+                isNewestFirst = !state.isNewestFirst
+            )
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun sortAndUpdateResult(listItem: List<MoodEntity>?) {
+        var tmpResults = listItem
+
+        tmpResults = if (_uiState.value.isNewestFirst) {
+            tmpResults?.sortedByDescending { it.localDate }
+        } else {
+            tmpResults?.sortedBy { it.localDate }
+        }
+
+        _uiState.update { state ->
+            state.copy(
+                listItem = tmpResults
+            )
+        }
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun fetchAllItems() {
         viewModelScope.launch {
             val result = repository.selectAll()
-            val sortedResult = result?.sortedByDescending { it.localDate }
-            updateListItem(newState = sortedResult)
+            sortAndUpdateResult(result)
         }
     }
 
@@ -42,14 +74,6 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
             val result = repository.deleteById(id = id)
             if (result) { fetchAllItems() }
             updateDeleteByIdResult(newState = result)
-        }
-    }
-
-    private fun updateListItem(newState: List<MoodEntity>?) {
-        _uiState.update { state ->
-            state.copy(
-                listItem = newState
-            )
         }
     }
 }
