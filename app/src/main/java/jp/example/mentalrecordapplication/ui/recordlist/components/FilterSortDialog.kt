@@ -35,7 +35,7 @@ import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 
 @Composable
 fun FilterSortDialog(
-    isAscending: Boolean,
+    isNewestFirst: Boolean,
     onToggleSortOrder: () -> Unit,
     onDismissRequest: () -> Unit
 ) {
@@ -95,7 +95,7 @@ fun FilterSortDialog(
                     }
                     Spacer(Modifier.weight(1f))
                     Switch(
-                        checked = isAscending,
+                        checked = isNewestFirst,
                         onCheckedChange = { onToggleSortOrder() }
                     )
                 }
@@ -110,7 +110,7 @@ fun FilterSortDialog(
 fun FilterSortDialogPreview() {
     MentalRecordAppTheme {
         FilterSortDialog(
-            isAscending = true,
+            isNewestFirst = true,
             onToggleSortOrder = {},
             onDismissRequest = {}
         )

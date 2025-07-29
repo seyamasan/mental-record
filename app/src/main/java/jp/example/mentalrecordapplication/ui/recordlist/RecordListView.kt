@@ -105,7 +105,7 @@ fun RecordListView(
 
         if (uiState.showFilterSortDialog) {
             FilterSortDialog(
-                isAscending = uiState.isNewestFirst,
+                isNewestFirst = uiState.isNewestFirst,
                 onToggleSortOrder = {
                     viewModel.toggleIsNewestFirst()
                     viewModel.sortAndUpdateResult(uiState.listItem)
