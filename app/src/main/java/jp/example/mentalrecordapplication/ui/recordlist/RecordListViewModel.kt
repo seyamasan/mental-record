@@ -19,29 +19,11 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
     private val _uiState = MutableStateFlow(RecordListState())
     val uiState: StateFlow<RecordListState> = _uiState.asStateFlow()
 
-    fun updateDeleteByIdResult(newState: Boolean?) {
-        _uiState.update { state ->
-            state.copy(
-                deleteByIdResult = newState
-            )
-        }
-    }
+    fun updateDeleteByIdResult(newState: Boolean?) = _uiState.update { state -> state.copy(deleteByIdResult = newState) }
 
-    fun updateShowFilterSortDialog(newState: Boolean) {
-        _uiState.update { state ->
-            state.copy(
-                showFilterSortDialog = newState
-            )
-        }
-    }
+    fun updateShowFilterSortDialog(newState: Boolean) = _uiState.update { state -> state.copy(showFilterSortDialog = newState) }
 
-    fun toggleIsNewestFirst() {
-        _uiState.update { state ->
-            state.copy(
-                isNewestFirst = !state.isNewestFirst
-            )
-        }
-    }
+    fun toggleIsNewestFirst() = _uiState.update { state -> state.copy(isNewestFirst = !state.isNewestFirst) }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun sortAndUpdateResult(listItem: List<MoodEntity>?) {
@@ -53,11 +35,7 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
             tmpResults?.sortedBy { it.localDate }
         }
 
-        _uiState.update { state ->
-            state.copy(
-                listItem = tmpResults
-            )
-        }
+        _uiState.update { state -> state.copy(listItem = tmpResults) }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
