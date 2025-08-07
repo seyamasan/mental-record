@@ -20,61 +20,19 @@ class RecordMoodViewModel @Inject constructor(private val repository: MoodReposi
     private val _uiState = MutableStateFlow(RecordMoodState())
     val uiState: StateFlow<RecordMoodState> = _uiState.asStateFlow()
 
-    fun updateMood(newState: DefaultMoodType?) {
-        _uiState.update { state ->
-            state.copy(
-                selectedMood = newState
-            )
-        }
-    }
+    fun updateMood(newState: DefaultMoodType?) = _uiState.update { state -> state.copy( selectedMood = newState) }
 
-    fun updateTimeOfDay(newState: TimeOfDayType?) {
-        _uiState.update { state ->
-            state.copy(
-                selectedTimeOfDay = newState
-            )
-        }
-    }
+    fun updateTimeOfDay(newState: TimeOfDayType?) = _uiState.update { state -> state.copy(selectedTimeOfDay = newState) }
 
-    fun updateDate(newState: String) {
-        _uiState.update { state ->
-            state.copy(
-                selectedDate = newState
-            )
-        }
-    }
+    fun updateDate(newState: String) = _uiState.update { state -> state.copy(selectedDate = newState) }
 
-    fun updateMemo(newState: String?) {
-        _uiState.update { state ->
-            state.copy(
-                enteredMemo = newState
-            )
-        }
-    }
+    fun updateMemo(newState: String?) = _uiState.update { state -> state.copy(enteredMemo = newState) }
 
-    fun updateIsDatePickerVisible(newState: Boolean) {
-        _uiState.update { state ->
-            state.copy(
-                isDatePickerVisible = newState
-            )
-        }
-    }
+    fun updateIsDatePickerVisible(newState: Boolean) = _uiState.update { state -> state.copy(isDatePickerVisible = newState) }
 
-    fun updateIsMemoSheetVisible(newState: Boolean) {
-        _uiState.update { state ->
-            state.copy(
-                isMemoSheetVisible = newState
-            )
-        }
-    }
+    fun updateIsMemoSheetVisible(newState: Boolean) = _uiState.update { state -> state.copy(isMemoSheetVisible = newState) }
 
-    fun updateSaveResult(newState: RecordMoodSaveResultType?) {
-        _uiState.update { state ->
-            state.copy(
-                saveResult = newState
-            )
-        }
-    }
+    fun updateSaveResult(newState: RecordMoodSaveResultType?) = _uiState.update { state -> state.copy(saveResult = newState) }
 
     fun saveMoodDetail() {
         viewModelScope.launch {
