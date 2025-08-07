@@ -9,19 +9,8 @@ import javax.inject.Singleton
 class MoodRepositoryImpl@Inject constructor(
     private val dataSource: MoodDataSource
 ): MoodRepository {
-    override suspend fun insert(entity: MoodEntity): Boolean {
-        return dataSource.insert(entity)
-    }
-
-    override suspend fun deleteById(id: Int): Boolean {
-        return dataSource.deleteById(id = id)
-    }
-
-    override suspend fun selectAll(): List<MoodEntity>? {
-        return dataSource.selectAll()
-    }
-
-    override suspend fun deleteAll(): Boolean {
-        return dataSource.deleteAll()
-    }
+    override suspend fun insert(entity: MoodEntity): Boolean = dataSource.insert(entity)
+    override suspend fun deleteById(id: Int): Boolean = dataSource.deleteById(id = id)
+    override suspend fun selectAll(): List<MoodEntity>? = dataSource.selectAll()
+    override suspend fun deleteAll(): Boolean = dataSource.deleteAll()
 }
