@@ -65,7 +65,7 @@ fun RecordListView(
         }
     ) { innerPadding ->
 
-        if (uiState.listItem.isNullOrEmpty()) {
+        if (uiState.filteredListItem.isNullOrEmpty()) {
             NoRecordView()
         } else {
             Column(
@@ -81,7 +81,7 @@ fun RecordListView(
                         .fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    uiState.listItem?.let { list ->
+                    uiState.filteredListItem?.let { list ->
                         items(list) { item ->
                             RecordedMoodCard(
                                 moodEntity = item,
@@ -114,9 +114,14 @@ fun RecordListView(
             ) {
                 FilterSortSheetComponents(
                     isNewestFirst = uiState.isNewestFirst,
+                    selectedTimeOfDay = uiState.selectedTimeOfDay,
                     onToggleSortOrder = {
                         viewModel.toggleIsNewestFirst()
-                        viewModel.sortAndUpdateResult(uiState.listItem)
+                        viewModel.sortAndUpdateResult(uiState.allListItem)
+                    },
+                    onTimeOfDaySelected = {
+                        viewModel.updateSelectedTimeOfDay(it)
+                        viewModel.applyTimeOfDayFilter()
                     }
                 )
             }

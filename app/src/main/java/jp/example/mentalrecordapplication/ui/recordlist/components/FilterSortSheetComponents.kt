@@ -27,24 +27,27 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import jp.example.mentalrecordapplication.R
+import jp.example.mentalrecordapplication.ui.common.TimeOfDayButtonGroup
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
+import jp.example.mentalrecordapplication.utils.types.TimeOfDayType
 
 @Composable
 fun FilterSortSheetComponents(
     isNewestFirst: Boolean,
-    onToggleSortOrder: () -> Unit
+    selectedTimeOfDay: TimeOfDayType?,
+    onToggleSortOrder: () -> Unit,
+    onTimeOfDaySelected: (TimeOfDayType) -> Unit
 ) {
     Column(
         modifier = Modifier
             .padding(16.dp)
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-
             Text(
                 text = stringResource(id = R.string.filter),
                 style = MaterialTheme.typography.titleLarge.copy(
@@ -62,7 +65,7 @@ fun FilterSortSheetComponents(
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row {
                 Icon(
                     imageVector = Icons.Filled.Schedule,
                     contentDescription = null
@@ -80,6 +83,11 @@ fun FilterSortSheetComponents(
                 onCheckedChange = { onToggleSortOrder() }
             )
         }
+
+        TimeOfDayButtonGroup(
+            selectedTimeOfDay = selectedTimeOfDay,
+            onItemSelected = onTimeOfDaySelected
+        )
     }
 }
 
@@ -91,7 +99,9 @@ fun FilterSortDialogPreview() {
         Surface {
             FilterSortSheetComponents(
                 isNewestFirst = true,
-                onToggleSortOrder = {}
+                selectedTimeOfDay = null,
+                onToggleSortOrder = {},
+                onTimeOfDaySelected = {}
             )
         }
     }

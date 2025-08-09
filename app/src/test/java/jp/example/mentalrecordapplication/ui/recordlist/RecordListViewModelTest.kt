@@ -68,8 +68,8 @@ class RecordListViewModelTest {
         val state = viewModel.uiState.first()
 
         // Then
-        assertThat(state.listItem?.first()).isEqualTo(dummyEntity2)
-        assertThat(state.listItem?.last()).isEqualTo(dummyEntity1)
+        assertThat(state.filteredListItem?.first()).isEqualTo(dummyEntity2)
+        assertThat(state.filteredListItem?.last()).isEqualTo(dummyEntity1)
     }
 
     @Test
@@ -83,8 +83,8 @@ class RecordListViewModelTest {
         val state = viewModel.uiState.first()
 
         // Then
-        assertThat(state.listItem?.first()).isEqualTo(dummyEntity1)
-        assertThat(state.listItem?.last()).isEqualTo(dummyEntity2)
+        assertThat(state.filteredListItem?.first()).isEqualTo(dummyEntity1)
+        assertThat(state.filteredListItem?.last()).isEqualTo(dummyEntity2)
     }
 
     @Test
@@ -94,7 +94,7 @@ class RecordListViewModelTest {
         val state = viewModel.uiState.first()
 
         // Then
-        assertThat(state.listItem).isNull()
+        assertThat(state.filteredListItem).isNull()
     }
 
     @Test
@@ -107,8 +107,8 @@ class RecordListViewModelTest {
         val state = viewModel.uiState.first()
 
         // Then
-        assertThat(state.listItem?.first()).isEqualTo(dummyEntity2)
-        assertThat(state.listItem?.count()).isEqualTo(2)
+        assertThat(state.filteredListItem?.first()).isEqualTo(dummyEntity2)
+        assertThat(state.filteredListItem?.count()).isEqualTo(2)
         coVerify { repository.selectAll() }
     }
 
@@ -124,7 +124,7 @@ class RecordListViewModelTest {
 
         // Then
         assertThat(state.deleteByIdResult).isTrue()
-        assertThat(state.listItem).containsExactly(dummyEntity1)
+        assertThat(state.filteredListItem).containsExactly(dummyEntity1)
         coVerify { repository.deleteById(DUMMY_ID) }
         coVerify { repository.selectAll() }
     }

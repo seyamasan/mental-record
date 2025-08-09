@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.example.mentalrecordapplication.data.local.room.MoodEntity
 import jp.example.mentalrecordapplication.data.repository.MoodRepository
+import jp.example.mentalrecordapplication.utils.types.TimeOfDayType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,6 +26,8 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
 
     fun toggleIsNewestFirst() = _uiState.update { state -> state.copy(isNewestFirst = !state.isNewestFirst) }
 
+    fun updateSelectedTimeOfDay(newState: TimeOfDayType) = _uiState.update { state -> state.copy(selectedTimeOfDay = newState) }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun sortAndUpdateResult(listItem: List<MoodEntity>?) {
         var tmpResults = listItem
@@ -35,7 +38,14 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
             tmpResults?.sortedBy { it.localDate }
         }
 
-        _uiState.update { state -> state.copy(listItem = tmpResults) }
+        _uiState.update { state -> state.copy(allListItem = tmpResults, filteredListItem = tmpResults) }
+    }
+
+    fun applyTimeOfDayFilter() {
+        if (_uiState.value.selectedTimeOfDay == null) { return }
+
+        val filteredResult = _uiState.value.allListItem?.filter { it.timeOfDay == _uiState.value.selectedTimeOfDay }
+        _uiState.update { state -> state.copy(filteredListItem = filteredResult) }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -43,6 +53,7 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
         viewModelScope.launch {
             val result = repository.selectAll()
             sortAndUpdateResult(result)
+            applyTimeOfDayFilter()
         }
     }
 
