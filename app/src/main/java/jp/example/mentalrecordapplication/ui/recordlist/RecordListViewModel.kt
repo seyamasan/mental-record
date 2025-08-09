@@ -29,31 +29,18 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
     fun updateSelectedTimeOfDay(newState: TimeOfDayType) = _uiState.update { state -> state.copy(selectedTimeOfDay = newState) }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun sortAndUpdateResult(listItem: List<MoodEntity>?) {
-        var tmpResults = listItem
-
-        tmpResults = if (_uiState.value.isNewestFirst) {
-            tmpResults?.sortedByDescending { it.localDate }
-        } else {
-            tmpResults?.sortedBy { it.localDate }
-        }
-
-        _uiState.update { state -> state.copy(allListItem = tmpResults, filteredListItem = tmpResults) }
-    }
-
-    fun applyTimeOfDayFilter() {
-        if (_uiState.value.selectedTimeOfDay == null) { return }
-
-        val filteredResult = _uiState.value.allListItem?.filter { it.timeOfDay == _uiState.value.selectedTimeOfDay }
-        _uiState.update { state -> state.copy(filteredListItem = filteredResult) }
+    fun applyListItemFilter() {
+        val filteredItem1 = applyTimeOfDayFilter(_uiState.value.allListItem)
+        val filteredItem2 = applySortOrder(filteredItem1)
+        _uiState.update { state -> state.copy(filteredListItem = filteredItem2) }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun fetchAllItems() {
         viewModelScope.launch {
             val result = repository.selectAll()
-            sortAndUpdateResult(result)
-            applyTimeOfDayFilter()
+            _uiState.update { state -> state.copy(allListItem = result, filteredListItem = result) }
+            applyListItemFilter()
         }
     }
 
@@ -64,5 +51,19 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
             if (result) { fetchAllItems() }
             updateDeleteByIdResult(newState = result)
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun applySortOrder(targetItem: List<MoodEntity>?): List<MoodEntity>? {
+        return if (_uiState.value.isNewestFirst) {
+            targetItem?.sortedByDescending { it.localDate }
+        } else {
+            targetItem?.sortedBy { it.localDate }
+        }
+    }
+
+    private fun applyTimeOfDayFilter(targetItem: List<MoodEntity>?): List<MoodEntity>? {
+        if (_uiState.value.selectedTimeOfDay == null) { return targetItem }
+        return targetItem?.filter { it.timeOfDay == _uiState.value.selectedTimeOfDay }
     }
 }

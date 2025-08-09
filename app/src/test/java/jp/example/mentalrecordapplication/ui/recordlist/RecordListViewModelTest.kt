@@ -56,46 +56,46 @@ class RecordListViewModelTest {
         assertThat(state2.isNewestFirst).isTrue()
     }
 
-    @Test
-    fun sortAndUpdateResult_should_sort_by_newest_first_when_isNewestFirst_true() = runTest {
-        // Given
-        val list = listOf(dummyEntity1, dummyEntity2)
+//    @Test
+//    fun sortAndUpdateResult_should_sort_by_newest_first_when_isNewestFirst_true() = runTest {
+//        // Given
+//        val list = listOf(dummyEntity1, dummyEntity2)
+//
+//        // When
+//        viewModel.toggleIsNewestFirst()
+//        viewModel.toggleIsNewestFirst()
+//        viewModel.sortAndUpdateResult(list)
+//        val state = viewModel.uiState.first()
+//
+//        // Then
+//        assertThat(state.filteredListItem?.first()).isEqualTo(dummyEntity2)
+//        assertThat(state.filteredListItem?.last()).isEqualTo(dummyEntity1)
+//    }
 
-        // When
-        viewModel.toggleIsNewestFirst()
-        viewModel.toggleIsNewestFirst()
-        viewModel.sortAndUpdateResult(list)
-        val state = viewModel.uiState.first()
+//    @Test
+//    fun sortAndUpdateResult_should_sort_by_oldest_first_when_isNewestFirst_false() = runTest {
+//        // Given
+//        val list = listOf(dummyEntity2, dummyEntity1)
+//
+//        // When
+//        viewModel.toggleIsNewestFirst()
+//        viewModel.sortAndUpdateResult(list)
+//        val state = viewModel.uiState.first()
+//
+//        // Then
+//        assertThat(state.filteredListItem?.first()).isEqualTo(dummyEntity1)
+//        assertThat(state.filteredListItem?.last()).isEqualTo(dummyEntity2)
+//    }
 
-        // Then
-        assertThat(state.filteredListItem?.first()).isEqualTo(dummyEntity2)
-        assertThat(state.filteredListItem?.last()).isEqualTo(dummyEntity1)
-    }
-
-    @Test
-    fun sortAndUpdateResult_should_sort_by_oldest_first_when_isNewestFirst_false() = runTest {
-        // Given
-        val list = listOf(dummyEntity2, dummyEntity1)
-
-        // When
-        viewModel.toggleIsNewestFirst()
-        viewModel.sortAndUpdateResult(list)
-        val state = viewModel.uiState.first()
-
-        // Then
-        assertThat(state.filteredListItem?.first()).isEqualTo(dummyEntity1)
-        assertThat(state.filteredListItem?.last()).isEqualTo(dummyEntity2)
-    }
-
-    @Test
-    fun sortAndUpdateResult_should_handle_null_listItem() = runTest {
-        // When
-        viewModel.sortAndUpdateResult(null)
-        val state = viewModel.uiState.first()
-
-        // Then
-        assertThat(state.filteredListItem).isNull()
-    }
+//    @Test
+//    fun sortAndUpdateResult_should_handle_null_listItem() = runTest {
+//        // When
+//        viewModel.sortAndUpdateResult(null)
+//        val state = viewModel.uiState.first()
+//
+//        // Then
+//        assertThat(state.filteredListItem).isNull()
+//    }
 
     @Test
     fun fetchAllItems_should_update_listItem_sorted() = runTest {

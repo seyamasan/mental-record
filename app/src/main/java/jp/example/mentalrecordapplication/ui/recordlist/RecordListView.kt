@@ -117,11 +117,11 @@ fun RecordListView(
                     selectedTimeOfDay = uiState.selectedTimeOfDay,
                     onToggleSortOrder = {
                         viewModel.toggleIsNewestFirst()
-                        viewModel.sortAndUpdateResult(uiState.allListItem)
+                        viewModel.applyListItemFilter()
                     },
                     onTimeOfDaySelected = {
                         viewModel.updateSelectedTimeOfDay(it)
-                        viewModel.applyTimeOfDayFilter()
+                        viewModel.applyListItemFilter()
                     }
                 )
             }
