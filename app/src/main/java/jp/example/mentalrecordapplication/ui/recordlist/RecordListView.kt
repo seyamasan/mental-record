@@ -8,9 +8,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ErrorOutline
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,10 +31,11 @@ import jp.example.mentalrecordapplication.ui.common.NoRecordView
 import jp.example.mentalrecordapplication.ui.common.OkOnlyAlertDialog
 import jp.example.mentalrecordapplication.ui.common.TopBarView
 import jp.example.mentalrecordapplication.ui.recordlist.components.FilterSortButton
-import jp.example.mentalrecordapplication.ui.recordlist.components.FilterSortDialog
+import jp.example.mentalrecordapplication.ui.recordlist.components.FilterSortSheetComponents
 import jp.example.mentalrecordapplication.ui.recordlist.components.RecordedMoodCard
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RecordListView(
@@ -104,14 +108,18 @@ fun RecordListView(
         }
 
         if (uiState.showFilterSortDialog) {
-            FilterSortDialog(
-                isNewestFirst = uiState.isNewestFirst,
-                onToggleSortOrder = {
-                    viewModel.toggleIsNewestFirst()
-                    viewModel.sortAndUpdateResult(uiState.listItem)
-                },
-                onDismissRequest = { viewModel.updateShowFilterSortDialog(newState = false) }
-            )
+            ModalBottomSheet(
+                onDismissRequest = { viewModel.updateShowFilterSortDialog(newState = false) },
+                shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
+            ) {
+                FilterSortSheetComponents(
+                    isNewestFirst = uiState.isNewestFirst,
+                    onToggleSortOrder = {
+                        viewModel.toggleIsNewestFirst()
+                        viewModel.sortAndUpdateResult(uiState.listItem)
+                    }
+                )
+            }
         }
     }
 }

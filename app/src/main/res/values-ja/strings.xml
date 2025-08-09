@@ -35,7 +35,7 @@
     <string name="record_list_screen_title">リスト</string>
     <string name="failed_to_delete_record_msg">記録の削除に失敗しました。</string>
     <string name="no_record_exists">こんにちは。今日のメンタル、少しだけ記録してみませんか？</string>
-    <string name="setting">設定</string>
+    <string name="filter">絞り込み</string>
     <string name="newest_first">新しい順</string>
 
 <!--    OkHttpUtil-->
