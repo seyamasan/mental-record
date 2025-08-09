@@ -73,7 +73,7 @@ fun RecordListView(
                     .padding(innerPadding)
             ) {
                 FilterSortButton(
-                    onTapped = { viewModel.updateShowFilterSortDialog(newState = true) }
+                    onTapped = { viewModel.updateOpenFilterSortSheet(newState = true) }
                 )
 
                 LazyColumn(
@@ -107,9 +107,9 @@ fun RecordListView(
             )
         }
 
-        if (uiState.showFilterSortDialog) {
+        if (uiState.openFilterSortSheet) {
             ModalBottomSheet(
-                onDismissRequest = { viewModel.updateShowFilterSortDialog(newState = false) },
+                onDismissRequest = { viewModel.updateOpenFilterSortSheet(newState = false) },
                 shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
             ) {
                 FilterSortSheetComponents(

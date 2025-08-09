@@ -21,7 +21,7 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
 
     fun updateDeleteByIdResult(newState: Boolean?) = _uiState.update { state -> state.copy(deleteByIdResult = newState) }
 
-    fun updateShowFilterSortDialog(newState: Boolean) = _uiState.update { state -> state.copy(showFilterSortDialog = newState) }
+    fun updateOpenFilterSortSheet(newState: Boolean) = _uiState.update { state -> state.copy(openFilterSortSheet = newState) }
 
     fun toggleIsNewestFirst() = _uiState.update { state -> state.copy(isNewestFirst = !state.isNewestFirst) }
 

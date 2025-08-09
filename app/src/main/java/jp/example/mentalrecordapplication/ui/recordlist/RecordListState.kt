@@ -5,6 +5,6 @@ import jp.example.mentalrecordapplication.data.local.room.MoodEntity
 data class RecordListState(
     val listItem: List<MoodEntity>? = null,
     val deleteByIdResult: Boolean? = null,
-    val showFilterSortDialog: Boolean = false,
+    val openFilterSortSheet: Boolean = false,
     val isNewestFirst: Boolean = true
 )
