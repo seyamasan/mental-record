@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import jp.example.mentalrecordapplication.R
 import jp.example.mentalrecordapplication.ui.common.button.SmallElevatedButton
-import jp.example.mentalrecordapplication.ui.common.TimeOfDayButtonGroup
+import jp.example.mentalrecordapplication.ui.common.button.TimeOfDayButtonGroup
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 import jp.example.mentalrecordapplication.utils.types.TimeOfDayType
 

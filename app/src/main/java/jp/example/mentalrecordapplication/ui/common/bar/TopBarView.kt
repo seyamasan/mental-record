@@ -1,4 +1,4 @@
-package jp.example.mentalrecordapplication.ui.common
+package jp.example.mentalrecordapplication.ui.common.bar
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box

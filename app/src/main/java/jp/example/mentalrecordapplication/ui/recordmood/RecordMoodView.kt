@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDatePickerState
@@ -20,9 +19,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import jp.example.mentalrecordapplication.R
 import jp.example.mentalrecordapplication.navigator.screens.Screens
-import jp.example.mentalrecordapplication.ui.common.BottomNavBarView
+import jp.example.mentalrecordapplication.ui.common.bar.BottomNavBarView
 import jp.example.mentalrecordapplication.ui.common.OkOnlyAlertDialog
-import jp.example.mentalrecordapplication.ui.common.TopBarView
+import jp.example.mentalrecordapplication.ui.common.bar.TopBarView
 import jp.example.mentalrecordapplication.ui.recordmood.components.DefaultMoodSelector
 import jp.example.mentalrecordapplication.ui.recordmood.components.RecordMoodInputSectionsCard
 import jp.example.mentalrecordapplication.ui.recordmood.components.SupportMessage

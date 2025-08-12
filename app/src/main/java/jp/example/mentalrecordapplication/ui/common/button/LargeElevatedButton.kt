@@ -1,4 +1,4 @@
-package jp.example.mentalrecordapplication.ui.common
+package jp.example.mentalrecordapplication.ui.common.button
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.heightIn
@@ -37,7 +37,7 @@ fun LargeElevatedButton(
 @Preview(showBackground = true)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun SmallElevatedButtonPreview() {
+fun LargeElevatedButtonPreview() {
     MentalRecordAppTheme {
         LargeElevatedButton(
             text = "Button",

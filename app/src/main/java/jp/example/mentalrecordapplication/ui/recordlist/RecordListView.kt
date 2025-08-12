@@ -26,10 +26,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import jp.example.mentalrecordapplication.R
-import jp.example.mentalrecordapplication.ui.common.BottomNavBarView
+import jp.example.mentalrecordapplication.ui.common.bar.BottomNavBarView
 import jp.example.mentalrecordapplication.ui.common.NoRecordView
 import jp.example.mentalrecordapplication.ui.common.OkOnlyAlertDialog
-import jp.example.mentalrecordapplication.ui.common.TopBarView
+import jp.example.mentalrecordapplication.ui.common.bar.TopBarView
 import jp.example.mentalrecordapplication.ui.recordlist.components.FilterSortButton
 import jp.example.mentalrecordapplication.ui.recordlist.components.FilterSortSheetComponents
 import jp.example.mentalrecordapplication.ui.recordlist.components.RecordedMoodCard
