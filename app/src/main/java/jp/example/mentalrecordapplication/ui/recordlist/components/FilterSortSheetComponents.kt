@@ -2,7 +2,6 @@ package jp.example.mentalrecordapplication.ui.recordlist.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -27,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import jp.example.mentalrecordapplication.R
+import jp.example.mentalrecordapplication.ui.common.button.SmallElevatedButton
 import jp.example.mentalrecordapplication.ui.common.TimeOfDayButtonGroup
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 import jp.example.mentalrecordapplication.utils.types.TimeOfDayType
@@ -35,6 +35,7 @@ import jp.example.mentalrecordapplication.utils.types.TimeOfDayType
 fun FilterSortSheetComponents(
     isNewestFirst: Boolean,
     selectedTimeOfDay: TimeOfDayType?,
+    onReset: () -> Unit,
     onToggleSortOrder: () -> Unit,
     onTimeOfDaySelected: (TimeOfDayType) -> Unit
 ) {
@@ -44,16 +45,22 @@ fun FilterSortSheetComponents(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = stringResource(id = R.string.filter),
                 style = MaterialTheme.typography.titleLarge.copy(
                     fontWeight = FontWeight.Bold
-                ),
-                modifier = Modifier.align(Alignment.CenterStart)
+                )
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            SmallElevatedButton(
+                text = stringResource(id = R.string.reset),
+                onClick = onReset
             )
         }
 
@@ -100,6 +107,7 @@ fun FilterSortDialogPreview() {
             FilterSortSheetComponents(
                 isNewestFirst = true,
                 selectedTimeOfDay = null,
+                onReset = {},
                 onToggleSortOrder = {},
                 onTimeOfDaySelected = {}
             )

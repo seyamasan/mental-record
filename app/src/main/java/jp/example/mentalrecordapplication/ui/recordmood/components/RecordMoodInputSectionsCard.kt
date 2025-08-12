@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,7 +18,6 @@ import jp.example.mentalrecordapplication.ui.common.TimeOfDayButtonGroup
 import jp.example.mentalrecordapplication.ui.recordmood.RecordMoodState
 import jp.example.mentalrecordapplication.ui.recordmood.RecordMoodViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecordMoodInputSectionsCard(
     viewModel: RecordMoodViewModel,

@@ -1,4 +1,4 @@
-package jp.example.mentalrecordapplication.ui.common
+package jp.example.mentalrecordapplication.ui.common.button
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.heightIn
@@ -15,11 +15,11 @@ import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun LargeElevatedButton(
+fun SmallElevatedButton(
     text: String,
     onClick: () -> Unit
 ) {
-    val size = ButtonDefaults.LargeContainerHeight
+    val size = ButtonDefaults.ExtraSmallContainerHeight
     ElevatedButton(
         modifier = Modifier.heightIn(size),
         colors = ButtonDefaults.elevatedButtonColors(
@@ -39,7 +39,7 @@ fun LargeElevatedButton(
 @Composable
 fun SmallElevatedButtonPreview() {
     MentalRecordAppTheme {
-        LargeElevatedButton(
+        SmallElevatedButton(
             text = "Button",
             onClick = {}
         )

@@ -115,6 +115,7 @@ fun RecordListView(
                 FilterSortSheetComponents(
                     isNewestFirst = uiState.isNewestFirst,
                     selectedTimeOfDay = uiState.selectedTimeOfDay,
+                    onReset = {},
                     onToggleSortOrder = {
                         viewModel.toggleIsNewestFirst()
                         viewModel.applyListItemFilter()
