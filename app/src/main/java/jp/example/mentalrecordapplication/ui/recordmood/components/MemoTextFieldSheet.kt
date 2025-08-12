@@ -20,9 +20,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
@@ -43,6 +47,7 @@ fun MemoTextFieldSheet(
 ) {
     val coroutineScope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
+    val focusRequester = remember { FocusRequester() }
 
     OutlinedTextField(
         value = enteredMemo ?: "",
@@ -84,9 +89,16 @@ fun MemoTextFieldSheet(
                 TextField(
                     value = enteredMemo ?: "",
                     onValueChange = { onChangeTextField(it) },
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(focusRequester),
                     placeholder = { Text(stringResource(id = R.string.memo_placeholder)) }
                 )
+
+                LaunchedEffect(Unit){
+                    focusRequester.requestFocus()
+                }
+
                 Button(
                     onClick = {
                         coroutineScope.launch { sheetState.hide() }.invokeOnCompletion {

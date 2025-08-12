@@ -30,7 +30,6 @@ import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 import jp.example.mentalrecordapplication.utils.NavigationUtil
 import jp.example.mentalrecordapplication.utils.types.RecordMoodSaveResultType
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecordMoodView(
     viewModel: RecordMoodViewModel = hiltViewModel(),
