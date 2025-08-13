@@ -15,6 +15,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -46,6 +47,7 @@ fun RecordListView(
     onSelectedTab: (Int) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val dateRangePickerState = rememberDateRangePickerState()
 
     LaunchedEffect(Unit) {
         viewModel.fetchAllItems()
@@ -115,6 +117,8 @@ fun RecordListView(
                 FilterSortSheetComponents(
                     isNewestFirst = uiState.isNewestFirst,
                     selectedTimeOfDay = uiState.selectedTimeOfDay,
+                    showDateRangePicker = uiState.showDateRangePicker,
+                    dateRangePickerState = dateRangePickerState,
                     onReset = {},
                     onToggleSortOrder = {
                         viewModel.toggleIsNewestFirst()
@@ -123,6 +127,11 @@ fun RecordListView(
                     onTimeOfDaySelected = {
                         viewModel.updateSelectedTimeOfDay(it)
                         viewModel.applyListItemFilter()
+                    },
+                    onDRPMTextFieldTap = { viewModel.updateShowDateRangePicker(true) },
+                    onDateRangeSelected = {
+                        viewModel.updateShowDateRangePicker(false)
+                        // TODO: ここで絞り込みの処理を呼び出す
                     }
                 )
             }

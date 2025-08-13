@@ -28,6 +28,8 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
 
     fun updateSelectedTimeOfDay(newState: TimeOfDayType) = _uiState.update { state -> state.copy(selectedTimeOfDay = newState) }
 
+    fun updateShowDateRangePicker(newState: Boolean) = _uiState.update { state -> state.copy(showDateRangePicker = newState) }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun applyListItemFilter() {
         val filteredItem1 = applyTimeOfDayFilter(_uiState.value.allListItem)

@@ -5,6 +5,8 @@
 <!--    Common-->
     <string name="success">成功</string>
     <string name="failure">失敗</string>
+    <string name="select_date_range">年月日の範囲を選択</string>
+    <string name="select_range">範囲を選択してください。</string>
 
 <!--    RecordMoodView-->
     <string name="mood_record_screen_title">記録する</string>

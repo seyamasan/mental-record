@@ -12,12 +12,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Schedule
+import androidx.compose.material3.DateRangePickerState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import jp.example.mentalrecordapplication.R
+import jp.example.mentalrecordapplication.ui.common.DateRangePickerModal
 import jp.example.mentalrecordapplication.ui.common.button.SmallElevatedButton
 import jp.example.mentalrecordapplication.ui.common.button.TimeOfDayButtonGroup
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
@@ -35,9 +38,13 @@ import jp.example.mentalrecordapplication.utils.types.TimeOfDayType
 fun FilterSortSheetComponents(
     isNewestFirst: Boolean,
     selectedTimeOfDay: TimeOfDayType?,
+    showDateRangePicker: Boolean,
+    dateRangePickerState: DateRangePickerState,
     onReset: () -> Unit,
     onToggleSortOrder: () -> Unit,
-    onTimeOfDaySelected: (TimeOfDayType) -> Unit
+    onTimeOfDaySelected: (TimeOfDayType) -> Unit,
+    onDRPMTextFieldTap: () -> Unit,
+    onDateRangeSelected: (Pair<Long?, Long?>) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -95,6 +102,13 @@ fun FilterSortSheetComponents(
             selectedTimeOfDay = selectedTimeOfDay,
             onItemSelected = onTimeOfDaySelected
         )
+
+        DateRangePickerModal(
+            showDateRangePicker = showDateRangePicker,
+            state = dateRangePickerState,
+            onTextFieldTap = onDRPMTextFieldTap,
+            onDateRangeSelected = onDateRangeSelected
+        )
     }
 }
 
@@ -103,13 +117,19 @@ fun FilterSortSheetComponents(
 @Composable
 fun FilterSortDialogPreview() {
     MentalRecordAppTheme {
+        val dummyState = rememberDateRangePickerState()
+
         Surface {
             FilterSortSheetComponents(
                 isNewestFirst = true,
                 selectedTimeOfDay = null,
+                showDateRangePicker = false,
+                dateRangePickerState = dummyState,
                 onReset = {},
                 onToggleSortOrder = {},
-                onTimeOfDaySelected = {}
+                onTimeOfDaySelected = {},
+                onDRPMTextFieldTap = {},
+                onDateRangeSelected = {}
             )
         }
     }

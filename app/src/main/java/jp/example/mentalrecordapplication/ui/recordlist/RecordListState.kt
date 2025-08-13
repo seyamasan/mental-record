@@ -9,5 +9,6 @@ data class RecordListState(
     val deleteByIdResult: Boolean? = null,
     val openFilterSortSheet: Boolean = false,
     val isNewestFirst: Boolean = true,
-    val selectedTimeOfDay: TimeOfDayType? = null
+    val selectedTimeOfDay: TimeOfDayType? = null,
+    val showDateRangePicker: Boolean = false
 )

@@ -5,6 +5,8 @@
 <!--    Common-->
     <string name="success">Success</string>
     <string name="failure">Failure</string>
+    <string name="select_date_range">Select date range</string>
+    <string name="select_range">Please select a range.</string>
 
 <!--    RecordView-->
     <string name="mood_record_screen_title">Record</string>
