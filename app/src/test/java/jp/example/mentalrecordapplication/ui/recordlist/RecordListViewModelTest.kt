@@ -284,7 +284,7 @@ class RecordListViewModelTest {
 
         private val dummyEntity5: MoodEntity = MoodEntity(
             id = 5,
-            mood = DefaultMoodType.Normal,
+            mood = DefaultMoodType.NORMAL,
             date = "2024/11/16",
             timeOfDay = TimeOfDayType.NIGHT,
             memo = null

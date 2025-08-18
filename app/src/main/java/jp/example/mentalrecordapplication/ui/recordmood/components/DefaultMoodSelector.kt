@@ -33,7 +33,7 @@ fun DefaultMoodSelector(
         DefaultMoodType.ANGER,
         DefaultMoodType.SAD,
         DefaultMoodType.FUN,
-        DefaultMoodType.Normal
+        DefaultMoodType.NORMAL
     )
 
     LazyRow(
