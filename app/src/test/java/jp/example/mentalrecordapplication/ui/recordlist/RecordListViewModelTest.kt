@@ -119,41 +119,41 @@ class RecordListViewModelTest {
         assertThat(state.filteredListItem).containsExactly(dummyEntity3, dummyEntity5)
     }
 
-//    @Test
-//    fun applyListItemFilter_filters_items_from_start_date_range() = runTest {
-//        // Given
-//        val startDate = LocalDate.parse("2025-06-01")
-//        val startMillis = startDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
-//        coEvery { repository.selectAll() } returns dummyList
-//
-//        // When
-//        viewModel.fetchAllItems()
-//        viewModel.updateSelectedDateRange(Pair(startMillis, null)) // 2025/06/01〜の範囲
-//        viewModel.applyListItemFilter()
-//        val state = viewModel.uiState.first()
-//
-//        // Then
-//        assertThat(state.filteredListItem).containsExactly(dummyEntity6, dummyEntity2, dummyEntity1, dummyEntity4)
-//    }
-//
-//    @Test
-//    fun applyListItemFilter_should_filter_by_date_range() = runTest {
-//        // Given
-//        val startDate = LocalDate.parse("2025-06-01")
-//        val endDate = LocalDate.parse("2025-08-01")
-//        val startMillis = startDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
-//        val endMillis = endDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
-//        coEvery { repository.selectAll() } returns dummyList
-//
-//        // When
-//        viewModel.fetchAllItems()
-//        viewModel.updateSelectedDateRange(Pair(startMillis, endMillis)) // 2025/06/01〜2025/08/01の範囲
-//        viewModel.applyListItemFilter()
-//        val state = viewModel.uiState.first()
-//
-//        // Then
-//        assertThat(state.filteredListItem).containsExactly(dummyEntity2, dummyEntity1, dummyEntity4)
-//    }
+    @Test
+    fun applyListItemFilter_filters_items_from_start_date_range() = runTest {
+        // Given
+        val startDate = LocalDate.parse("2025-06-01")
+        val startMillis = startDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        coEvery { repository.selectAll() } returns dummyList
+
+        // When
+        viewModel.fetchAllItems()
+        viewModel.updateSelectedDateRange(Pair(startMillis, null)) // 2025/06/01〜の範囲
+        viewModel.applyListItemFilter()
+        val state = viewModel.uiState.first()
+
+        // Then
+        assertThat(state.filteredListItem).containsExactly(dummyEntity6, dummyEntity2, dummyEntity1, dummyEntity4)
+    }
+
+    @Test
+    fun applyListItemFilter_should_filter_by_date_range() = runTest {
+        // Given
+        val startDate = LocalDate.parse("2025-06-01")
+        val endDate = LocalDate.parse("2025-08-01")
+        val startMillis = startDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        val endMillis = endDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        coEvery { repository.selectAll() } returns dummyList
+
+        // When
+        viewModel.fetchAllItems()
+        viewModel.updateSelectedDateRange(Pair(startMillis, endMillis)) // 2025/06/01〜2025/08/01の範囲
+        viewModel.applyListItemFilter()
+        val state = viewModel.uiState.first()
+
+        // Then
+        assertThat(state.filteredListItem).containsExactly(dummyEntity2, dummyEntity1, dummyEntity4)
+    }
 
     @Test
     fun applyListItemFilter_should_return_empty_when_start_date_is_after_end_date() = runTest {
@@ -172,6 +172,27 @@ class RecordListViewModelTest {
 
         // Then
         assertThat(state.filteredListItem).isEmpty()
+    }
+
+    @Test
+    fun applyListItemFilter_should_filter_by_all_pattern() = runTest {
+        // Given
+        val startDate = LocalDate.parse("2025-06-01")
+        val endDate = LocalDate.parse("2025-09-01")
+        val startMillis = startDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        val endMillis = endDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        coEvery { repository.selectAll() } returns dummyList
+
+        // When
+        viewModel.fetchAllItems()
+        viewModel.toggleIsNewestFirst()
+        viewModel.updateSelectedTimeOfDay(TimeOfDayType.MORNING)
+        viewModel.updateSelectedDateRange(Pair(startMillis, endMillis))
+        viewModel.applyListItemFilter()
+        val state = viewModel.uiState.first()
+
+        // Then
+        assertThat(state.filteredListItem).containsExactly(dummyEntity4, dummyEntity2)
     }
 
     @Test
