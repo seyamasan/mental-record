@@ -7,7 +7,7 @@ import java.util.Locale
 object DateUtil {
      fun convertMillisToDate(millis: Long): String {
         // yyyy/MM/ddのフォーマットに変換
-        val formatter = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+        val formatter = SimpleDateFormat("yyyy/M/dd", Locale.getDefault())
         return formatter.format(Date(millis))
     }
 }

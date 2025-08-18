@@ -27,7 +27,7 @@ class DateUtilTest {
         // Given
         // Timestamp in milliseconds for 00:00:00 UTC on July 17, 2025 (2025年7月17日 00:00:00 UTC のミリ秒)
         val millis = 1752710400000L
-        val formattedDateString = "2025/07/17"
+        val formattedDateString = "2025/7/17"
 
         // When
         val result = DateUtil.convertMillisToDate(millis)
