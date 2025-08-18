@@ -131,7 +131,8 @@ fun RecordListView(
                     onDRPMTextFieldTap = { viewModel.updateShowDateRangePicker(true) },
                     onDateRangeSelected = {
                         viewModel.updateShowDateRangePicker(false)
-                        // TODO: ここで絞り込みの処理を呼び出す
+                        viewModel.updateSelectedDateRange(Pair(it.first, it.second))
+                        viewModel.applyListItemFilter()
                     }
                 )
             }

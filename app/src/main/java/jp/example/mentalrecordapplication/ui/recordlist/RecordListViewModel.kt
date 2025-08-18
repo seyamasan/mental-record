@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.example.mentalrecordapplication.data.local.room.MoodEntity
 import jp.example.mentalrecordapplication.data.repository.MoodRepository
+import jp.example.mentalrecordapplication.utils.DateUtil
 import jp.example.mentalrecordapplication.utils.types.TimeOfDayType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,11 +31,14 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
 
     fun updateShowDateRangePicker(newState: Boolean) = _uiState.update { state -> state.copy(showDateRangePicker = newState) }
 
+    fun updateSelectedDateRange(newState: Pair<Long?, Long?>) = _uiState.update { state -> state.copy(selectedDateRange = newState) }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun applyListItemFilter() {
-        val filteredItem1 = applyTimeOfDayFilter(_uiState.value.allListItem)
-        val filteredItem2 = applySortOrder(filteredItem1)
-        _uiState.update { state -> state.copy(filteredListItem = filteredItem2) }
+        val firstFilteredItem = applyTimeOfDayFilter(_uiState.value.allListItem)
+        val secondFilteredItem = applySortOrder(firstFilteredItem)
+        val thirdFilteredItem = applyDateRangeFilter(secondFilteredItem)
+        _uiState.update { state -> state.copy(filteredListItem = thirdFilteredItem) }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -67,5 +71,22 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
     private fun applyTimeOfDayFilter(targetItem: List<MoodEntity>?): List<MoodEntity>? {
         if (_uiState.value.selectedTimeOfDay == null) { return targetItem }
         return targetItem?.filter { it.timeOfDay == _uiState.value.selectedTimeOfDay }
+    }
+
+    private fun applyDateRangeFilter(targetItem: List<MoodEntity>?): List<MoodEntity>? {
+        val dateRange = _uiState.value.selectedDateRange
+        val from = dateRange.first?.let { DateUtil.convertMillisToDate(it) }
+        val to = dateRange.second?.let { DateUtil.convertMillisToDate(it) }
+
+        // 両方nullならフィルターしない
+        if (from == null && to == null) return targetItem
+
+        return targetItem?.filter { entity ->
+            when {
+                from != null && to != null -> entity.date in from..to
+                from != null -> entity.date >= from
+                else -> true // この分岐は発生しない
+            }
+        }
     }
 }

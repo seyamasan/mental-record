@@ -10,5 +10,6 @@ data class RecordListState(
     val openFilterSortSheet: Boolean = false,
     val isNewestFirst: Boolean = true,
     val selectedTimeOfDay: TimeOfDayType? = null,
-    val showDateRangePicker: Boolean = false
+    val showDateRangePicker: Boolean = false,
+    val selectedDateRange: Pair<Long?, Long?> = Pair(null, null)
 )
