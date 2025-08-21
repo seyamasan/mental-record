@@ -22,7 +22,7 @@ import jp.example.mentalrecordapplication.navigator.screens.Screens
 import jp.example.mentalrecordapplication.ui.common.bar.BottomNavBarView
 import jp.example.mentalrecordapplication.ui.common.OkOnlyAlertDialog
 import jp.example.mentalrecordapplication.ui.common.bar.TopBarView
-import jp.example.mentalrecordapplication.ui.recordmood.components.DefaultMoodSelector
+import jp.example.mentalrecordapplication.ui.common.DefaultMoodSelector
 import jp.example.mentalrecordapplication.ui.recordmood.components.RecordMoodInputSectionsCard
 import jp.example.mentalrecordapplication.ui.recordmood.components.SupportMessage
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
