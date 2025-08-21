@@ -1,6 +1,7 @@
 package jp.example.mentalrecordapplication.ui.recordlist
 
 import jp.example.mentalrecordapplication.data.local.room.MoodEntity
+import jp.example.mentalrecordapplication.utils.types.DefaultMoodType
 import jp.example.mentalrecordapplication.utils.types.TimeOfDayType
 
 data class RecordListState(
@@ -9,6 +10,7 @@ data class RecordListState(
     val deleteByIdResult: Boolean? = null,
     val openFilterSortSheet: Boolean = false,
     val isNewestFirst: Boolean = true,
+    val selectedDefaultMood: DefaultMoodType? = null,
     val selectedTimeOfDay: TimeOfDayType? = null,
     val showDateRangePicker: Boolean = false,
     val selectedDateRange: Pair<Long?, Long?> = Pair(null, null)

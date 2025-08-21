@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.example.mentalrecordapplication.data.local.room.MoodEntity
 import jp.example.mentalrecordapplication.data.repository.MoodRepository
 import jp.example.mentalrecordapplication.utils.DateUtil
+import jp.example.mentalrecordapplication.utils.types.DefaultMoodType
 import jp.example.mentalrecordapplication.utils.types.TimeOfDayType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,6 +28,8 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
 
     fun toggleIsNewestFirst() = _uiState.update { state -> state.copy(isNewestFirst = !state.isNewestFirst) }
 
+    fun updateSelectedDefaultMood(newState: DefaultMoodType?) = _uiState.update { state -> state.copy(selectedDefaultMood = newState) }
+
     fun updateSelectedTimeOfDay(newState: TimeOfDayType) = _uiState.update { state -> state.copy(selectedTimeOfDay = newState) }
 
     fun updateShowDateRangePicker(newState: Boolean) = _uiState.update { state -> state.copy(showDateRangePicker = newState) }
@@ -35,10 +38,11 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun applyListItemFilter() {
-        val firstFilteredItem = applyTimeOfDayFilter(_uiState.value.allListItem)
-        val secondFilteredItem = applySortOrder(firstFilteredItem)
+        val firstFilteredItem = applyDefaultMoodFilter(_uiState.value.allListItem)
+        val secondFilteredItem = applyTimeOfDayFilter(firstFilteredItem)
         val thirdFilteredItem = applyDateRangeFilter(secondFilteredItem)
-        _uiState.update { state -> state.copy(filteredListItem = thirdFilteredItem) }
+        val fourthFilteredItem = applySortOrder(thirdFilteredItem)
+        _uiState.update { state -> state.copy(filteredListItem = fourthFilteredItem) }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -66,6 +70,11 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
         } else {
             targetItem?.sortedBy { it.localDate }
         }
+    }
+
+    private fun applyDefaultMoodFilter(targetItem: List<MoodEntity>?): List<MoodEntity>? {
+        if (_uiState.value.selectedDefaultMood == null) { return targetItem }
+        return targetItem?.filter { it.mood == _uiState.value.selectedDefaultMood }
     }
 
     private fun applyTimeOfDayFilter(targetItem: List<MoodEntity>?): List<MoodEntity>? {
