@@ -75,6 +75,81 @@ class RecordListViewModelTest {
     }
 
     @Test
+    fun should_filter_only_happy_items_when_selectedDefaultMood_is_Happy() = runTest {
+        // Given
+        coEvery { repository.selectAll() } returns dummyList
+
+        // When
+        viewModel.fetchAllItems()
+        viewModel.updateSelectedDefaultMood(DefaultMoodType.HAPPY)
+        viewModel.applyListItemFilter()
+        val state = viewModel.uiState.first()
+
+        // Then
+        assertThat(state.filteredListItem).containsExactly(dummyEntity1)
+    }
+
+    @Test
+    fun should_filter_only_anger_items_when_selectedDefaultMood_is_ANGER() = runTest {
+        // Given
+        coEvery { repository.selectAll() } returns dummyList
+
+        // When
+        viewModel.fetchAllItems()
+        viewModel.updateSelectedDefaultMood(DefaultMoodType.ANGER)
+        viewModel.applyListItemFilter()
+        val state = viewModel.uiState.first()
+
+        // Then
+        assertThat(state.filteredListItem).containsExactly(dummyEntity4)
+    }
+
+    @Test
+    fun should_filter_only_sad_items_when_selectedDefaultMood_is_SAD() = runTest {
+        // Given
+        coEvery { repository.selectAll() } returns dummyList
+
+        // When
+        viewModel.fetchAllItems()
+        viewModel.updateSelectedDefaultMood(DefaultMoodType.SAD)
+        viewModel.applyListItemFilter()
+        val state = viewModel.uiState.first()
+
+        // Then
+        assertThat(state.filteredListItem).containsExactly(dummyEntity3)
+    }
+
+    @Test
+    fun should_filter_only_fun_items_when_selectedDefaultMood_is_FUN() = runTest {
+        // Given
+        coEvery { repository.selectAll() } returns dummyList
+
+        // When
+        viewModel.fetchAllItems()
+        viewModel.updateSelectedDefaultMood(DefaultMoodType.FUN)
+        viewModel.applyListItemFilter()
+        val state = viewModel.uiState.first()
+
+        // Then
+        assertThat(state.filteredListItem).containsExactly(dummyEntity6, dummyEntity2, dummyEntity7)
+    }
+
+    @Test
+    fun should_filter_only_normal_items_when_selectedDefaultMood_is_NORMAL() = runTest {
+        // Given
+        coEvery { repository.selectAll() } returns dummyList
+
+        // When
+        viewModel.fetchAllItems()
+        viewModel.updateSelectedDefaultMood(DefaultMoodType.NORMAL)
+        viewModel.applyListItemFilter()
+        val state = viewModel.uiState.first()
+
+        // Then
+        assertThat(state.filteredListItem).containsExactly(dummyEntity5)
+    }
+
+    @Test
     fun should_filter_only_morning_items_when_selectedTimeOfDay_is_MORNING() = runTest {
         // Given
         coEvery { repository.selectAll() } returns dummyList
@@ -86,7 +161,7 @@ class RecordListViewModelTest {
         val state = viewModel.uiState.first()
 
         // Then
-        assertThat(state.filteredListItem).containsExactly(dummyEntity2, dummyEntity4)
+        assertThat(state.filteredListItem).containsExactly(dummyEntity2, dummyEntity7, dummyEntity4)
     }
 
     @Test
@@ -133,7 +208,7 @@ class RecordListViewModelTest {
         val state = viewModel.uiState.first()
 
         // Then
-        assertThat(state.filteredListItem).containsExactly(dummyEntity6, dummyEntity2, dummyEntity1, dummyEntity4)
+        assertThat(state.filteredListItem).containsExactly(dummyEntity6, dummyEntity2, dummyEntity1, dummyEntity4, dummyEntity7)
     }
 
     @Test
@@ -152,7 +227,7 @@ class RecordListViewModelTest {
         val state = viewModel.uiState.first()
 
         // Then
-        assertThat(state.filteredListItem).containsExactly(dummyEntity2, dummyEntity1, dummyEntity4)
+        assertThat(state.filteredListItem).containsExactly(dummyEntity2, dummyEntity1, dummyEntity4, dummyEntity7)
     }
 
     @Test
@@ -186,13 +261,14 @@ class RecordListViewModelTest {
         // When
         viewModel.fetchAllItems()
         viewModel.toggleIsNewestFirst()
+        viewModel.updateSelectedDefaultMood(DefaultMoodType.FUN)
         viewModel.updateSelectedTimeOfDay(TimeOfDayType.MORNING)
         viewModel.updateSelectedDateRange(Pair(startMillis, endMillis))
         viewModel.applyListItemFilter()
         val state = viewModel.uiState.first()
 
         // Then
-        assertThat(state.filteredListItem).containsExactly(dummyEntity4, dummyEntity2)
+        assertThat(state.filteredListItem).containsExactly(dummyEntity7, dummyEntity2)
     }
 
     @Test
@@ -298,6 +374,14 @@ class RecordListViewModelTest {
             memo = null
         )
 
-        private val dummyList = listOf(dummyEntity1, dummyEntity2, dummyEntity3, dummyEntity4, dummyEntity5, dummyEntity6)
+        private val dummyEntity7 = MoodEntity(
+            id = 7,
+            mood = DefaultMoodType.FUN,
+            date = "2025/6/1",
+            timeOfDay = TimeOfDayType.MORNING,
+            memo = null
+        )
+
+        private val dummyList = listOf(dummyEntity1, dummyEntity2, dummyEntity3, dummyEntity4, dummyEntity5, dummyEntity6, dummyEntity7)
     }
 }
