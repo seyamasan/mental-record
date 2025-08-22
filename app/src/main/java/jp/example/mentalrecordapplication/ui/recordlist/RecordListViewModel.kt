@@ -82,6 +82,7 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
         return targetItem?.filter { it.timeOfDay == _uiState.value.selectedTimeOfDay }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun applyDateRangeFilter(targetItem: List<MoodEntity>?): List<MoodEntity>? {
         val dateRange = _uiState.value.selectedDateRange
         val from = dateRange.first?.let { DateUtil.convertMillisToDate(it) }
@@ -91,10 +92,14 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
         if (from == null && to == null) return targetItem
 
         return targetItem?.filter { entity ->
+            val entityLocalDate = DateUtil.stringToLocalDate(entity.date)
+            val fromLocalDate = from?.let { DateUtil.stringToLocalDate(it) }
+            val toLocalDate = to?.let { DateUtil.stringToLocalDate(it) }
+
             when {
-                from != null && to != null -> entity.date in from..to
-                from != null -> entity.date >= from
-                else -> true // この分岐は発生しない
+                fromLocalDate != null && toLocalDate != null -> entityLocalDate in fromLocalDate..toLocalDate
+                fromLocalDate != null -> entityLocalDate >= fromLocalDate
+                else -> true
             }
         }
     }
