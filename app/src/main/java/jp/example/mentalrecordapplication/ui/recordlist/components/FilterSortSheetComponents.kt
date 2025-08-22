@@ -29,19 +29,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import jp.example.mentalrecordapplication.R
 import jp.example.mentalrecordapplication.ui.common.DateRangePickerModal
+import jp.example.mentalrecordapplication.ui.common.DefaultMoodSelector
 import jp.example.mentalrecordapplication.ui.common.button.SmallElevatedButton
 import jp.example.mentalrecordapplication.ui.common.button.TimeOfDayButtonGroup
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
+import jp.example.mentalrecordapplication.utils.types.DefaultMoodType
 import jp.example.mentalrecordapplication.utils.types.TimeOfDayType
 
 @Composable
 fun FilterSortSheetComponents(
     isNewestFirst: Boolean,
+    selectedDefaultMood: DefaultMoodType?,
     selectedTimeOfDay: TimeOfDayType?,
     showDateRangePicker: Boolean,
     dateRangePickerState: DateRangePickerState,
     onReset: () -> Unit,
     onToggleSortOrder: () -> Unit,
+    onDefaultMoodSelected: (DefaultMoodType) -> Unit,
     onTimeOfDaySelected: (TimeOfDayType) -> Unit,
     onDRPMTextFieldTap: () -> Unit,
     onDateRangeSelected: (Pair<Long?, Long?>) -> Unit
@@ -98,6 +102,11 @@ fun FilterSortSheetComponents(
             )
         }
 
+        DefaultMoodSelector(
+            selectedMood = selectedDefaultMood,
+            onDefaultMoodSelected
+        )
+
         TimeOfDayButtonGroup(
             selectedTimeOfDay = selectedTimeOfDay,
             onItemSelected = onTimeOfDaySelected
@@ -122,11 +131,13 @@ fun FilterSortDialogPreview() {
         Surface {
             FilterSortSheetComponents(
                 isNewestFirst = true,
+                selectedDefaultMood = null,
                 selectedTimeOfDay = null,
                 showDateRangePicker = false,
                 dateRangePickerState = dummyState,
                 onReset = {},
                 onToggleSortOrder = {},
+                onDefaultMoodSelected = {},
                 onTimeOfDaySelected = {},
                 onDRPMTextFieldTap = {},
                 onDateRangeSelected = {}
