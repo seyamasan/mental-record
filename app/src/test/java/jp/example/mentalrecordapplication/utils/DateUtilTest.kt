@@ -1,9 +1,12 @@
 package jp.example.mentalrecordapplication.utils
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import java.time.LocalDate
 import java.util.Locale
 
 class DateUtilTest {
@@ -34,5 +37,17 @@ class DateUtilTest {
 
         // Then
         assertThat(result).isEqualTo(formattedDateString)
+    }
+
+    @Test
+    fun stringToLocalDate_returns_correct_LocalDate() {
+        // Given
+        val dateString = "2025/7/17"
+
+        // When
+        val localDate = DateUtil.stringToLocalDate(dateString)
+
+        // Then
+        assertThat(localDate).isEqualTo(LocalDate.of(2025, 7, 17))
     }
 }
