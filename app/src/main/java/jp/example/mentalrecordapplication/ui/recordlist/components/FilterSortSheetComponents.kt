@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -80,17 +81,19 @@ fun FilterSortSheetComponents(
             color = MaterialTheme.colorScheme.secondary
         )
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Row {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     imageVector = Icons.Filled.Schedule,
+                    modifier = Modifier.size(30.dp),
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
-                    text = stringResource(id = R.string.newest_first)
+                    text = stringResource(id = R.string.newest_first),
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        fontWeight = FontWeight.SemiBold
+                    )
                 )
             }
 
@@ -102,22 +105,28 @@ fun FilterSortSheetComponents(
             )
         }
 
-        DefaultMoodSelector(
-            selectedMood = selectedDefaultMood,
-            onDefaultMoodSelected
-        )
+        FilterSectionWithTitle(title = stringResource(id = R.string.mood)) {
+            DefaultMoodSelector(
+                selectedMood = selectedDefaultMood,
+                onDefaultMoodSelected
+            )
+        }
 
-        TimeOfDayButtonGroup(
-            selectedTimeOfDay = selectedTimeOfDay,
-            onItemSelected = onTimeOfDaySelected
-        )
+        FilterSectionWithTitle(title = stringResource(id = R.string.time_of_day)) {
+            TimeOfDayButtonGroup(
+                selectedTimeOfDay = selectedTimeOfDay,
+                onItemSelected = onTimeOfDaySelected
+            )
+        }
 
-        DateRangePickerModal(
-            showDateRangePicker = showDateRangePicker,
-            state = dateRangePickerState,
-            onTextFieldTap = onDRPMTextFieldTap,
-            onDateRangeSelected = onDateRangeSelected
-        )
+        FilterSectionWithTitle(title = stringResource(id = R.string.date)) {
+            DateRangePickerModal(
+                showDateRangePicker = showDateRangePicker,
+                state = dateRangePickerState,
+                onTextFieldTap = onDRPMTextFieldTap,
+                onDateRangeSelected = onDateRangeSelected
+            )
+        }
     }
 }
 
