@@ -70,8 +70,7 @@ class RecordListViewModelTest {
         val state = viewModel.uiState.first()
 
         // Then
-        assertThat(state.filteredListItem?.first()).isEqualTo(dummyEntity5)
-        assertThat(state.filteredListItem?.last()).isEqualTo(dummyEntity6)
+        assertThat(state.filteredListItem).containsExactly(dummyEntity5, dummyEntity3, dummyEntity7, dummyEntity4, dummyEntity1, dummyEntity2, dummyEntity6)
     }
 
     @Test
@@ -269,6 +268,34 @@ class RecordListViewModelTest {
 
         // Then
         assertThat(state.filteredListItem).containsExactly(dummyEntity7, dummyEntity2)
+    }
+
+    @Test
+    fun resetSortAndFilter_should_reset_filter_and_listItem() = runTest {
+        // Given
+        val startDate = LocalDate.parse("2025-06-01")
+        val endDate = LocalDate.parse("2025-09-01")
+        val startMillis = startDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        val endMillis = endDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        coEvery { repository.selectAll() } returns dummyList
+
+        viewModel.fetchAllItems()
+        viewModel.toggleIsNewestFirst()
+        viewModel.updateSelectedDefaultMood(DefaultMoodType.FUN)
+        viewModel.updateSelectedTimeOfDay(TimeOfDayType.MORNING)
+        viewModel.updateSelectedDateRange(Pair(startMillis, endMillis))
+        viewModel.applyListItemFilter()
+
+        // When
+        viewModel.resetSortAndFilter()
+        val state = viewModel.uiState.first()
+
+        // Then
+        assertThat(state.isNewestFirst).isTrue()
+        assertThat(state.selectedDefaultMood).isNull()
+        assertThat(state.selectedTimeOfDay).isNull()
+        assertThat(state.selectedDateRange).isEqualTo(Pair(null, null))
+        assertThat(state.filteredListItem).containsExactly(dummyEntity6, dummyEntity2, dummyEntity1, dummyEntity4, dummyEntity7, dummyEntity3, dummyEntity5)
     }
 
     @Test
