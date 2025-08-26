@@ -120,7 +120,10 @@ fun RecordListView(
                     selectedTimeOfDay = uiState.selectedTimeOfDay,
                     showDateRangePicker = uiState.showDateRangePicker,
                     dateRangePickerState = dateRangePickerState,
-                    onReset = {},
+                    onReset = {
+                        dateRangePickerState.setSelection(null, null)
+                        viewModel.resetSortAndFilter()
+                    },
                     onToggleSortOrder = {
                         viewModel.toggleIsNewestFirst()
                         viewModel.applyListItemFilter()

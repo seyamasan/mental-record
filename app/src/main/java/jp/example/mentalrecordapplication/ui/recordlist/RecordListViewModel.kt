@@ -46,6 +46,20 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
+    fun resetSortAndFilter() {
+        _uiState.update { state ->
+             state.copy(
+                isNewestFirst = true,
+                selectedDefaultMood = null,
+                selectedTimeOfDay = null,
+                selectedDateRange = Pair(null, null)
+            )
+        }
+
+        applyListItemFilter()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     fun fetchAllItems() {
         viewModelScope.launch {
             val result = repository.selectAll()
