@@ -10,8 +10,8 @@ import java.util.Locale
 
 object DateUtil {
      fun convertMillisToDate(millis: Long): String {
-        // yyyy/MM/ddのフォーマットに変換
-        val formatter = SimpleDateFormat("yyyy/M/dd", Locale.getDefault())
+        // yyyy/M/dのフォーマットに変換
+        val formatter = SimpleDateFormat("yyyy/M/d", Locale.getDefault())
         return formatter.format(Date(millis))
     }
 
