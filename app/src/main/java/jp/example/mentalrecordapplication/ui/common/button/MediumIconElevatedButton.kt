@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -25,15 +26,16 @@ import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 fun MediumIconElevatedButton(
     icon: ImageVector,
     text: String,
+    colors: ButtonColors = ButtonDefaults.elevatedButtonColors(
+        containerColor = MaterialTheme.colorScheme.background,
+        contentColor = MaterialTheme.colorScheme.primary
+    ),
     onTap: () -> Unit
 ) {
     val size = ButtonDefaults.MediumContainerHeight
     ElevatedButton(
         modifier = Modifier.heightIn(size),
-        colors = ButtonDefaults.elevatedButtonColors(
-            containerColor = MaterialTheme.colorScheme.background,
-            contentColor = MaterialTheme.colorScheme.primary
-        ),
+        colors = colors,
         contentPadding = ButtonDefaults.contentPaddingFor(size),
         elevation = ButtonDefaults.elevatedButtonElevation(8.dp),
         onClick = onTap

@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ErrorOutline
+import androidx.compose.material3.DateRangePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -31,6 +32,7 @@ import jp.example.mentalrecordapplication.ui.common.bar.BottomNavBarView
 import jp.example.mentalrecordapplication.ui.common.NoRecordView
 import jp.example.mentalrecordapplication.ui.common.OkOnlyAlertDialog
 import jp.example.mentalrecordapplication.ui.common.bar.TopBarView
+import jp.example.mentalrecordapplication.ui.recordlist.components.EmptyFilterRecordView
 import jp.example.mentalrecordapplication.ui.recordlist.components.FilterSortButton
 import jp.example.mentalrecordapplication.ui.recordlist.components.FilterSortSheetComponents
 import jp.example.mentalrecordapplication.ui.recordlist.components.RecordedMoodCard
@@ -67,8 +69,14 @@ fun RecordListView(
         }
     ) { innerPadding ->
 
-        if (uiState.filteredListItem.isNullOrEmpty()) {
+        if (uiState.allListItem.isNullOrEmpty()) {
             NoRecordView()
+        } else if (uiState.filteredListItem.isNullOrEmpty()) {
+            EmptyFilterRecordView(
+                innerPadding = innerPadding,
+                onFilterSortButtonTap = { viewModel.updateOpenFilterSortSheet(newState = true) },
+                onResetFilterButtonTap = { resetFilter(dateRangePickerState = dateRangePickerState, viewModel = viewModel) }
+            )
         } else {
             Column(
                 modifier = Modifier
@@ -121,8 +129,7 @@ fun RecordListView(
                     showDateRangePicker = uiState.showDateRangePicker,
                     dateRangePickerState = dateRangePickerState,
                     onReset = {
-                        dateRangePickerState.setSelection(null, null)
-                        viewModel.resetSortAndFilter()
+                        resetFilter(dateRangePickerState = dateRangePickerState, viewModel = viewModel)
                     },
                     onToggleSortOrder = {
                         viewModel.toggleIsNewestFirst()
@@ -146,6 +153,15 @@ fun RecordListView(
             }
         }
     }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+private fun resetFilter(
+    dateRangePickerState: DateRangePickerState,
+    viewModel: RecordListViewModel
+) {
+    dateRangePickerState.setSelection(null, null)
+    viewModel.resetSortAndFilter()
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
