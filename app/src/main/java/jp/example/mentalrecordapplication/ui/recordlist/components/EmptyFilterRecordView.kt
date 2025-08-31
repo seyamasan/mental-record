@@ -36,7 +36,7 @@ fun EmptyFilterRecordView(
 ) {
     Column(Modifier.padding(innerPadding)) {
         FilterSortButton(
-            onTapped = onFilterSortButtonTap
+            onTap = onFilterSortButtonTap
         )
 
         Column(

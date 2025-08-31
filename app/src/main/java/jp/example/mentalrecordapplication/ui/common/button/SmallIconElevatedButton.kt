@@ -24,7 +24,7 @@ import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun MediumIconElevatedButton(
+fun SmallIconElevatedButton(
     icon: ImageVector,
     text: String,
     colors: ButtonColors = ButtonDefaults.elevatedButtonColors(
@@ -33,7 +33,7 @@ fun MediumIconElevatedButton(
     ),
     onTap: () -> Unit
 ) {
-    val size = ButtonDefaults.MediumContainerHeight
+    val size = ButtonDefaults.ExtraSmallContainerHeight
     ElevatedButton(
         modifier = Modifier.heightIn(size),
         colors = colors,
@@ -55,9 +55,9 @@ fun MediumIconElevatedButton(
 @Preview(showBackground = true)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun MediumIconElevatedButtonPreview() {
+fun SmallIconElevatedButtonPreview() {
     MentalRecordAppTheme {
-        MediumIconElevatedButton(
+        SmallIconElevatedButton(
             icon = Icons.Default.Add,
             text = "Button",
             onTap = {}

@@ -83,7 +83,7 @@ fun RecordListView(
                     .padding(innerPadding)
             ) {
                 FilterSortButton(
-                    onTapped = { viewModel.updateOpenFilterSortSheet(newState = true) }
+                    onTap = { viewModel.updateOpenFilterSortSheet(newState = true) }
                 )
 
                 LazyColumn(
