@@ -43,6 +43,8 @@
     <string name="filter">絞り込み</string>
     <string name="reset">リセット</string>
     <string name="newest_first">新しい順</string>
+    <string name="empty_filter_record_msg">絞り込みの結果、データが存在しませんでした。</string>
+    <string name="reset_filter">絞り込みをリセット</string>
 
 <!--    OkHttpUtil-->
     <string name="opening_the_link_failed">リンクを開くことができませんでした。</string>

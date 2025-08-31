@@ -43,6 +43,8 @@
     <string name="filter">Filter</string>
     <string name="reset">Reset</string>
     <string name="newest_first">Newest First</string>
+    <string name="empty_filter_record_msg">No data was found after filtering.</string>
+    <string name="reset_filter">Reset filters</string>
 
 <!--    OkHttpUtil-->
     <string name="opening_the_link_failed">Opening the link failed.</string>
