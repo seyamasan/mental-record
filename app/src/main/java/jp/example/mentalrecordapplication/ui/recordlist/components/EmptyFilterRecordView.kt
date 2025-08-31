@@ -24,8 +24,13 @@ import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 
 @Composable
 fun EmptyFilterRecordView(
+    onFilterSortButtonTap: () -> Unit,
     onResetFilterButtonTap: () -> Unit
 ) {
+    FilterSortButton(
+        onTapped = onFilterSortButtonTap
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -55,7 +60,10 @@ fun EmptyFilterRecordView(
 fun EmptyFilterRecordViewPreview() {
     MentalRecordAppTheme {
         Surface {
-            EmptyFilterRecordView(onResetFilterButtonTap = {})
+            EmptyFilterRecordView(
+                onFilterSortButtonTap = {},
+                onResetFilterButtonTap = {}
+            )
         }
     }
 }
