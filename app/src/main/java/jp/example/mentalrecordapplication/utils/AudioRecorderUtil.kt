@@ -38,13 +38,18 @@ class AudioRecorderUtil() {
     }
 
     // 録音を停止
-    fun stopRecording() {
-        mediaRecorder?.apply {
-            stop()
-            release()
-        }
+    fun stopRecording(): Boolean {
+        return mediaRecorder?.let {
+            it.apply {
+                stop()
+                release()
+            }
 
-        mediaRecorder = null
+            mediaRecorder = null
+            true
+        } ?: run {
+            false
+        }
     }
 
     private fun createMediaRecorder(context: Context): MediaRecorder {
