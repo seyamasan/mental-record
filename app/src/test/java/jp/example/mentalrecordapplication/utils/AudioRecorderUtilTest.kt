@@ -76,4 +76,40 @@ class AudioRecorderUtilTest {
         }
         verify(exactly = 0) { mediaRecorder.start() }
     }
+
+    @Test
+    fun stop_recording_when_mediaRecorder_is_not_null_should_return_true() {
+        // Given
+        val fileName = "test.3gp"
+        every { context.filesDir } returns File("/tmp")
+        val mediaRecorder = mockk<MediaRecorder>(relaxed = true)
+        every { util["createMediaRecorder"](context) } returns mediaRecorder
+        util.startRecording(context, fileName) // スタートしておく
+
+        // When
+        val result = util.stopRecording()
+
+        // Then
+        assertThat(result).isTrue()
+        verifyOrder {
+            mediaRecorder.stop()
+            mediaRecorder.release()
+        }
+    }
+
+    @Test
+    fun stop_recording_when_mediaRecorder_is_null_should_return_false() {
+        // Given
+        val mediaRecorder = mockk<MediaRecorder>(relaxed = true)
+
+        // When
+        val result = util.stopRecording()
+
+        // Then
+        assertThat(result).isFalse()
+        verify(exactly = 0) {
+            mediaRecorder.stop()
+            mediaRecorder.release()
+        }
+    }
 }
