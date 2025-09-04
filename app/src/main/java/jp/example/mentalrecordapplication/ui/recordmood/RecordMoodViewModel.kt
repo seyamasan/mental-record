@@ -1,11 +1,13 @@
 package jp.example.mentalrecordapplication.ui.recordmood
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.example.mentalrecordapplication.data.local.room.MoodEntity
 import jp.example.mentalrecordapplication.data.repository.MoodRepository
 import jp.example.mentalrecordapplication.utils.AudioRecorderUtil
+import jp.example.mentalrecordapplication.utils.types.AudioRecordResultType
 import jp.example.mentalrecordapplication.utils.types.DefaultMoodType
 import jp.example.mentalrecordapplication.utils.types.RecordMoodSaveResultType
 import jp.example.mentalrecordapplication.utils.types.TimeOfDayType
@@ -19,7 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RecordMoodViewModel @Inject constructor(
     private val repository: MoodRepository,
-    private val recorder: AudioRecorderUtil
+    private val audioRecorder: AudioRecorderUtil
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(RecordMoodState())
     val uiState: StateFlow<RecordMoodState> = _uiState.asStateFlow()
@@ -36,7 +38,35 @@ class RecordMoodViewModel @Inject constructor(
 
     fun updateIsMemoSheetVisible(newState: Boolean) = _uiState.update { state -> state.copy(isMemoSheetVisible = newState) }
 
+    fun updateAudioRecordResultType(newState: AudioRecordResultType?) = _uiState.update { state -> state.copy(audioRecordResultType = newState) }
+
     fun updateSaveResult(newState: RecordMoodSaveResultType?) = _uiState.update { state -> state.copy(saveResult = newState) }
+
+    private fun updateIsAudioRecording(newState: Boolean) = _uiState.update { state -> state.copy(isAudioRecording = newState) }
+
+    fun startAudioRecording(context: Context) {
+        if (_uiState.value.isAudioRecording) { return }
+
+        val isStarted = audioRecorder.startRecording(context = context)
+
+        if (isStarted) {
+            updateIsAudioRecording(true)
+        } else {
+            updateAudioRecordResultType(AudioRecordResultType.START_FAILURE)
+        }
+    }
+
+    fun stopAudioRecording() {
+        if (!_uiState.value.isAudioRecording) { return }
+
+        val isStopped = audioRecorder.stopRecording()
+
+        if (isStopped) {
+            updateIsAudioRecording(false)
+        } else {
+            updateAudioRecordResultType(AudioRecordResultType.STOP_FAILURE)
+        }
+    }
 
     fun saveMoodDetail() {
         viewModelScope.launch {
