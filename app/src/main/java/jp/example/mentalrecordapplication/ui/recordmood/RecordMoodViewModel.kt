@@ -42,27 +42,25 @@ class RecordMoodViewModel @Inject constructor(
 
     fun updateSaveResult(newState: RecordMoodSaveResultType?) = _uiState.update { state -> state.copy(saveResult = newState) }
 
-    private fun updateIsAudioRecording(newState: Boolean) = _uiState.update { state -> state.copy(isAudioRecording = newState) }
-
-    fun startAudioRecording(context: Context) {
+    fun startAudioRecord(context: Context) {
         if (_uiState.value.isAudioRecording) { return }
 
         val isStarted = audioRecorder.startRecording(context = context)
 
         if (isStarted) {
-            updateIsAudioRecording(true)
+            _uiState.update { state -> state.copy(isAudioRecording = true) }
         } else {
             updateAudioRecordResultType(AudioRecordResultType.START_FAILURE)
         }
     }
 
-    fun stopAudioRecording() {
+    fun stopAudioRecord() {
         if (!_uiState.value.isAudioRecording) { return }
 
         val isStopped = audioRecorder.stopRecording()
 
         if (isStopped) {
-            updateIsAudioRecording(false)
+            _uiState.update { state -> state.copy(isAudioRecording = false) }
         } else {
             updateAudioRecordResultType(AudioRecordResultType.STOP_FAILURE)
         }
