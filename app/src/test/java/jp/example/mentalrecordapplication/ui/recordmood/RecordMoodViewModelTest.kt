@@ -6,6 +6,7 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import jp.example.mentalrecordapplication.data.repository.MoodRepository
 import jp.example.mentalrecordapplication.rule.MainDispatcherRule
+import jp.example.mentalrecordapplication.utils.AudioRecorderUtil
 import jp.example.mentalrecordapplication.utils.types.DefaultMoodType
 import jp.example.mentalrecordapplication.utils.types.RecordMoodSaveResultType
 import jp.example.mentalrecordapplication.utils.types.TimeOfDayType
@@ -26,7 +27,9 @@ class RecordMoodViewModelTest {
     @Before
     fun setUp() {
         repository = mockk()
-        viewModel = RecordMoodViewModel(repository)
+        val audio: AudioRecorderUtil = mockk()
+
+        viewModel = RecordMoodViewModel(repository, audio)
     }
 
     @Test
