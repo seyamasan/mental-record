@@ -38,6 +38,8 @@ class RecordMoodViewModel @Inject constructor(
 
     fun updateIsMemoSheetVisible(newState: Boolean) = _uiState.update { state -> state.copy(isMemoSheetVisible = newState) }
 
+    fun updateIsAudioRecordSheetVisible(newState: Boolean) = _uiState.update { state -> state.copy(isAudioRecordSheetVisible = newState) }
+
     fun updateAudioRecordResultType(newState: AudioRecordResultType?) = _uiState.update { state -> state.copy(audioRecordResultType = newState) }
 
     fun updateSaveResult(newState: RecordMoodSaveResultType?) = _uiState.update { state -> state.copy(saveResult = newState) }
