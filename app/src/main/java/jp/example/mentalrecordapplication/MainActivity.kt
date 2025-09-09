@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -17,6 +18,7 @@ import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    private val viewModel: MainViewModel by viewModels()
     private var permissions: Array<String> = arrayOf(Manifest.permission.RECORD_AUDIO)
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -47,8 +49,10 @@ class MainActivity : AppCompatActivity() {
             false
         }
 
-        if (!permissionToRecordAccepted) finish() // 録音の権限が付与されていなければActivityを終了
+        viewModel.updatePermissionResult(permissionToRecordAccepted)
     }
+
+    fun getPermissionToRecordAccepted() = viewModel.permissionToRecordAccepted
 
     companion object {
         const val REQUEST_RECORD_AUDIO_PERMISSION = 200
