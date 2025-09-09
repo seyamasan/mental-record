@@ -25,8 +25,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION)
-
         enableEdgeToEdge()
         setContent {
             MentalRecordAppTheme {
@@ -52,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.updatePermissionResult(permissionToRecordAccepted)
     }
 
-    fun getPermissionToRecordAccepted() = viewModel.permissionToRecordAccepted
+    fun requestRecordAudioPermission() = ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION)
 
     companion object {
         const val REQUEST_RECORD_AUDIO_PERMISSION = 200

@@ -87,6 +87,7 @@ fun RecordMoodView(
 
             RecordMoodInputSectionsCard(
                 viewModel = viewModel,
+                context = context,
                 uiState = uiState,
                 datePickerState = datePickerState
             )

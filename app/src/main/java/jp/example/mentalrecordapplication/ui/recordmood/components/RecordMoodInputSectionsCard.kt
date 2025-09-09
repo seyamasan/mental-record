@@ -1,5 +1,8 @@
 package jp.example.mentalrecordapplication.ui.recordmood.components
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,9 +21,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
+import jp.example.mentalrecordapplication.MainActivity
 import jp.example.mentalrecordapplication.R
 import jp.example.mentalrecordapplication.ui.common.button.LargeElevatedButton
 import jp.example.mentalrecordapplication.ui.common.button.TimeOfDayButtonGroup
@@ -30,9 +34,11 @@ import jp.example.mentalrecordapplication.ui.recordmood.RecordMoodViewModel
 @Composable
 fun RecordMoodInputSectionsCard(
     viewModel: RecordMoodViewModel,
+    context: Context,
     uiState: RecordMoodState,
     datePickerState: DatePickerState
 ) {
+
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -69,7 +75,17 @@ fun RecordMoodInputSectionsCard(
             )
 
             IconButton(
-                onClick = { viewModel.updateIsAudioRecordSheetVisible(true) },
+                onClick = {
+                    val permission = Manifest.permission.RECORD_AUDIO
+                    val hasPermission = ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
+
+                    if (hasPermission) {
+                        viewModel.updateIsAudioRecordSheetVisible(true)
+                    } else {
+                        val activity = context as? MainActivity
+                        activity?.requestRecordAudioPermission()
+                    }
+                },
                 modifier = Modifier
                     .size(64.dp)
                     .border(2.dp, MaterialTheme.colorScheme.primary, CircleShape)
