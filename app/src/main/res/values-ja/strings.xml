@@ -10,6 +10,10 @@
     <string name="mood">感情</string>
     <string name="time_of_day">時間帯</string>
     <string name="date">日付</string>
+    <string name="record_audio_permission_dialog_title">マイクの権限がありません</string>
+    <string name="record_audio_permission_dialog_message">録音機能を利用するには、設定アプリにてマイクの権限を許可してください。</string>
+    <string name="permission_dialog_positive">設定を開く</string>
+    <string name="permission_dialog_negative">閉じる</string>
 
 <!--    RecordMoodView-->
     <string name="mood_record_screen_title">記録する</string>
