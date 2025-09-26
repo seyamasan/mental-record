@@ -16,7 +16,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.Timer
+import java.util.TimerTask
 import javax.inject.Inject
+import kotlin.concurrent.timer
 
 @HiltViewModel
 class RecordMoodViewModel @Inject constructor(
@@ -25,6 +28,8 @@ class RecordMoodViewModel @Inject constructor(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(RecordMoodState())
     val uiState: StateFlow<RecordMoodState> = _uiState.asStateFlow()
+
+    private var timer: Timer? = null
 
     fun updateMood(newState: DefaultMoodType?) = _uiState.update { state -> state.copy( selectedMood = newState) }
 
@@ -50,7 +55,8 @@ class RecordMoodViewModel @Inject constructor(
         val isStarted = audioRecorder.startRecording(context = context)
 
         if (isStarted) {
-            _uiState.update { state -> state.copy(isAudioRecording = true) }
+            _uiState.update { state -> state.copy(isAudioRecording = true, elapsedTime = 0) }
+            startTimer()
         } else {
             updateAudioRecordResultType(AudioRecordResultType.START_FAILURE)
         }
@@ -63,6 +69,7 @@ class RecordMoodViewModel @Inject constructor(
 
         if (isStopped) {
             _uiState.update { state -> state.copy(isAudioRecording = false) }
+            stopTimer()
         } else {
             updateAudioRecordResultType(AudioRecordResultType.STOP_FAILURE)
         }
@@ -116,6 +123,20 @@ class RecordMoodViewModel @Inject constructor(
                 enteredMemo = null
             )
         }
+    }
+
+    private fun startTimer() {
+        timer?.cancel()
+
+        timer = timer(period = 1000L) { // 1秒間隔
+            _uiState.update { state -> state.copy(elapsedTime = _uiState.value.elapsedTime + 1) }
+        }
+    }
+
+    private fun stopTimer() {
+        timer?.cancel()
+        timer = null
+        _uiState.update { state -> state.copy(elapsedTime = 0) }
     }
 
     companion object {

@@ -99,7 +99,7 @@ fun RecordMoodView(
                 ) {
                     AudioRecorderSheetComponents(
                         isRecording = uiState.isAudioRecording,
-                        elapsedTime = 0, // カウントを後から実装する
+                        elapsedTime = uiState.elapsedTime,
                         onStartRecording = {
                             val result = PermissionUtil.checkAndRequestRecordAudioPermission(context = context)
 

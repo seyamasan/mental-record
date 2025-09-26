@@ -14,6 +14,7 @@ data class RecordMoodState(
     val isMemoSheetVisible: Boolean = false,
     val isAudioRecordSheetVisible: Boolean = false,
     val isAudioRecording: Boolean = false,
+    val elapsedTime: Int = 0,
     val audioRecordResultType: AudioRecordResultType? = null,
     val saveResult: RecordMoodSaveResultType? = null
 )
