@@ -1,6 +1,5 @@
 package jp.example.mentalrecordapplication.ui.recordmood.components
 
-import android.content.Context
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

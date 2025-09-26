@@ -95,7 +95,10 @@ fun RecordMoodView(
             if (uiState.isAudioRecordSheetVisible) {
                 ModalBottomSheet(
                     sheetState = audioRecordSheetState,
-                    onDismissRequest = { viewModel.updateIsAudioRecordSheetVisible(false) }
+                    onDismissRequest = {
+                        viewModel.updateIsAudioRecordSheetVisible(false)
+                        viewModel.stopAudioRecord() // 閉じたら録音を停止させる
+                    }
                 ) {
                     AudioRecorderSheetComponents(
                         isRecording = uiState.isAudioRecording,
