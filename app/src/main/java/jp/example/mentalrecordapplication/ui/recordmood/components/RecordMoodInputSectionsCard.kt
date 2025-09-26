@@ -26,12 +26,10 @@ import jp.example.mentalrecordapplication.ui.common.button.LargeElevatedButton
 import jp.example.mentalrecordapplication.ui.common.button.TimeOfDayButtonGroup
 import jp.example.mentalrecordapplication.ui.recordmood.RecordMoodState
 import jp.example.mentalrecordapplication.ui.recordmood.RecordMoodViewModel
-import jp.example.mentalrecordapplication.utils.PermissionUtil
 
 @Composable
 fun RecordMoodInputSectionsCard(
     viewModel: RecordMoodViewModel,
-    context: Context,
     uiState: RecordMoodState,
     datePickerState: DatePickerState
 ) {
@@ -73,11 +71,7 @@ fun RecordMoodInputSectionsCard(
 
             IconButton(
                 onClick = {
-                    val result = PermissionUtil.checkAndRequestRecordAudioPermission(context = context)
-
-                    if (result) {
-                        viewModel.updateIsAudioRecordSheetVisible(true)
-                    }
+                    viewModel.updateIsAudioRecordSheetVisible(true)
                 },
                 modifier = Modifier
                     .size(64.dp)

@@ -32,6 +32,7 @@ import jp.example.mentalrecordapplication.ui.recordmood.components.RecordMoodInp
 import jp.example.mentalrecordapplication.ui.recordmood.components.SupportMessage
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 import jp.example.mentalrecordapplication.utils.NavigationUtil
+import jp.example.mentalrecordapplication.utils.PermissionUtil
 import jp.example.mentalrecordapplication.utils.types.RecordMoodSaveResultType
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -87,7 +88,6 @@ fun RecordMoodView(
 
             RecordMoodInputSectionsCard(
                 viewModel = viewModel,
-                context = context,
                 uiState = uiState,
                 datePickerState = datePickerState
             )
@@ -101,7 +101,11 @@ fun RecordMoodView(
                         isRecording = uiState.isAudioRecording,
                         elapsedTime = 0, // カウントを後から実装する
                         onStartRecording = {
-                            viewModel.startAudioRecord(context = context)
+                            val result = PermissionUtil.checkAndRequestRecordAudioPermission(context = context)
+
+                            if (result) {
+                                viewModel.startAudioRecord(context = context)
+                            }
                         },
                         onStopRecording = {
                             viewModel.stopAudioRecord()
