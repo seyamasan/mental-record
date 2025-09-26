@@ -14,6 +14,7 @@ class AudioRecorderUtilTest {
 
     private lateinit var context: Context
     private lateinit var util: AudioRecorderUtil
+    private val folderName = "MentalRecordAudio"
 
     @Before
     fun setUp() {
@@ -29,7 +30,8 @@ class AudioRecorderUtilTest {
     fun start_recording_success_returns_true() {
         // Given
         val fileName = "test.3gp"
-        val file = File("/tmp", fileName)
+        val dir = File("/tmp", folderName)
+        val file = File(dir, fileName)
         every { context.filesDir } returns File("/tmp")
         val mediaRecorder = mockk<MediaRecorder>(relaxed = true)
         // createMediaRecorderをモック
@@ -55,7 +57,8 @@ class AudioRecorderUtilTest {
     fun start_recording_prepare_throws_exception_returns_false() {
         // Given
         val fileName = "test.3gp"
-        val file = File("/tmp", fileName)
+        val dir = File("/tmp", folderName)
+        val file = File(dir, fileName)
         every { context.filesDir } returns File("/tmp")
         val mediaRecorder = mockk<MediaRecorder>(relaxed = true)
         every { util["createMediaRecorder"](context) } returns mediaRecorder

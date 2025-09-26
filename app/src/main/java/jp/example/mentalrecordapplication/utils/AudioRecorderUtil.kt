@@ -16,7 +16,12 @@ class AudioRecorderUtil {
         context: Context,
         fileName: String = "test.3gp"
     ): Boolean {
-        val filePath = File(context.filesDir, fileName).absolutePath
+        // フォルダ作成
+        val dir = File(context.filesDir, FOLDER_NAME)
+        if (!dir.exists()) {
+            dir.mkdirs()
+        }
+        val filePath = File(dir, fileName).absolutePath
 
         mediaRecorder = createMediaRecorder(context).apply {
             setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -64,5 +69,6 @@ class AudioRecorderUtil {
 
     companion object {
         private const val TAG = "AudioRecorderUtil"
+        private const val FOLDER_NAME = "MentalRecordAudio"
     }
 }
