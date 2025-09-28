@@ -200,14 +200,14 @@ class RecordMoodViewModelTest {
     fun startAudioRecord_alreadyRecording_should_do_nothing() = runTest {
         // Given
         val context = mockk<Context>(relaxed = true)
-        every { audioRecorder.startRecording(any()) } returns true
-        viewModel.startAudioRecord(context) // スタートしている前提
+        every { audioRecorder.startRecording(context, fileName = DUMMY_FILE_NAME) } returns true
+        viewModel.startAudioRecord(context, fileName = DUMMY_FILE_NAME) // スタートしている前提
 
         // When
-        viewModel.startAudioRecord(context)
+        viewModel.startAudioRecord(context, fileName = DUMMY_FILE_NAME)
 
         // Then
-        verify(exactly = 1) { audioRecorder.startRecording(any()) }
+        verify(exactly = 1) { audioRecorder.startRecording(context, fileName = DUMMY_FILE_NAME) }
         val state = viewModel.uiState.first()
         assertThat(state.isAudioRecording).isTrue()
         assertThat(state.audioRecordResultType).isNull()
@@ -217,13 +217,13 @@ class RecordMoodViewModelTest {
     fun startAudioRecord_success_should_update_isAudioRecording_true() = runTest {
         // Given
         val context = mockk<Context>(relaxed = true)
-        every { audioRecorder.startRecording(any()) } returns true
+        every { audioRecorder.startRecording(context, fileName = DUMMY_FILE_NAME) } returns true
 
         // When
-        viewModel.startAudioRecord(context)
+        viewModel.startAudioRecord(context, fileName = DUMMY_FILE_NAME)
 
         // Then
-        verify(exactly = 1) { audioRecorder.startRecording(context) }
+        verify(exactly = 1) { audioRecorder.startRecording(context, fileName = DUMMY_FILE_NAME) }
         val state = viewModel.uiState.first()
         assertThat(state.isAudioRecording).isTrue()
         assertThat(state.audioRecordResultType).isNull()
@@ -233,13 +233,13 @@ class RecordMoodViewModelTest {
     fun startAudioRecord_failure_should_update_resultType() = runTest {
         // Given
         val context = mockk<Context>(relaxed = true)
-        every { audioRecorder.startRecording(any()) } returns false
+        every { audioRecorder.startRecording(context, fileName = DUMMY_FILE_NAME) } returns false
 
         // When
-        viewModel.startAudioRecord(context)
+        viewModel.startAudioRecord(context, fileName = DUMMY_FILE_NAME)
 
         // Then
-        verify { audioRecorder.startRecording(context) }
+        verify { audioRecorder.startRecording(context, fileName = DUMMY_FILE_NAME) }
         val state = viewModel.uiState.first()
         assertThat(state.isAudioRecording).isFalse()
         assertThat(state.audioRecordResultType).isEqualTo(AudioRecordResultType.START_FAILURE)
@@ -261,9 +261,9 @@ class RecordMoodViewModelTest {
     fun stopAudioRecord_success_should_update_isAudioRecording_false() = runTest {
         // Given
         val context = mockk<Context>(relaxed = true)
-        every { audioRecorder.startRecording(context) } returns true
+        every { audioRecorder.startRecording(context, fileName = DUMMY_FILE_NAME) } returns true
         every { audioRecorder.stopRecording() } returns true
-        viewModel.startAudioRecord(context) // スタートしている前提
+        viewModel.startAudioRecord(context, fileName = DUMMY_FILE_NAME) // スタートしている前提
 
         // When
         viewModel.stopAudioRecord()
@@ -279,9 +279,9 @@ class RecordMoodViewModelTest {
     fun stopAudioRecord_failure_should_update_resultType() = runTest {
         // Given
         val context = mockk<Context>(relaxed = true)
-        every { audioRecorder.startRecording(context) } returns true
+        every { audioRecorder.startRecording(context, fileName = DUMMY_FILE_NAME) } returns true
         every { audioRecorder.stopRecording() } returns false
-        viewModel.startAudioRecord(context)
+        viewModel.startAudioRecord(context, fileName = DUMMY_FILE_NAME)
 
 
         // When
@@ -297,5 +297,6 @@ class RecordMoodViewModelTest {
     companion object {
         private const val DUMMY_DATE = "2025/07/16"
         private const val DUMMY_MEMO = "Memo"
+        private const val DUMMY_FILE_NAME = "dummy.3gp"
     }
 }

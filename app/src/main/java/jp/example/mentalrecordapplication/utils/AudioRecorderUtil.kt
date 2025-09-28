@@ -14,7 +14,7 @@ class AudioRecorderUtil {
     // 録音を開始
     fun startRecording(
         context: Context,
-        fileName: String = "test.3gp"
+        fileName: String
     ): Boolean {
         // フォルダ作成
         val dir = File(context.filesDir, FOLDER_NAME)

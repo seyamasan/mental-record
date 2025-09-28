@@ -1,5 +1,7 @@
 package jp.example.mentalrecordapplication.ui.recordmood
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -31,10 +33,12 @@ import jp.example.mentalrecordapplication.ui.recordmood.components.AudioRecorder
 import jp.example.mentalrecordapplication.ui.recordmood.components.RecordMoodInputSectionsCard
 import jp.example.mentalrecordapplication.ui.recordmood.components.SupportMessage
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
+import jp.example.mentalrecordapplication.utils.DateUtil
 import jp.example.mentalrecordapplication.utils.NavigationUtil
 import jp.example.mentalrecordapplication.utils.PermissionUtil
 import jp.example.mentalrecordapplication.utils.types.RecordMoodSaveResultType
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecordMoodView(
@@ -107,7 +111,9 @@ fun RecordMoodView(
                             val result = PermissionUtil.checkAndRequestRecordAudioPermission(context = context)
 
                             if (result) {
-                                viewModel.startAudioRecord(context = context)
+                                // 3GPファイルは、スマホなどの携帯電話のために開発されたファイル形式, 中身は音声や動画データ
+                                val fileName = DateUtil.timestampFileName(fileExtension = "3gp")
+                                viewModel.startAudioRecord(context = context, fileName = fileName)
                             }
                         },
                         onStopRecording = {
@@ -130,6 +136,7 @@ fun RecordMoodView(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 fun RecordViewPreview() {

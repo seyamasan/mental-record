@@ -24,10 +24,10 @@ object DateUtil {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun timestampFileName(ext: String): String {
+    fun timestampFileName(fileExtension: String): String {
         val now = LocalDateTime.now(ZoneId.systemDefault())
         val fmt = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss")
         val ts = now.format(fmt)
-        return "${ts}.${ext}"
+        return "${ts}.${fileExtension}"
     }
 }

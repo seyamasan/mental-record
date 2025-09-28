@@ -1,6 +1,8 @@
 package jp.example.mentalrecordapplication.ui.recordmood
 
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -48,10 +50,11 @@ class RecordMoodViewModel @Inject constructor(
 
     fun updateSaveResult(newState: RecordMoodSaveResultType?) = _uiState.update { state -> state.copy(saveResult = newState) }
 
-    fun startAudioRecord(context: Context) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun startAudioRecord(context: Context, fileName: String) {
         if (_uiState.value.isAudioRecording) { return }
 
-        val isStarted = audioRecorder.startRecording(context = context)
+        val isStarted = audioRecorder.startRecording(context = context, fileName = fileName)
 
         if (isStarted) {
             _uiState.update { state -> state.copy(isAudioRecording = true, elapsedTime = 0) }
