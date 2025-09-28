@@ -4,6 +4,8 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
@@ -19,5 +21,13 @@ object DateUtil {
     fun stringToLocalDate(date: String): LocalDate {
         val formatter = DateTimeFormatter.ofPattern("yyyy/M/d")
         return LocalDate.parse(date, formatter)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun timestampFileName(ext: String): String {
+        val now = LocalDateTime.now(ZoneId.systemDefault())
+        val fmt = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss")
+        val ts = now.format(fmt)
+        return "${ts}.${ext}"
     }
 }
