@@ -47,9 +47,9 @@ class AudioUtilTest {
     fun start_recording_success_returns_true() {
         // Given
         val fileName = "test.3gp"
-        val dir = File("/tmp", folderName)
+        val dir = File(tempDir, folderName)
         val file = File(dir, fileName)
-        every { context.filesDir } returns File("/tmp")
+
         val mediaRecorder = mockk<MediaRecorder>(relaxed = true)
         // createMediaRecorderをモック
         every { util["createMediaRecorder"](context) } returns mediaRecorder
@@ -74,9 +74,9 @@ class AudioUtilTest {
     fun start_recording_prepare_throws_exception_returns_false() {
         // Given
         val fileName = "test.3gp"
-        val dir = File("/tmp", folderName)
+        val dir = File(tempDir, folderName)
         val file = File(dir, fileName)
-        every { context.filesDir } returns File("/tmp")
+
         val mediaRecorder = mockk<MediaRecorder>(relaxed = true)
         every { util["createMediaRecorder"](context) } returns mediaRecorder
         every { mediaRecorder.prepare() } throws IOException("prepare failed")
@@ -101,7 +101,7 @@ class AudioUtilTest {
     fun stop_recording_when_mediaRecorder_is_not_null_should_return_true() {
         // Given
         val fileName = "test.3gp"
-        every { context.filesDir } returns File("/tmp")
+        
         val mediaRecorder = mockk<MediaRecorder>(relaxed = true)
         every { util["createMediaRecorder"](context) } returns mediaRecorder
         util.startRecording(context, fileName) // スタートしておく
