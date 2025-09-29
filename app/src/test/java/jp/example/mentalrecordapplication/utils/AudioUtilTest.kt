@@ -10,16 +10,16 @@ import org.junit.Test
 import java.io.File
 import java.io.IOException
 
-class AudioRecorderUtilTest {
+class AudioUtilTest {
 
     private lateinit var context: Context
-    private lateinit var util: AudioRecorderUtil
+    private lateinit var util: AudioUtil
     private val folderName = "MentalRecordAudio"
 
     @Before
     fun setUp() {
         context = mockk(relaxed = true)
-        util = spyk(AudioRecorderUtil()) // 一部だけモック化したいのでSpyを使う
+        util = spyk(AudioUtil()) // 一部だけモック化したいのでSpyを使う
 
         // Logをモック化
         mockkStatic(Log::class)

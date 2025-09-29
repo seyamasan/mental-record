@@ -8,7 +8,7 @@ import android.util.Log
 import java.io.File
 import java.io.IOException
 
-class AudioRecorderUtil {
+class AudioUtil {
 
     private var mediaRecorder: MediaRecorder? = null
     private var mediaPlayer: MediaPlayer? = null

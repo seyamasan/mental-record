@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.example.mentalrecordapplication.data.local.room.MoodEntity
 import jp.example.mentalrecordapplication.data.repository.MoodRepository
-import jp.example.mentalrecordapplication.utils.AudioRecorderUtil
+import jp.example.mentalrecordapplication.utils.AudioUtil
 import jp.example.mentalrecordapplication.utils.types.AudioRecordResultType
 import jp.example.mentalrecordapplication.utils.types.DefaultMoodType
 import jp.example.mentalrecordapplication.utils.types.RecordMoodSaveResultType
@@ -25,7 +25,7 @@ import kotlin.concurrent.timer
 @HiltViewModel
 class RecordMoodViewModel @Inject constructor(
     private val repository: MoodRepository,
-    private val audioRecorder: AudioRecorderUtil
+    private val audioRecorder: AudioUtil
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(RecordMoodState())
     val uiState: StateFlow<RecordMoodState> = _uiState.asStateFlow()

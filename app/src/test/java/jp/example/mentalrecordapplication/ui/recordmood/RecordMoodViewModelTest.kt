@@ -9,7 +9,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import jp.example.mentalrecordapplication.data.repository.MoodRepository
 import jp.example.mentalrecordapplication.rule.MainDispatcherRule
-import jp.example.mentalrecordapplication.utils.AudioRecorderUtil
+import jp.example.mentalrecordapplication.utils.AudioUtil
 import jp.example.mentalrecordapplication.utils.types.AudioRecordResultType
 import jp.example.mentalrecordapplication.utils.types.DefaultMoodType
 import jp.example.mentalrecordapplication.utils.types.RecordMoodSaveResultType
@@ -23,7 +23,7 @@ import org.junit.Test
 class RecordMoodViewModelTest {
 
     private lateinit var repository: MoodRepository
-    private lateinit var audioRecorder: AudioRecorderUtil
+    private lateinit var audioRecorder: AudioUtil
     private lateinit var viewModel: RecordMoodViewModel
 
     @get:Rule
