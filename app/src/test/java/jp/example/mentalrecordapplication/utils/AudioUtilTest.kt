@@ -23,7 +23,7 @@ class AudioUtilTest {
     @Before
     fun setUp() {
         context = mockk(relaxed = true)
-        util = spyk(AudioUtil()) // 一部だけモック化したいのでSpyを使う
+        util = spyk(AudioUtil(), recordPrivateCalls = true) // 一部だけモック化したいのでSpyを使う
 
         // 一時ディレクトリ作成
         tempDir = createTempDirectory("dummyTmpDir").toFile()
@@ -101,7 +101,7 @@ class AudioUtilTest {
     fun stop_recording_when_mediaRecorder_is_not_null_should_return_true() {
         // Given
         val fileName = "test.3gp"
-        
+
         val mediaRecorder = mockk<MediaRecorder>(relaxed = true)
         every { util["createMediaRecorder"](context) } returns mediaRecorder
         util.startRecording(context, fileName) // スタートしておく
