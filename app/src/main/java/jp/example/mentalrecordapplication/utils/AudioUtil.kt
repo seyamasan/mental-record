@@ -61,7 +61,7 @@ class AudioUtil {
     }
 
     // 音声ファイルを再生
-    private fun startPlaying(
+    fun startPlaying(
         context: Context,
         fileName: String
     ): Boolean {
@@ -89,7 +89,7 @@ class AudioUtil {
     }
 
     // 再生中の音声ファイルを停止
-    private fun stopPlaying(): Boolean {
+    fun stopPlaying(): Boolean {
         return mediaPlayer?.let {
             it.release()
             mediaPlayer = null
