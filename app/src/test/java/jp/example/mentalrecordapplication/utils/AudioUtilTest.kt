@@ -23,7 +23,9 @@ class AudioUtilTest {
     @Before
     fun setUp() {
         context = mockk(relaxed = true)
-        util = spyk(AudioUtil(), recordPrivateCalls = true) // 一部だけモック化したいのでSpyを使う
+
+        // スパイはモックと実際のオブジェクトを混ぜることができる
+        util = spyk(AudioUtil(), recordPrivateCalls = true) // private関数をモックしたいのでrecordPrivateCallsをtrue
 
         // 一時ディレクトリ作成
         tempDir = createTempDirectory("dummyTmpDir").toFile()
@@ -140,7 +142,7 @@ class AudioUtilTest {
         val dir = File(tempDir, folderName).apply { mkdirs() }
         val file = File(dir, fileName).apply {
             createNewFile()
-            deleteOnExit()
+            deleteOnExit() // プログラム終了時にファイルを自動的に削除する
         }
         val expectedPath = file.absolutePath
 
