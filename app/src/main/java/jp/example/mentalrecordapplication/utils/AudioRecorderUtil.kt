@@ -1,6 +1,7 @@
 package jp.example.mentalrecordapplication.utils
 
 import android.content.Context
+import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.os.Build
 import android.util.Log
@@ -10,6 +11,7 @@ import java.io.IOException
 class AudioRecorderUtil {
 
     private var mediaRecorder: MediaRecorder? = null
+    private var mediaPlayer: MediaPlayer? = null
 
     // 録音を開始
     fun startRecording(
@@ -51,6 +53,46 @@ class AudioRecorderUtil {
             }
 
             mediaRecorder = null
+            true
+        } ?: run {
+            false
+        }
+    }
+
+    // 音声ファイルを再生
+    private fun startPlaying(
+        context: Context,
+        fileName: String
+    ): Boolean {
+        val dir = File(context.filesDir, FOLDER_NAME)
+        val file = File(dir, fileName)
+
+        if (file.exists()) {
+            val filePath = file.absolutePath
+
+            mediaPlayer = MediaPlayer().apply {
+                try {
+                    setDataSource(filePath)
+                    prepare()
+                    start()
+                } catch (e: IOException) {
+                    Log.e(TAG, "prepare() failed")
+                    return false
+                }
+            }
+
+            return true
+        } else {
+            return false
+        }
+    }
+
+    // 再生中の音声ファイルを停止
+    private fun stopPlaying(): Boolean {
+        return mediaPlayer?.let {
+            it.release()
+            mediaPlayer = null
+            
             true
         } ?: run {
             false
