@@ -8,8 +8,8 @@ import jp.example.mentalrecordapplication.utils.AudioUtil
 
 @Module
 @InstallIn(ViewModelComponent::class)
-object AudioRecorderModule {
+object AudioModule {
 
     @Provides
-    fun provideAudioRecorderUtil(): AudioUtil = AudioUtil()
+    fun provideAudioUtil(): AudioUtil = AudioUtil()
 }
