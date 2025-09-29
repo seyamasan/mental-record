@@ -18,11 +18,12 @@ class AudioRecorderUtil {
         context: Context,
         fileName: String
     ): Boolean {
-        // フォルダ作成
         val dir = File(context.filesDir, FOLDER_NAME)
         if (!dir.exists()) {
+            // なければディレクトリを作成
             dir.mkdirs()
         }
+
         val filePath = File(dir, fileName).absolutePath
 
         mediaRecorder = createMediaRecorder(context).apply {
@@ -92,7 +93,7 @@ class AudioRecorderUtil {
         return mediaPlayer?.let {
             it.release()
             mediaPlayer = null
-            
+
             true
         } ?: run {
             false
