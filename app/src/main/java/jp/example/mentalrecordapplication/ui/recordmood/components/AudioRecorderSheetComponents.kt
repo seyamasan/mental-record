@@ -41,6 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import jp.example.mentalrecordapplication.R
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
+import jp.example.mentalrecordapplication.utils.TimeUtil
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -60,7 +61,7 @@ fun AudioRecorderSheetComponents(
     ) {
         // 経過時間
         Text(
-            text = formatElapsedTime(elapsedTime),
+            text = TimeUtil.formatElapsedTime(elapsedTime),
             style = MaterialTheme.typography.headlineSmall,
             color = if (isRecording) Color.Green else Color.Gray,
             modifier = Modifier.padding(bottom = 24.dp)
@@ -143,12 +144,6 @@ private fun WaveformAnimation(modifier: Modifier = Modifier) {
             )
         }
     }
-}
-
-private fun formatElapsedTime(seconds: Int): String {
-    val m = seconds / 60
-    val s = seconds % 60
-    return "%02d:%02d".format(m, s)
 }
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
