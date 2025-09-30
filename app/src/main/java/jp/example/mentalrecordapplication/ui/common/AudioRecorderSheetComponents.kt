@@ -1,4 +1,4 @@
-package jp.example.mentalrecordapplication.ui.recordmood.components
+package jp.example.mentalrecordapplication.ui.common
 
 import android.content.res.Configuration
 import androidx.compose.animation.core.LinearEasing
