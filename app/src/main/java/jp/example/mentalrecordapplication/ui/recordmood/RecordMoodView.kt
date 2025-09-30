@@ -36,6 +36,7 @@ import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 import jp.example.mentalrecordapplication.utils.DateUtil
 import jp.example.mentalrecordapplication.utils.NavigationUtil
 import jp.example.mentalrecordapplication.utils.PermissionUtil
+import jp.example.mentalrecordapplication.utils.types.AudioType
 import jp.example.mentalrecordapplication.utils.types.RecordMoodSaveResultType
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -105,9 +106,10 @@ fun RecordMoodView(
                     }
                 ) {
                     AudioSheetComponents(
-                        isRecording = uiState.isAudioRecording,
+                        type = AudioType.RECORD,
+                        isActive = uiState.isAudioRecording,
                         elapsedTime = uiState.elapsedTime,
-                        onStartRecording = {
+                        onStart = {
                             val result = PermissionUtil.checkAndRequestRecordAudioPermission(context = context)
 
                             if (result) {
@@ -116,7 +118,7 @@ fun RecordMoodView(
                                 viewModel.startAudioRecord(context = context, fileName = fileName)
                             }
                         },
-                        onStopRecording = {
+                        onStop = {
                             viewModel.stopAudioRecord()
                         }
                     )

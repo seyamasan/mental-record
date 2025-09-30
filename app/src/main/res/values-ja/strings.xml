@@ -32,6 +32,7 @@
     <string name="memo_support_message">メモしたいことを入力してください。</string>
     <string name="memo_placeholder">ここに入力…</string>
     <string name="audio_record_start_hint">ボタンをタップして気持ちを録音しよう！</string>
+    <string name="audio_play_hint">ボタンをタップして気持ちを聴きましょう！</string>
     <string name="success_save_dialog_msg">保存に成功しました。</string>
     <string name="unselected_date_dialog_title">日付が未選択です</string>
     <string name="unselected_date_dialog_msg">日付を選択してください。</string>

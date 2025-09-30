@@ -23,6 +23,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Mic
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -42,16 +43,20 @@ import androidx.compose.ui.unit.dp
 import jp.example.mentalrecordapplication.R
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
 import jp.example.mentalrecordapplication.utils.TimeUtil
+import jp.example.mentalrecordapplication.utils.types.AudioType
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun AudioSheetComponents(
-    isRecording: Boolean,
+    type: AudioType,
+    isActive: Boolean,
     elapsedTime: Int,
-    onStartRecording: () -> Unit,
-    onStopRecording: () -> Unit
+    onStart: () -> Unit,
+    onStop: () -> Unit
 ) {
     val size = ButtonDefaults.LargeContainerHeight
+    val inactiveIcon = if (type == AudioType.RECORD) Icons.Default.Mic else Icons.Default.PlayArrow
+    val hintLabel = if (type == AudioType.RECORD) stringResource(id = R.string.audio_record_start_hint) else stringResource(id = R.string.audio_play_hint)
 
     Column(
         modifier = Modifier
@@ -63,11 +68,11 @@ fun AudioSheetComponents(
         Text(
             text = TimeUtil.formatElapsedTime(elapsedTime),
             style = MaterialTheme.typography.headlineSmall,
-            color = if (isRecording) Color.Green else Color.Gray,
+            color = if (isActive) Color.Green else Color.Gray,
             modifier = Modifier.padding(bottom = 24.dp)
         )
 
-        if (isRecording) {
+        if (isActive) {
             WaveformAnimation(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -76,7 +81,7 @@ fun AudioSheetComponents(
             )
         } else {
             Text(
-                text = stringResource(id = R.string.audio_record_start_hint),
+                text = hintLabel,
                 modifier = Modifier.padding(bottom = 24.dp)
             )
         }
@@ -87,25 +92,25 @@ fun AudioSheetComponents(
                 .size(size)
                 .border(
                     width = 2.dp,
-                    color = if (isRecording) Color.Green else Color.Gray,
+                    color = if (isActive) Color.Green else Color.Gray,
                     shape = CircleShape
                 ),
             onClick = {
-                if (isRecording) {
-                    onStopRecording()
+                if (isActive) {
+                    onStop()
                 } else {
-                    onStartRecording()
+                    onStart()
                 }
             },
             shape = CircleShape,
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (isRecording) Color.Green else Color.White
+                containerColor = if (isActive) Color.Green else Color.White
             )
         ) {
             Icon(
-                imageVector = if (isRecording) Icons.Default.Stop else Icons.Default.Mic,
+                imageVector = if (isActive) Icons.Default.Stop else inactiveIcon,
                 contentDescription = null,
-                tint = if (isRecording) Color.White else Color.Red,
+                tint = if (isActive) Color.White else Color.Red,
                 modifier = Modifier.size(32.dp)
             )
         }
@@ -153,10 +158,11 @@ fun AudioSheetComponentsPreview() {
     MentalRecordAppTheme {
         Surface {
             AudioSheetComponents(
-                isRecording = false,
+                type = AudioType.RECORD,
+                isActive = false,
                 elapsedTime = 0,
-                onStartRecording = {},
-                onStopRecording = {}
+                onStart = {},
+                onStop = {}
             )
         }
     }
