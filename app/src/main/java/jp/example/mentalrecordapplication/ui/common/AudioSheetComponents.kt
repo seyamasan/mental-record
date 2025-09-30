@@ -45,7 +45,7 @@ import jp.example.mentalrecordapplication.utils.TimeUtil
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun AudioRecorderSheetComponents(
+fun AudioSheetComponents(
     isRecording: Boolean,
     elapsedTime: Int,
     onStartRecording: () -> Unit,
@@ -149,10 +149,10 @@ private fun WaveformAnimation(modifier: Modifier = Modifier) {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
-fun AudioRecorderSheetComponentsPreview() {
+fun AudioSheetComponentsPreview() {
     MentalRecordAppTheme {
         Surface {
-            AudioRecorderSheetComponents(
+            AudioSheetComponents(
                 isRecording = false,
                 elapsedTime = 0,
                 onStartRecording = {},
