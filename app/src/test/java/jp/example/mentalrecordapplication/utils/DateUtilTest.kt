@@ -1,7 +1,5 @@
 package jp.example.mentalrecordapplication.utils
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Before
