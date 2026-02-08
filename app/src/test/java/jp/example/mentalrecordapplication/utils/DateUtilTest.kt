@@ -28,25 +28,26 @@ class DateUtilTest {
     fun convertMillisToDate_returns_formatted_date_string() {
         // Given
         val millis = 1752710400000L // 2025年7月17日 09:00 Japan のミリ秒
-        val formattedDateString = "2025/7/17"
+        val expect = "2025/7/17"
 
         // When
         val result = DateUtil.convertMillisToDate(millis)
 
         // Then
-        assertThat(result).isEqualTo(formattedDateString)
+        assertThat(result).isEqualTo(expect)
     }
 
     @Test
     fun stringToLocalDate_returns_correct_LocalDate() {
         // Given
         val dateString = "2025/7/17"
+        val expect = LocalDate.of(2025, 7, 17)
 
         // When
         val localDate = DateUtil.stringToLocalDate(dateString)
 
         // Then
-        assertThat(localDate).isEqualTo(LocalDate.of(2025, 7, 17))
+        assertThat(localDate).isEqualTo(expect)
     }
 
     @Test
