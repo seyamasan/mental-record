@@ -6,22 +6,31 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDate
+import java.time.ZoneId
 import java.util.Locale
+import java.util.TimeZone
 
 class DateUtilTest {
 
     private lateinit var originalLocale: Locale
+    private lateinit var originalTimeZone: TimeZone
 
     @Before
     fun setUp() {
         originalLocale = Locale.getDefault()
-        Locale.setDefault(Locale.JAPAN) // Set locale to Locale.JAPAN (ロケールをJAPANに固定)
+        Locale.setDefault(Locale.JAPAN) // ロケールをJAPANに固定
+
+        originalTimeZone = TimeZone.getDefault()
+        // デフォルトタイムゾーンを Asia/Tokyo に
+        val tokyo = ZoneId.of("Asia/Tokyo")
+        TimeZone.setDefault(TimeZone.getTimeZone(tokyo))
     }
 
     @After
     fun tearDown() {
-        // Restore original locale (元に戻す)
+        // 元に戻す
         Locale.setDefault(originalLocale)
+        TimeZone.setDefault(originalTimeZone)
     }
 
     @Test
