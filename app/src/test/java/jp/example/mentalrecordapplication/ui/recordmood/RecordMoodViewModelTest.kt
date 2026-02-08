@@ -130,7 +130,7 @@ class RecordMoodViewModelTest {
         // Then
         assertThat(state.saveResult).isEqualTo(RecordMoodSaveResultType.SUCCESS)
         assertThat(state.selectedMood).isNull()
-        assertThat(state.selectedTimeOfDay).isNull()
+        assertThat(state.selectedTimeOfDay).isNotNull()
         assertThat(state.selectedDate).isNotNull()
         assertThat(state.enteredMemo).isNull()
         coVerify { repository.insert(any()) }
@@ -169,6 +169,7 @@ class RecordMoodViewModelTest {
     fun sets_saveResult_to_INVALID_TIME_OF_DAY_when_selectedTimeOfDay_is_null() = runTest {
         // When
         viewModel.updateMood(DefaultMoodType.HAPPY)
+        viewModel.updateTimeOfDay(null) // 強制的にエラーを出すためにnullを渡す
         viewModel.updateDate(DUMMY_DATE)
         viewModel.saveMoodDetail()
         val state = viewModel.uiState.first()

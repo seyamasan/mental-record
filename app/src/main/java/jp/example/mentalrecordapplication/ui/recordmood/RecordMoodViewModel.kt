@@ -1,5 +1,7 @@
 package jp.example.mentalrecordapplication.ui.recordmood
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +18,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@RequiresApi(Build.VERSION_CODES.O)
 @HiltViewModel
 class RecordMoodViewModel @Inject constructor(
     private val repository: MoodRepository
@@ -24,7 +27,11 @@ class RecordMoodViewModel @Inject constructor(
     val uiState: StateFlow<RecordMoodState> = _uiState.asStateFlow()
 
     init {
-        updateDate(DateUtil.getStringNow()) // 今日を先に入れておく
+        // 今の時間帯を先に入れておく
+        updateTimeOfDay(DateUtil.convertMillisToTimeOfDay(millis = System.currentTimeMillis()))
+        
+        // 今日を先に入れておく
+        updateDate(DateUtil.getStringNow())
     }
 
     fun updateMood(newState: DefaultMoodType?) = _uiState.update { state -> state.copy( selectedMood = newState) }
@@ -85,8 +92,8 @@ class RecordMoodViewModel @Inject constructor(
         _uiState.update { state ->
             state.copy(
                 selectedMood = null,
-                selectedTimeOfDay = null,
-                selectedDate = DateUtil.getStringNow(), // 日付だけは今日を入れる
+                selectedTimeOfDay = DateUtil.convertMillisToTimeOfDay(millis = System.currentTimeMillis()),
+                selectedDate = DateUtil.getStringNow(),
                 enteredMemo = null
             )
         }
