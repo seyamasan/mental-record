@@ -1,6 +1,5 @@
 package jp.example.mentalrecordapplication.ui.recordmood
 
-import jp.example.mentalrecordapplication.utils.types.AudioRecordResultType
 import jp.example.mentalrecordapplication.utils.types.DefaultMoodType
 import jp.example.mentalrecordapplication.utils.types.RecordMoodSaveResultType
 import jp.example.mentalrecordapplication.utils.types.TimeOfDayType
@@ -12,9 +11,5 @@ data class RecordMoodState(
     val enteredMemo: String? = null,
     val isDatePickerVisible: Boolean = false,
     val isMemoSheetVisible: Boolean = false,
-    val isAudioRecordSheetVisible: Boolean = false,
-    val isAudioRecording: Boolean = false,
-    val elapsedTime: Int = 0,
-    val audioRecordResultType: AudioRecordResultType? = null,
     val saveResult: RecordMoodSaveResultType? = null
 )

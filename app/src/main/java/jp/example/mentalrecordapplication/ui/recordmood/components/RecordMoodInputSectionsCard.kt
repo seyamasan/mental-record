@@ -1,20 +1,12 @@
 package jp.example.mentalrecordapplication.ui.recordmood.components
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -67,22 +59,6 @@ fun RecordMoodInputSectionsCard(
                 onDismissRequest = { viewModel.updateIsMemoSheetVisible(newState = false) },
                 onChangeTextField = { viewModel.updateMemo(it) }
             )
-
-            IconButton(
-                onClick = {
-                    viewModel.updateIsAudioRecordSheetVisible(true)
-                },
-                modifier = Modifier
-                    .size(64.dp)
-                    .border(2.dp, MaterialTheme.colorScheme.primary, CircleShape)
-            ) {
-                Icon(
-                    Icons.Default.Mic,
-                    tint = MaterialTheme.colorScheme.primary,
-                    contentDescription = "Audio Record Sheet Button",
-                    modifier = Modifier.size(32.dp)
-                )
-            }
 
             LargeElevatedButton(
                 text = stringResource(id = R.string.save_button_text),

@@ -9,15 +9,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDatePickerState
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,14 +26,10 @@ import jp.example.mentalrecordapplication.ui.common.bar.BottomNavBarView
 import jp.example.mentalrecordapplication.ui.common.OkOnlyAlertDialog
 import jp.example.mentalrecordapplication.ui.common.bar.TopBarView
 import jp.example.mentalrecordapplication.ui.common.DefaultMoodSelector
-import jp.example.mentalrecordapplication.ui.common.AudioSheetComponents
 import jp.example.mentalrecordapplication.ui.recordmood.components.RecordMoodInputSectionsCard
 import jp.example.mentalrecordapplication.ui.recordmood.components.SupportMessage
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
-import jp.example.mentalrecordapplication.utils.DateUtil
 import jp.example.mentalrecordapplication.utils.NavigationUtil
-import jp.example.mentalrecordapplication.utils.PermissionUtil
-import jp.example.mentalrecordapplication.utils.types.AudioType
 import jp.example.mentalrecordapplication.utils.types.RecordMoodSaveResultType
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -51,8 +44,6 @@ fun RecordMoodView(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val datePickerState = rememberDatePickerState()
-    val audioRecordSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
-    val context = LocalContext.current
 
     val handleResult: (RecordMoodSaveResultType) -> Unit = {
         if (it == RecordMoodSaveResultType.SUCCESS) {
@@ -96,34 +87,6 @@ fun RecordMoodView(
                 uiState = uiState,
                 datePickerState = datePickerState
             )
-
-            if (uiState.isAudioRecordSheetVisible) {
-                ModalBottomSheet(
-                    sheetState = audioRecordSheetState,
-                    onDismissRequest = {
-                        viewModel.updateIsAudioRecordSheetVisible(false)
-                        viewModel.stopAudioRecord() // 閉じたら録音を停止させる
-                    }
-                ) {
-                    AudioSheetComponents(
-                        type = AudioType.RECORD,
-                        isActive = uiState.isAudioRecording,
-                        elapsedTime = uiState.elapsedTime,
-                        onStart = {
-                            val result = PermissionUtil.checkAndRequestRecordAudioPermission(context = context)
-
-                            if (result) {
-                                // 3GPファイルは、スマホなどの携帯電話のために開発されたファイル形式, 中身は音声や動画データ
-                                val fileName = DateUtil.timestampFileName(fileExtension = "3gp")
-                                viewModel.startAudioRecord(context = context, fileName = fileName)
-                            }
-                        },
-                        onStop = {
-                            viewModel.stopAudioRecord()
-                        }
-                    )
-                }
-            }
 
             uiState.saveResult?.let {
                 OkOnlyAlertDialog(

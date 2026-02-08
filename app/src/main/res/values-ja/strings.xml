@@ -10,10 +10,6 @@
     <string name="mood">感情</string>
     <string name="time_of_day">時間帯</string>
     <string name="date">日付</string>
-    <string name="record_audio_permission_dialog_title">マイクの権限がありません</string>
-    <string name="record_audio_permission_dialog_message">録音機能を利用するには、設定アプリにてマイクの権限を許可してください。</string>
-    <string name="permission_dialog_positive">設定を開く</string>
-    <string name="permission_dialog_negative">閉じる</string>
 
 <!--    RecordMoodView-->
     <string name="mood_record_screen_title">記録する</string>
@@ -31,8 +27,6 @@
     <string name="memo_title">メモ</string>
     <string name="memo_support_message">メモしたいことを入力してください。</string>
     <string name="memo_placeholder">ここに入力…</string>
-    <string name="audio_record_start_hint">ボタンをタップして気持ちを録音しよう！</string>
-    <string name="audio_play_hint">ボタンをタップして気持ちを聴きましょう！</string>
     <string name="success_save_dialog_msg">保存に成功しました。</string>
     <string name="unselected_date_dialog_title">日付が未選択です</string>
     <string name="unselected_date_dialog_msg">日付を選択してください。</string>

@@ -1,15 +1,10 @@
 package jp.example.mentalrecordapplication.ui.recordmood
 
-import android.content.Context
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.example.mentalrecordapplication.data.local.room.MoodEntity
 import jp.example.mentalrecordapplication.data.repository.MoodRepository
-import jp.example.mentalrecordapplication.utils.AudioUtil
-import jp.example.mentalrecordapplication.utils.types.AudioRecordResultType
 import jp.example.mentalrecordapplication.utils.types.DefaultMoodType
 import jp.example.mentalrecordapplication.utils.types.RecordMoodSaveResultType
 import jp.example.mentalrecordapplication.utils.types.TimeOfDayType
@@ -20,12 +15,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.Timer
 import javax.inject.Inject
-import kotlin.concurrent.timer
 
 @HiltViewModel
 class RecordMoodViewModel @Inject constructor(
-    private val repository: MoodRepository,
-    private val audioRecorder: AudioUtil
+    private val repository: MoodRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(RecordMoodState())
     val uiState: StateFlow<RecordMoodState> = _uiState.asStateFlow()
@@ -44,38 +37,7 @@ class RecordMoodViewModel @Inject constructor(
 
     fun updateIsMemoSheetVisible(newState: Boolean) = _uiState.update { state -> state.copy(isMemoSheetVisible = newState) }
 
-    fun updateIsAudioRecordSheetVisible(newState: Boolean) = _uiState.update { state -> state.copy(isAudioRecordSheetVisible = newState) }
-
-    fun updateAudioRecordResultType(newState: AudioRecordResultType?) = _uiState.update { state -> state.copy(audioRecordResultType = newState) }
-
     fun updateSaveResult(newState: RecordMoodSaveResultType?) = _uiState.update { state -> state.copy(saveResult = newState) }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun startAudioRecord(context: Context, fileName: String) {
-        if (_uiState.value.isAudioRecording) { return }
-
-        val isStarted = audioRecorder.startRecording(context = context, fileName = fileName)
-
-        if (isStarted) {
-            _uiState.update { state -> state.copy(isAudioRecording = true, elapsedTime = 0) }
-            startTimer()
-        } else {
-            updateAudioRecordResultType(AudioRecordResultType.START_FAILURE)
-        }
-    }
-
-    fun stopAudioRecord() {
-        if (!_uiState.value.isAudioRecording) { return }
-
-        val isStopped = audioRecorder.stopRecording()
-
-        if (isStopped) {
-            _uiState.update { state -> state.copy(isAudioRecording = false) }
-            stopTimer()
-        } else {
-            updateAudioRecordResultType(AudioRecordResultType.STOP_FAILURE)
-        }
-    }
 
     fun saveMoodDetail() {
         viewModelScope.launch {
@@ -125,20 +87,6 @@ class RecordMoodViewModel @Inject constructor(
                 enteredMemo = null
             )
         }
-    }
-
-    private fun startTimer() {
-        timer?.cancel()
-
-        timer = timer(period = 1000L) { // 1秒間隔
-            _uiState.update { state -> state.copy(elapsedTime = _uiState.value.elapsedTime + 1) }
-        }
-    }
-
-    private fun stopTimer() {
-        timer?.cancel()
-        timer = null
-        _uiState.update { state -> state.copy(elapsedTime = 0) }
     }
 
     companion object {

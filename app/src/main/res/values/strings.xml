@@ -10,10 +10,6 @@
     <string name="mood">Mood</string>
     <string name="time_of_day">Time Of Day</string>
     <string name="date">Date</string>
-    <string name="record_audio_permission_dialog_title">Microphone permission is not granted</string>
-    <string name="record_audio_permission_dialog_message">To use the recording feature, please allow microphone permission in the Settings app.</string>
-    <string name="permission_dialog_positive">Open Settings</string>
-    <string name="permission_dialog_negative">Close</string>
 
 <!--    RecordView-->
     <string name="mood_record_screen_title">Record</string>
@@ -31,8 +27,6 @@
     <string name="memo_title">Memo</string>
     <string name="memo_support_message">Enter the memo you want to make.</string>
     <string name="memo_placeholder">Type here…</string>
-    <string name="audio_record_start_hint">Tap the button to record your feelings!</string>
-    <string name="audio_play_hint">Tap the button to hear how you feel!</string>
     <string name="success_save_dialog_msg">Saving was successful.</string>
     <string name="unselected_date_dialog_title">Date not selected</string>
     <string name="unselected_date_dialog_msg">Please select a date.</string>

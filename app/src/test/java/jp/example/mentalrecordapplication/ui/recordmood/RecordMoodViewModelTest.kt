@@ -1,16 +1,11 @@
 package jp.example.mentalrecordapplication.ui.recordmood
 
-import android.content.Context
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import jp.example.mentalrecordapplication.data.repository.MoodRepository
 import jp.example.mentalrecordapplication.rule.MainDispatcherRule
-import jp.example.mentalrecordapplication.utils.AudioUtil
-import jp.example.mentalrecordapplication.utils.types.AudioRecordResultType
 import jp.example.mentalrecordapplication.utils.types.DefaultMoodType
 import jp.example.mentalrecordapplication.utils.types.RecordMoodSaveResultType
 import jp.example.mentalrecordapplication.utils.types.TimeOfDayType
@@ -23,7 +18,6 @@ import org.junit.Test
 class RecordMoodViewModelTest {
 
     private lateinit var repository: MoodRepository
-    private lateinit var audioRecorder: AudioUtil
     private lateinit var viewModel: RecordMoodViewModel
 
     @get:Rule
@@ -32,9 +26,8 @@ class RecordMoodViewModelTest {
     @Before
     fun setUp() {
         repository = mockk()
-        audioRecorder = mockk()
 
-        viewModel = RecordMoodViewModel(repository, audioRecorder)
+        viewModel = RecordMoodViewModel(repository)
     }
 
     @Test
@@ -196,107 +189,8 @@ class RecordMoodViewModelTest {
         assertThat(state.saveResult).isEqualTo(RecordMoodSaveResultType.INVALID_DATE)
     }
 
-    @Test
-    fun startAudioRecord_alreadyRecording_should_do_nothing() = runTest {
-        // Given
-        val context = mockk<Context>(relaxed = true)
-        every { audioRecorder.startRecording(context, fileName = DUMMY_FILE_NAME) } returns true
-        viewModel.startAudioRecord(context, fileName = DUMMY_FILE_NAME) // スタートしている前提
-
-        // When
-        viewModel.startAudioRecord(context, fileName = DUMMY_FILE_NAME)
-
-        // Then
-        verify(exactly = 1) { audioRecorder.startRecording(context, fileName = DUMMY_FILE_NAME) }
-        val state = viewModel.uiState.first()
-        assertThat(state.isAudioRecording).isTrue()
-        assertThat(state.audioRecordResultType).isNull()
-    }
-
-    @Test
-    fun startAudioRecord_success_should_update_isAudioRecording_true() = runTest {
-        // Given
-        val context = mockk<Context>(relaxed = true)
-        every { audioRecorder.startRecording(context, fileName = DUMMY_FILE_NAME) } returns true
-
-        // When
-        viewModel.startAudioRecord(context, fileName = DUMMY_FILE_NAME)
-
-        // Then
-        verify(exactly = 1) { audioRecorder.startRecording(context, fileName = DUMMY_FILE_NAME) }
-        val state = viewModel.uiState.first()
-        assertThat(state.isAudioRecording).isTrue()
-        assertThat(state.audioRecordResultType).isNull()
-    }
-
-    @Test
-    fun startAudioRecord_failure_should_update_resultType() = runTest {
-        // Given
-        val context = mockk<Context>(relaxed = true)
-        every { audioRecorder.startRecording(context, fileName = DUMMY_FILE_NAME) } returns false
-
-        // When
-        viewModel.startAudioRecord(context, fileName = DUMMY_FILE_NAME)
-
-        // Then
-        verify { audioRecorder.startRecording(context, fileName = DUMMY_FILE_NAME) }
-        val state = viewModel.uiState.first()
-        assertThat(state.isAudioRecording).isFalse()
-        assertThat(state.audioRecordResultType).isEqualTo(AudioRecordResultType.START_FAILURE)
-    }
-
-    @Test
-    fun stopAudioRecord_notRecording_should_do_nothing() = runTest {
-        // When
-        viewModel.stopAudioRecord()
-
-        // Then
-        verify(exactly = 0) { audioRecorder.stopRecording() }
-        val state = viewModel.uiState.first()
-        assertThat(state.isAudioRecording).isFalse()
-        assertThat(state.audioRecordResultType).isNull()
-    }
-
-    @Test
-    fun stopAudioRecord_success_should_update_isAudioRecording_false() = runTest {
-        // Given
-        val context = mockk<Context>(relaxed = true)
-        every { audioRecorder.startRecording(context, fileName = DUMMY_FILE_NAME) } returns true
-        every { audioRecorder.stopRecording() } returns true
-        viewModel.startAudioRecord(context, fileName = DUMMY_FILE_NAME) // スタートしている前提
-
-        // When
-        viewModel.stopAudioRecord()
-
-        // Then
-        verify { audioRecorder.stopRecording() }
-        val state = viewModel.uiState.first()
-        assertThat(state.isAudioRecording).isFalse()
-        assertThat(state.audioRecordResultType).isNull()
-    }
-
-    @Test
-    fun stopAudioRecord_failure_should_update_resultType() = runTest {
-        // Given
-        val context = mockk<Context>(relaxed = true)
-        every { audioRecorder.startRecording(context, fileName = DUMMY_FILE_NAME) } returns true
-        every { audioRecorder.stopRecording() } returns false
-        viewModel.startAudioRecord(context, fileName = DUMMY_FILE_NAME)
-
-
-        // When
-        viewModel.stopAudioRecord()
-
-        // Then
-        verify { audioRecorder.stopRecording() }
-        val state = viewModel.uiState.first()
-        assertThat(state.isAudioRecording).isTrue()
-        assertThat(state.audioRecordResultType).isEqualTo(AudioRecordResultType.STOP_FAILURE)
-    }
-
     companion object {
         private const val DUMMY_DATE = "2025/07/16"
         private const val DUMMY_MEMO = "Memo"
-        private const val DUMMY_FILE_NAME = "dummy.3gp"
     }
 }
