@@ -20,4 +20,9 @@ object DateUtil {
         val formatter = DateTimeFormatter.ofPattern("yyyy/M/d")
         return LocalDate.parse(date, formatter)
     }
+
+    fun getStringNow(): String {
+        val millis = System.currentTimeMillis()
+        return convertMillisToDate(millis)
+    }
 }

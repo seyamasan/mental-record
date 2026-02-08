@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.example.mentalrecordapplication.data.local.room.MoodEntity
 import jp.example.mentalrecordapplication.data.repository.MoodRepository
+import jp.example.mentalrecordapplication.utils.DateUtil
 import jp.example.mentalrecordapplication.utils.types.DefaultMoodType
 import jp.example.mentalrecordapplication.utils.types.RecordMoodSaveResultType
 import jp.example.mentalrecordapplication.utils.types.TimeOfDayType
@@ -21,6 +22,10 @@ class RecordMoodViewModel @Inject constructor(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(RecordMoodState())
     val uiState: StateFlow<RecordMoodState> = _uiState.asStateFlow()
+
+    init {
+        updateDate(DateUtil.getStringNow()) // 今日を先に入れておく
+    }
 
     fun updateMood(newState: DefaultMoodType?) = _uiState.update { state -> state.copy( selectedMood = newState) }
 
@@ -51,7 +56,7 @@ class RecordMoodViewModel @Inject constructor(
             )
 
             if (result) {
-                clearInputState() // After successful saving, the input is cleared. (保存に成功したら入力内容はクリアする。)
+                clearInputState() // 保存に成功したら入力内容はクリアする
                 updateSaveResult(newState = RecordMoodSaveResultType.SUCCESS)
             } else {
                 updateSaveResult(newState = RecordMoodSaveResultType.FAILURE)
@@ -72,6 +77,7 @@ class RecordMoodViewModel @Inject constructor(
             updateSaveResult(newState = RecordMoodSaveResultType.INVALID_DATE)
             return false
         }
+
         return true
     }
 
@@ -80,7 +86,7 @@ class RecordMoodViewModel @Inject constructor(
             state.copy(
                 selectedMood = null,
                 selectedTimeOfDay = null,
-                selectedDate = null,
+                selectedDate = DateUtil.getStringNow(), // 日付だけは今日を入れる
                 enteredMemo = null
             )
         }

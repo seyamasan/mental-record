@@ -43,11 +43,13 @@ fun RecordMoodView(
     onSelectedTab: (Int) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val datePickerState = rememberDatePickerState()
+    val datePickerState = rememberDatePickerState(
+        initialSelectedDateMillis = System.currentTimeMillis()
+    )
 
     val handleResult: (RecordMoodSaveResultType) -> Unit = {
         if (it == RecordMoodSaveResultType.SUCCESS) {
-            datePickerState.selectedDateMillis = null
+            datePickerState.selectedDateMillis = System.currentTimeMillis()
             onSelectedTab(Screens.recordListView.navBarIndex)
             NavigationUtil.navigate(
                 navController = navController,
