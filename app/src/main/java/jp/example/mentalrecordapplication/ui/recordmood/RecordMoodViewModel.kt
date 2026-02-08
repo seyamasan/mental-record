@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.Timer
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,8 +21,6 @@ class RecordMoodViewModel @Inject constructor(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(RecordMoodState())
     val uiState: StateFlow<RecordMoodState> = _uiState.asStateFlow()
-
-    private var timer: Timer? = null
 
     fun updateMood(newState: DefaultMoodType?) = _uiState.update { state -> state.copy( selectedMood = newState) }
 
