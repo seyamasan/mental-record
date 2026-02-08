@@ -1,5 +1,7 @@
 package jp.example.mentalrecordapplication.ui.recordmood.components
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +20,7 @@ import jp.example.mentalrecordapplication.ui.common.button.TimeOfDayButtonGroup
 import jp.example.mentalrecordapplication.ui.recordmood.RecordMoodState
 import jp.example.mentalrecordapplication.ui.recordmood.RecordMoodViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RecordMoodInputSectionsCard(
     viewModel: RecordMoodViewModel,
