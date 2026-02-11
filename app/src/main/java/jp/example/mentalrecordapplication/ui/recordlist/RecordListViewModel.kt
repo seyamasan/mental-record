@@ -42,7 +42,6 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
         val secondFilteredItem = applyTimeOfDayFilter(firstFilteredItem)
         val thirdFilteredItem = applyDateRangeFilter(secondFilteredItem)
         val fourthFilteredItem = applySortOrder(thirdFilteredItem)
-
         _uiState.update { state -> state.copy(filteredListItem = fourthFilteredItem) }
     }
 
@@ -73,15 +72,7 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
     fun deleteById(id: Int) {
         viewModelScope.launch {
             val result = repository.deleteById(id = id)
-            if (result) {
-                _uiState.update { state ->
-                    state.copy(
-                        allListItem = _uiState.value.allListItem?.filterNot { it.id == id },
-                        filteredListItem = _uiState.value.filteredListItem?.filterNot { it.id == id }
-                    )
-                }
-            }
-
+            if (result) { fetchAllItems() }
             updateDeleteByIdResult(newState = result)
         }
     }

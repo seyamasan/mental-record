@@ -317,11 +317,9 @@ class RecordListViewModelTest {
     @Test
     fun deleteById_success_should_update_deleteByIdResult_and_refresh_list() = runTest {
         // Given
-        val dummyItem = listOf(dummyEntity1, dummyEntity2, dummyEntity3, dummyEntity4, dummyEntity5, dummyEntity6)
+        val deletedList = listOf(dummyEntity6, dummyEntity2, dummyEntity4, dummyEntity3, dummyEntity5)
         coEvery { repository.deleteById(DUMMY_ID) } returns true
-        coEvery { repository.selectAll() } returns dummyItem
-
-        viewModel.fetchAllItems() // データを取っておく
+        coEvery { repository.selectAll() } returns deletedList
 
         // When
         viewModel.deleteById(DUMMY_ID)
@@ -329,9 +327,9 @@ class RecordListViewModelTest {
 
         // Then
         assertThat(state.deleteByIdResult).isTrue()
-        assertThat(state.allListItem?.none { it.id == DUMMY_ID }).isTrue()
-        assertThat(state.filteredListItem?.none { it.id == DUMMY_ID }).isTrue()
-
+        state.filteredListItem?.forEachIndexed { index, filteredEntity ->
+            assertThat(filteredEntity.id).isEqualTo(deletedList[index].id)
+        }
 
         coVerify { repository.deleteById(DUMMY_ID) }
         coVerify { repository.selectAll() }
