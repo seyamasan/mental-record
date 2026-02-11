@@ -79,10 +79,20 @@ class RecordListViewModel @Inject constructor(private val repository: MoodReposi
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun applySortOrder(targetItem: List<MoodEntity>?): List<MoodEntity>? {
-        return if (_uiState.value.isNewestFirst) {
-            targetItem?.sortedByDescending { it.localDate }
-        } else {
-            targetItem?.sortedBy { it.localDate }
+        return targetItem?.let { item ->
+            if (_uiState.value.isNewestFirst) {
+                // 日付降順 → 同じ日付内で id 降順
+                item.sortedWith(
+                    compareByDescending<MoodEntity> { it.localDate }
+                        .thenByDescending { it.id }
+                )
+            } else {
+                // 日付昇順 → 同じ日付内で id 昇順
+                item.sortedWith(
+                    compareBy<MoodEntity> { it.localDate }
+                        .thenBy { it.id }
+                )
+            }
         }
     }
 
