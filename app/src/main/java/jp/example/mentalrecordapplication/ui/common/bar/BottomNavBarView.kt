@@ -3,6 +3,7 @@ package jp.example.mentalrecordapplication.ui.common.bar
 import android.content.res.Configuration
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.automirrored.filled.ShowChart
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -26,7 +27,8 @@ fun BottomNavBarView(
 ) {
     val screenList: List<Pair<ScreenData, ImageVector>> = listOf(
         Pair(Screens.recordMoodView, Icons.Filled.Create),
-        Pair(Screens.recordListView, Icons.AutoMirrored.Filled.List)
+        Pair(Screens.recordListView, Icons.AutoMirrored.Filled.List),
+        Pair(Screens.analysisView, Icons.AutoMirrored.Filled.ShowChart)
     )
 
     NavigationBar {

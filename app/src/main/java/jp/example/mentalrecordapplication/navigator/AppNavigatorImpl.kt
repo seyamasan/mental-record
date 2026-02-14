@@ -13,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import jp.example.mentalrecordapplication.navigator.screens.Screens
+import jp.example.mentalrecordapplication.ui.analysis.AnalysisView
 import jp.example.mentalrecordapplication.ui.recordmood.RecordMoodView
 import jp.example.mentalrecordapplication.ui.recordlist.RecordListView
 
@@ -47,6 +48,19 @@ class AppNavigatorImpl (private val navController: NavHostController) : AppNavig
                 RecordListView(
                     navController = navController,
                     screenTitle = stringResource(id = recordListView.screenTitleResId),
+                    selectedTab = selectedTab,
+                    onSelectedTab = { selectedTab = it }
+                )
+            }
+
+            // AnalysisView
+            composable<Screens.AnalysisView> { backStackEntry ->
+                val analysisView: Screens.AnalysisView = backStackEntry.toRoute()
+                selectedTab = Screens.analysisView.navBarIndex
+
+                AnalysisView (
+                    navController = navController,
+                    screenTitle = stringResource(id = analysisView.screenTitleResId),
                     selectedTab = selectedTab,
                     onSelectedTab = { selectedTab = it }
                 )

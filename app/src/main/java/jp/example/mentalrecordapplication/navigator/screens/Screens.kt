@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 object Screens {
     val recordMoodView = RecordMoodView()
     val recordListView = RecordListView()
+    val analysisView = AnalysisView()
 
     @Serializable
     data class RecordMoodView (
@@ -17,5 +18,11 @@ object Screens {
     data class RecordListView (
         override val screenTitleResId: Int = R.string.record_list_screen_title,
         val navBarIndex: Int = 1
+    ): ScreenData
+
+    @Serializable
+    data class AnalysisView (
+        override val screenTitleResId: Int = R.string.analysis_screen_title,
+        val navBarIndex: Int = 2
     ): ScreenData
 }

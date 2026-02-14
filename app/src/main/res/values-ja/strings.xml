@@ -46,6 +46,9 @@
     <string name="empty_filter_record_msg">絞り込みの結果、データが存在しませんでした。</string>
     <string name="reset_filter">絞り込みをリセット</string>
 
+<!--    AnalysisView-->
+    <string name="analysis_screen_title">分析</string>
+
 <!--    OkHttpUtil-->
     <string name="opening_the_link_failed">リンクを開くことができませんでした。</string>
     <string name="error_opening_link">リンクを開く際にエラーが発生しました。</string>
