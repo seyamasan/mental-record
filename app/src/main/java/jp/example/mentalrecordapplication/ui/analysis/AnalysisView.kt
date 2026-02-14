@@ -6,13 +6,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import jp.example.mentalrecordapplication.R
+import jp.example.mentalrecordapplication.ui.analysis.components.MentalLineGraph
 import jp.example.mentalrecordapplication.ui.common.bar.BottomNavBarView
 import jp.example.mentalrecordapplication.ui.common.bar.TopBarView
 import jp.example.mentalrecordapplication.ui.theme.MentalRecordAppTheme
@@ -38,7 +38,7 @@ fun AnalysisView(
         }
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
-            Text("解析画面です。")
+            MentalLineGraph()
         }
     }
 }
@@ -46,7 +46,7 @@ fun AnalysisView(
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
-fun AnalysisViewPreview() {
+private fun Preview() {
     MentalRecordAppTheme {
         AnalysisView(
             navController = null,
