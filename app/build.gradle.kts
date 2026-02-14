@@ -103,6 +103,9 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.hilt.compiler)
 
+    // vico
+    implementation(libs.vico.compose)
+
     // test
     testImplementation(libs.junit)
     testImplementation(libs.truth)
